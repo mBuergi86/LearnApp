@@ -1,0 +1,1803 @@
+{
+  "questions": [
+    {
+      "id": "exam-ml-learning-type-maintenance",
+      "topic_id": "supervised-unsupervised",
+      "type": "single-choice",
+      "prompt": "Ein Industriebetrieb hat Sensordaten von 500 Pumpen, aber keine Information, welche Pumpe später ausgefallen ist. Er möchte Pumpen mit ähnlichem Verhalten gruppieren. Welche Lernart passt?",
+      "explanation": "Es fehlt ein Label (Ausfall ja/nein). Ziel ist eine Gruppierung ähnlicher Pumpen, also Clustering ohne Labels. Mit bekannter Ausfallinformation wäre eine Klassifikation möglich. Reinforcement Learning braucht einen Agenten mit Belohnungen.",
+      "options": [
+        {
+          "id": "o3",
+          "text": "Supervised Learning, Klassifikation"
+        },
+        {
+          "id": "o4",
+          "text": "Reinforcement Learning"
+        },
+        {
+          "id": "o2",
+          "text": "Supervised Learning, Regression"
+        },
+        {
+          "id": "o1",
+          "text": "Unsupervised Learning, z. B. Clustering"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-ml-learning-type-label-trap",
+      "topic_id": "supervised-unsupervised",
+      "type": "single-choice",
+      "prompt": "Dieselben Pumpendaten enthalten neu die Spalte «ausgefallen innerhalb 30 Tagen (ja/nein)». Was ändert sich?",
+      "explanation": "Sobald ein bekanntes Ziel pro Beobachtung vorhanden ist, wird das Problem überwacht. Ja/nein ist eine Klasse, also binäre Klassifikation. Die Lernart hängt vom Ziel ab, nicht von den Features.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Jetzt ist eine überwachte binäre Klassifikation möglich"
+        },
+        {
+          "id": "o4",
+          "text": "Die Spalte muss vor dem Training gelöscht werden"
+        },
+        {
+          "id": "o3",
+          "text": "Es wird automatisch eine Regression"
+        },
+        {
+          "id": "o2",
+          "text": "Es bleibt zwingend Clustering"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-ml-datatype-zip",
+      "topic_id": "features-datatypes",
+      "type": "single-choice",
+      "prompt": "Ein Datensatz enthält das Merkmal «Postleitzahl» (z. B. 7000, 8001, 3011). Welche Einordnung ist korrekt?",
+      "explanation": "Mit einer PLZ kann man nicht sinnvoll rechnen: 8001 ist nicht «mehr» als 7000. Sie bezeichnet nur einen Ort, ist also nominal. Für ein Modell braucht es ein passendes Encoding statt der rohen Zahl.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Qualitativ, nominal: Die Zahl ist nur ein Code"
+        },
+        {
+          "id": "o2",
+          "text": "Quantitativ, kontinuierlich"
+        },
+        {
+          "id": "o3",
+          "text": "Quantitativ, diskret, weil man sie zählen kann"
+        },
+        {
+          "id": "o4",
+          "text": "Ordinal, weil grössere Zahlen weiter östlich liegen"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-ml-datatype-classify",
+      "topic_id": "features-datatypes",
+      "type": "multiple-select",
+      "prompt": "Welche Merkmale sind qualitativ ordinal?",
+      "explanation": "Ordinal heisst: Kategorien mit Reihenfolge. Zufriedenheit, Kleidergrösse und Passagierklasse lassen sich ordnen. Farbe ist nominal, Gewicht quantitativ kontinuierlich. Die Passagierklasse ist trotz Zahlen kein Messwert.",
+      "options": [
+        {
+          "id": "o5",
+          "text": "Passagierklasse 1, 2, 3"
+        },
+        {
+          "id": "o4",
+          "text": "Körpergewicht in kg"
+        },
+        {
+          "id": "o3",
+          "text": "Lieblingsfarbe"
+        },
+        {
+          "id": "o1",
+          "text": "Kundenzufriedenheit (tief, mittel, hoch)"
+        },
+        {
+          "id": "o2",
+          "text": "Kleidergrösse S, M, L, XL"
+        }
+      ],
+      "correct_answers": [
+        "o1",
+        "o2",
+        "o5"
+      ],
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-ml-eda-scope",
+      "topic_id": "eda-workflow",
+      "type": "single-choice",
+      "prompt": "Ein Modell für Mietpreise wurde nur mit Wohnungen aus der Stadt Zürich trainiert und soll nun im ganzen Kanton Graubünden eingesetzt werden. Welche EDA-Fragestellung ist verletzt?",
+      "explanation": "Die Daten stammen aus einem anderen Gebiet als dem Einsatzgebiet. Das ist ein Problem des Geltungsbereichs. Die Stichprobe ist für Graubünden nicht repräsentativ.",
+      "options": [
+        {
+          "id": "o3",
+          "text": "Struktur: Welche Datentypen gibt es?"
+        },
+        {
+          "id": "o4",
+          "text": "Zeitbezug: Was bedeutet der Zeitstempel?"
+        },
+        {
+          "id": "o2",
+          "text": "Granularität: Sind die Daten aggregiert?"
+        },
+        {
+          "id": "o1",
+          "text": "Geltungsbereich: Decken die Daten den relevanten Bereich ab?"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-ml-eda-no-transform",
+      "topic_id": "eda-workflow",
+      "type": "true-false",
+      "prompt": "In der EDA werden fehlende Werte bereits mit dem Mittelwert ersetzt.",
+      "explanation": "Falsch. Die EDA beschreibt und findet Probleme (EDA F.57: keine Transformationen). Das Ersetzen fehlender Werte gehört zum Preprocessing und wird auf den Trainingsdaten gelernt.",
+      "options": [
+        {
+          "id": "f",
+          "text": "Falsch"
+        },
+        {
+          "id": "t",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "f",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-ml-boxplot-whisker",
+      "topic_id": "eda-correlation-outliers",
+      "type": "single-choice",
+      "prompt": "Wie lang dürfen die Whisker eines Boxplots höchstens sein?",
+      "explanation": "EDA F.35: Whisker reichen höchstens 1.5 · IQR über Q3 bzw. unter Q1, mit $IQR=Q_3-Q_1$. Punkte ausserhalb erscheinen als Ausreisser.",
+      "options": [
+        {
+          "id": "o3",
+          "text": "2 Standardabweichungen ab dem Mittelwert"
+        },
+        {
+          "id": "o2",
+          "text": "Bis zum Minimum und Maximum, immer"
+        },
+        {
+          "id": "o1",
+          "text": "1.5 · IQR, gemessen ab Q1 bzw. Q3"
+        },
+        {
+          "id": "o4",
+          "text": "Bis zum Median"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-ml-correlation-zero",
+      "topic_id": "eda-correlation-outliers",
+      "type": "true-false",
+      "prompt": "Ein Pearson-Korrelationskoeffizient von r ≈ 0 beweist, dass zwei Merkmale nichts miteinander zu tun haben.",
+      "explanation": "Falsch. r misst nur den linearen Zusammenhang. Eine U-Form wie $y=x^2$ kann r ≈ 0 haben, obwohl y vollständig von x abhängt (EDA F.53).",
+      "options": [
+        {
+          "id": "f",
+          "text": "Falsch"
+        },
+        {
+          "id": "t",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "f",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-ml-hidden-missing",
+      "topic_id": "missing-values",
+      "type": "single-choice",
+      "prompt": "Ein Temperatursensor liefert bei 4 % der Zeilen den Wert −300 °C. `isna().sum()` zeigt 0 fehlende Werte. Was ist korrekt?",
+      "explanation": "Preprocessing F.6: Benutzerdefinierte Werte wie −300 °C oder 0 bpm stehen oft für fehlende Werte. isna() findet nur echte NaN. −300 °C liegt unter dem absoluten Nullpunkt und ist physikalisch unmöglich.",
+      "options": [
+        {
+          "id": "o4",
+          "text": "Die Spalte muss One-Hot-codiert werden"
+        },
+        {
+          "id": "o2",
+          "text": "Es gibt keine fehlenden Werte"
+        },
+        {
+          "id": "o1",
+          "text": "−300 °C ist ein Platzhalter für fehlende Werte und muss zuerst in NaN umgewandelt werden"
+        },
+        {
+          "id": "o3",
+          "text": "−300 °C ist ein normaler Messwert für Kälte"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-ml-dropna-axis",
+      "topic_id": "missing-values",
+      "type": "single-choice",
+      "prompt": "Ein DataFrame hat 2000 Zeilen. Nur die Spalte «Bemerkung» enthält in 1950 Zeilen NaN. Welche Methode verliert am wenigsten Information?",
+      "explanation": "axis=0 würde 1950 von 2000 Zeilen löschen. axis=1 entfernt nur die eine fast leere Spalte. fillna und ffill würden 1950 Werte erfinden.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "dropna(axis=1): die fast leere Spalte entfernen"
+        },
+        {
+          "id": "o4",
+          "text": "ffill über die ganze Tabelle"
+        },
+        {
+          "id": "o2",
+          "text": "dropna(axis=0): alle Zeilen mit NaN entfernen"
+        },
+        {
+          "id": "o3",
+          "text": "fillna(42)"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-ml-rolling-vs-resample",
+      "topic_id": "data-cleaning-noise",
+      "type": "single-choice",
+      "prompt": "Messwerte kommen alle 15 Minuten. Welcher Befehl berechnet ein gleitendes Mittel über eine Stunde und behält dabei die Anzahl Zeilen?",
+      "explanation": "Eine Stunde sind 4 Werte à 15 Minuten, also rolling(4). Resampling würde die Zeilen auf eine pro Stunde reduzieren. rolling(60) zählt Werte, nicht Minuten. pd.cut ist Binning.",
+      "options": [
+        {
+          "id": "o2",
+          "text": "resample('H').mean()"
+        },
+        {
+          "id": "o1",
+          "text": "rolling(4).mean()"
+        },
+        {
+          "id": "o3",
+          "text": "rolling(60).mean()"
+        },
+        {
+          "id": "o4",
+          "text": "pd.cut(..., 4)"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-ml-binning-type",
+      "topic_id": "data-cleaning-noise",
+      "type": "single-choice",
+      "prompt": "Was passiert mit dem Datentyp, wenn man eine stetige Grösse mit pd.cut in Klassen einteilt (Binning)?",
+      "explanation": "Preprocessing F.16: Binning wandelt stetige, quantitative Daten in ordinale, qualitative Daten um. Die Klassen haben eine Reihenfolge, aber die genauen Werte gehen verloren.",
+      "options": [
+        {
+          "id": "o4",
+          "text": "Aus ordinal wird nominal"
+        },
+        {
+          "id": "o2",
+          "text": "Aus qualitativ wird quantitativ"
+        },
+        {
+          "id": "o1",
+          "text": "Aus quantitativ stetig wird qualitativ ordinal"
+        },
+        {
+          "id": "o3",
+          "text": "Der Datentyp bleibt unverändert"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-ml-scaler-leakage",
+      "topic_id": "feature-scaling",
+      "type": "single-choice",
+      "prompt": "Ein Team fittet den StandardScaler auf Train und Test zusammen und teilt erst danach auf. Was ist die Folge?",
+      "explanation": "Preprocessing F.19, F.21: Parameter wie μ und σ werden nur auf den Trainingsdaten gefittet und dann identisch auf Test und Live-Daten angewendet.",
+      "options": [
+        {
+          "id": "o4",
+          "text": "Kein Problem, solange die Labels nicht skaliert werden"
+        },
+        {
+          "id": "o1",
+          "text": "Data Leakage: Testinformation fliesst in die Vorverarbeitung, die Testleistung wird zu optimistisch"
+        },
+        {
+          "id": "o2",
+          "text": "Das Modell kann nicht mehr trainiert werden"
+        },
+        {
+          "id": "o3",
+          "text": "Die Daten werden automatisch symmetrisch"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-ml-standardscaler-shape",
+      "topic_id": "feature-scaling",
+      "type": "true-false",
+      "prompt": "Der StandardScaler macht eine stark rechtsschiefe Verteilung symmetrisch.",
+      "explanation": "Falsch. Er verschiebt und streckt nur linear. Die Form bleibt gleich. Symmetrisieren können Log-Transformation, Box-Cox bzw. PowerTransformer (Preprocessing F.25 bis F.28).",
+      "options": [
+        {
+          "id": "f",
+          "text": "Falsch"
+        },
+        {
+          "id": "t",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "f",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-ml-boxcox-negative",
+      "topic_id": "feature-scaling",
+      "type": "single-choice",
+      "prompt": "Für welche Daten ist die Box-Cox-Transformation gedacht?",
+      "explanation": "Preprocessing F.25: Box-Cox symmetrisiert positive numerische Merkmale. λ wird so gewählt, dass die Daten möglichst symmetrisch werden.",
+      "options": [
+        {
+          "id": "o4",
+          "text": "Für Uhrzeiten"
+        },
+        {
+          "id": "o2",
+          "text": "Für nominale Kategorien"
+        },
+        {
+          "id": "o1",
+          "text": "Für positive Merkmale wie Preis, Länge oder Gewicht"
+        },
+        {
+          "id": "o3",
+          "text": "Für Temperaturen mit negativen Werten"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-ml-multihot-columns",
+      "topic_id": "feature-encoding",
+      "type": "single-choice",
+      "prompt": "Das Merkmal «Lieferant» hat 20 Ausprägungen. Wie viele Spalten erzeugt Multi-Hot-Encoding, wenn jedes Label binär geschrieben wird?",
+      "explanation": "Multi-Hot nach Folie: Label ab 0 binär schreiben. $2^4=16<20\\le 32=2^5$, also braucht es 5 Bits bzw. 5 Spalten. 20 Spalten wären One-Hot.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "5"
+        },
+        {
+          "id": "o4",
+          "text": "19"
+        },
+        {
+          "id": "o2",
+          "text": "4"
+        },
+        {
+          "id": "o3",
+          "text": "20"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 3,
+      "enabled": true
+    },
+    {
+      "id": "exam-ml-cyclic-weekday",
+      "topic_id": "feature-encoding",
+      "type": "single-choice",
+      "prompt": "Wochentage (0 = Montag bis 6 = Sonntag) sollen periodisch codiert werden. Welche Darstellung ist korrekt?",
+      "explanation": "Die Periode ist 7, nicht 24. Es braucht Sinus und Cosinus, sonst bekommen zwei Tage denselben Wert. So liegen Sonntag und Montag nah beieinander.",
+      "options": [
+        {
+          "id": "o4",
+          "text": "Die Zahl d unverändert"
+        },
+        {
+          "id": "o3",
+          "text": "$\\sin\\frac{2\\pi d}{24}$ und $\\cos\\frac{2\\pi d}{24}$"
+        },
+        {
+          "id": "o2",
+          "text": "Nur $\\sin\\frac{2\\pi d}{7}$"
+        },
+        {
+          "id": "o1",
+          "text": "$\\sin\\frac{2\\pi d}{7}$ und $\\cos\\frac{2\\pi d}{7}$"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-ml-vif",
+      "topic_id": "collinearity",
+      "type": "single-choice",
+      "prompt": "Drei Features haben paarweise nur schwache Korrelationen. Trotzdem hat x₃ einen VIF von 12. Was bedeutet das?",
+      "explanation": "Preprocessing F.40, F.41: Eine paarweise Korrelation kann Multikollinearität übersehen. Der VIF misst, wie stark ein Feature durch die anderen erklärbar ist. VIF > 5 bis 10 gilt als problematisch.",
+      "options": [
+        {
+          "id": "o4",
+          "text": "x₃ muss log-transformiert werden"
+        },
+        {
+          "id": "o3",
+          "text": "Die Korrelationsmatrix ist falsch berechnet"
+        },
+        {
+          "id": "o2",
+          "text": "Kein Problem, VIF ist erst ab 50 kritisch"
+        },
+        {
+          "id": "o1",
+          "text": "x₃ lässt sich gut durch eine Kombination der anderen Features erklären (Multikollinearität)"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-ml-linear-in-theta",
+      "topic_id": "linear-regression-model",
+      "type": "true-false",
+      "prompt": "Das Modell $y=\\theta_0+\\theta_1 x+\\theta_2 x^2$ ist eine lineare Regression.",
+      "explanation": "Richtig. Linear heisst linear in den Parametern θ. $x^2$ ist einfach ein zusätzliches Feature (verallgemeinertes lineares Modell, LinReg F.22).",
+      "options": [
+        {
+          "id": "f",
+          "text": "Falsch"
+        },
+        {
+          "id": "t",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "t",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-ml-logistic-odds",
+      "topic_id": "logistic-regression-model",
+      "type": "single-choice",
+      "prompt": "Ein Modell gibt die Kündigungswahrscheinlichkeit $p=0.75$ aus. Wie gross sind die Odds?",
+      "explanation": "$\\text{Odds}=\\frac{p}{1-p}=\\frac{0.75}{0.25}=3$. Achtung: Auf der Folie LogReg F.10 steht p/(p−1), richtig ist p/(1−p). Der Logit ist $\\ln 3$.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "3"
+        },
+        {
+          "id": "o2",
+          "text": "0.75"
+        },
+        {
+          "id": "o3",
+          "text": "0.25"
+        },
+        {
+          "id": "o4",
+          "text": "1.33"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-ml-logistic-boundary",
+      "topic_id": "logistic-regression-model",
+      "type": "true-false",
+      "prompt": "Ohne zusätzliche Features ist die Entscheidungsgrenze einer logistischen Regression bei Schwelle 0.5 eine Gerade bzw. Ebene.",
+      "explanation": "Richtig. p = 0.5 genau dann, wenn der lineare Score $L=\\theta_0+\\theta_1x_1+\\dots=0$ ist. Das ist eine lineare Grenze.",
+      "options": [
+        {
+          "id": "f",
+          "text": "Falsch"
+        },
+        {
+          "id": "t",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "t",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-ml-threshold-lower",
+      "topic_id": "classification-threshold",
+      "type": "multiple-select",
+      "prompt": "Die Schwelle eines Klassifikators wird von 0.5 auf 0.3 gesenkt. Was gilt sicher?",
+      "explanation": "Bei tieferer Schwelle werden mehr Fälle positiv. TP und FP können nur steigen, FN nur sinken, also steigt der Recall oder bleibt gleich. Die Precision kann in beide Richtungen gehen. Die Schwelle wird nach dem Modell angewendet, kein neues Training nötig.",
+      "options": [
+        {
+          "id": "o2",
+          "text": "Der Recall bleibt gleich oder steigt"
+        },
+        {
+          "id": "o1",
+          "text": "Die Anzahl True Positives bleibt gleich oder steigt"
+        },
+        {
+          "id": "o3",
+          "text": "Die Anzahl False Positives bleibt gleich oder steigt"
+        },
+        {
+          "id": "o5",
+          "text": "Das Modell muss neu trainiert werden"
+        },
+        {
+          "id": "o4",
+          "text": "Die Precision steigt garantiert"
+        }
+      ],
+      "correct_answers": [
+        "o1",
+        "o2",
+        "o3"
+      ],
+      "difficulty": 3,
+      "enabled": true
+    },
+    {
+      "id": "exam-ml-metric-spam",
+      "topic_id": "performance-metrics",
+      "type": "single-choice",
+      "prompt": "Bei einem Spamfilter ist es sehr ärgerlich, wenn wichtige Geschäftsmails im Spam landen. Welche Metrik sollte vor allem hoch sein?",
+      "explanation": "Eine wichtige Mail im Spam ist ein False Positive (Modell sagt Spam, ist aber keiner). Wenige FP bedeutet hohe Precision. Bei Krankheiten wäre dagegen der Recall wichtiger (ModelTraining F.44).",
+      "options": [
+        {
+          "id": "o4",
+          "text": "MAE"
+        },
+        {
+          "id": "o3",
+          "text": "Accuracy"
+        },
+        {
+          "id": "o1",
+          "text": "Precision der Klasse Spam"
+        },
+        {
+          "id": "o2",
+          "text": "Recall der Klasse Spam"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-ml-metric-fraud",
+      "topic_id": "performance-metrics",
+      "type": "single-choice",
+      "prompt": "Bei 0.5 % Betrugsfällen erreicht ein Modell 99.4 % Accuracy. Was ist die beste Beurteilung?",
+      "explanation": "Bei stark unausgewogenen Klassen wird die Accuracy von der grossen Klasse dominiert. Das naive Modell ist hier sogar besser. Entscheidend ist, wie viele Betrugsfälle gefunden werden (Recall).",
+      "options": [
+        {
+          "id": "o4",
+          "text": "Accuracy ist bei Betrug die einzig sinnvolle Metrik"
+        },
+        {
+          "id": "o2",
+          "text": "Sehr gutes Modell, da über 99 %"
+        },
+        {
+          "id": "o3",
+          "text": "Das Modell overfittet sicher"
+        },
+        {
+          "id": "o1",
+          "text": "Kaum aussagekräftig: «immer kein Betrug» erreicht schon 99.5 %. Recall und F1 prüfen"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-ml-mae-rmse-outlier",
+      "topic_id": "performance-metrics",
+      "type": "single-choice",
+      "prompt": "Zwei Modelle haben denselben MAE. Modell B hat aber einen deutlich grösseren RMSE. Was bedeutet das?",
+      "explanation": "Der RMSE quadriert die Fehler, grosse Fehler zählen überproportional. Gleicher MAE, aber grösserer RMSE heisst: B hat Ausreisser-Fehler. Es gilt immer RMSE ≥ MAE.",
+      "options": [
+        {
+          "id": "o3",
+          "text": "Modell B hat mehr Parameter"
+        },
+        {
+          "id": "o2",
+          "text": "Modell B ist überall genauer"
+        },
+        {
+          "id": "o1",
+          "text": "Modell B macht einzelne sehr grosse Fehler"
+        },
+        {
+          "id": "o4",
+          "text": "MAE und RMSE messen dasselbe, der Unterschied ist Zufall"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-ml-learning-curve-gap",
+      "topic_id": "overfitting-underfitting",
+      "type": "single-choice",
+      "prompt": "Lernkurve über die Anzahl Trainingsbeispiele: Trainingsfehler 2 %, Validierungsfehler 18 %, die Validierungskurve sinkt noch deutlich. Was hilft am ehesten?",
+      "explanation": "Grosse Lücke zwischen Training und Validierung heisst hohe Varianz (Overfitting). Da die Validierungskurve noch sinkt, helfen mehr Daten. Mehr Features oder weniger Regularisierung würden das Overfitting verstärken.",
+      "options": [
+        {
+          "id": "o3",
+          "text": "Regularisierung abschalten"
+        },
+        {
+          "id": "o4",
+          "text": "Nichts, das Modell ist optimal"
+        },
+        {
+          "id": "o1",
+          "text": "Mehr Trainingsdaten sammeln"
+        },
+        {
+          "id": "o2",
+          "text": "Mehr Polynom-Features hinzufügen"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 3,
+      "enabled": true
+    },
+    {
+      "id": "exam-ml-occam",
+      "topic_id": "overfitting-underfitting",
+      "type": "true-false",
+      "prompt": "Nach Occam's Razor wählt man bei gleicher Genauigkeit das komplexere Modell, weil es mehr Muster erkennt.",
+      "explanation": "Falsch. Bei gleicher Genauigkeit wird das einfachere Modell bevorzugt, weil es mit grösserer Wahrscheinlichkeit gut generalisiert (ModelTraining F.29).",
+      "options": [
+        {
+          "id": "f",
+          "text": "Falsch"
+        },
+        {
+          "id": "t",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "f",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-ml-regularization-lambda",
+      "topic_id": "hyperparameters-bias-variance",
+      "type": "multiple-select",
+      "prompt": "λ einer L1-Regularisierung (Lasso) wird stark erhöht. Welche Aussagen sind typischerweise korrekt?",
+      "explanation": "Die Strafe $\\lambda\\sum|w|$ drückt viele Gewichte auf 0 (Merkmalsauswahl). Das Modell wird einfacher: mehr Bias, weniger Varianz. Der Trainingsfehler steigt dabei meist (DL Tag 1 F.92, F.93).",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Mehr Gewichte werden exakt 0"
+        },
+        {
+          "id": "o2",
+          "text": "Der Bias steigt, die Varianz sinkt"
+        },
+        {
+          "id": "o3",
+          "text": "Der Trainingsfehler sinkt"
+        },
+        {
+          "id": "o4",
+          "text": "Das Modell wird komplexer"
+        }
+      ],
+      "correct_answers": [
+        "o1",
+        "o2"
+      ],
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-ml-knn-k1",
+      "topic_id": "hyperparameters-bias-variance",
+      "type": "single-choice",
+      "prompt": "Ein k-Nearest-Neighbors-Klassifikator wird mit k = 1 eingesetzt. Welches Fehlerbild ist typisch?",
+      "explanation": "Mit k = 1 ist jeder Trainingspunkt sein eigener nächster Nachbar. Die Grenze folgt jedem Punkt, das Modell overfittet. Ein sehr grosses k wäre dagegen zu glatt (hoher Bias).",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Hohe Varianz: Trainingsfehler fast 0, Entscheidungsgrenze sehr unruhig"
+        },
+        {
+          "id": "o2",
+          "text": "Hoher Bias: Grenze sehr glatt"
+        },
+        {
+          "id": "o3",
+          "text": "Das Modell sagt immer die Mehrheitsklasse vorher"
+        },
+        {
+          "id": "o4",
+          "text": "k hat keinen Einfluss auf Bias und Varianz"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-ml-cv-feature-selection",
+      "topic_id": "cross-validation",
+      "type": "single-choice",
+      "prompt": "Ein Data Scientist wählt aus 300 Features die 15 aus, die auf dem gesamten Datensatz am stärksten mit dem Label korrelieren. Danach macht er eine 10-fache Kreuzvalidierung. Was ist das Problem?",
+      "explanation": "Jeder Schritt, der aus Daten lernt, muss innerhalb der CV nur auf den Trainingsfolds passieren, z. B. in einer Pipeline. Sonst ist die CV-Leistung zu optimistisch.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Data Leakage: Die Auswahl hat die Labels der Validierungsfolds schon gesehen"
+        },
+        {
+          "id": "o3",
+          "text": "Underfitting, weil 15 Features zu wenig sind"
+        },
+        {
+          "id": "o2",
+          "text": "Kein Problem, die CV wird ja korrekt gemacht"
+        },
+        {
+          "id": "o4",
+          "text": "10 Folds sind zu viele"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 3,
+      "enabled": true
+    },
+    {
+      "id": "exam-ml-cv-refit",
+      "topic_id": "cross-validation",
+      "type": "single-choice",
+      "prompt": "Was passiert nach dem Hyperparameter-Tuning mit k-facher Kreuzvalidierung mit dem Modell?",
+      "explanation": "ModelTraining F.65: Nach dem Tuning wird auf dem gesamten Trainingsdatensatz neu trainiert, um alle Daten zu nutzen. Danach folgt die einmalige Bewertung auf dem Testset.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Das Modell wird mit den besten Hyperparametern auf allen Trainingsdaten neu trainiert"
+        },
+        {
+          "id": "o3",
+          "text": "Man trainiert auf dem Testset weiter"
+        },
+        {
+          "id": "o4",
+          "text": "Man mittelt die Gewichte der k Modelle"
+        },
+        {
+          "id": "o2",
+          "text": "Man nimmt das Modell des besten Folds"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-ml-cv-kohavi",
+      "topic_id": "cross-validation",
+      "type": "true-false",
+      "prompt": "Laut Kohavi ist eine 10-fache Kreuzvalidierung in den meisten Fällen ein guter Kompromiss zwischen Bias und Varianz der Schätzung.",
+      "explanation": "Richtig (ModelTraining F.67). Darum steht in den Code-Beispielen cv=10.",
+      "options": [
+        {
+          "id": "f",
+          "text": "Falsch"
+        },
+        {
+          "id": "t",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "t",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-ml-timeseries-split",
+      "topic_id": "train-validation-test",
+      "type": "single-choice",
+      "prompt": "Ein Modell soll den Stromverbrauch von morgen vorhersagen. Wie sollte das Testset gewählt werden?",
+      "explanation": "Bei Zeitreihen darf keine Zukunftsinformation ins Training gelangen. Zufälliges Mischen würde mit späteren Tagen trainieren und frühere testen.",
+      "options": [
+        {
+          "id": "o2",
+          "text": "Zufällig gemischte Tage aus dem ganzen Zeitraum"
+        },
+        {
+          "id": "o3",
+          "text": "Dieselben Tage wie im Training"
+        },
+        {
+          "id": "o4",
+          "text": "Nur Wochenenden"
+        },
+        {
+          "id": "o1",
+          "text": "Ein zeitlich späterer Zeitraum, der nicht im Training vorkommt"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-ml-tree-no-scaling",
+      "topic_id": "decision-trees-model",
+      "type": "true-false",
+      "prompt": "Ein Entscheidungsbaum liefert nach dem Standardisieren der Features grundsätzlich andere Splits.",
+      "explanation": "Falsch. Jeder Split vergleicht ein Feature mit einem Schwellenwert. Standardisieren verändert die Reihenfolge der Werte nicht, also auch nicht die Aufteilung.",
+      "options": [
+        {
+          "id": "f",
+          "text": "Falsch"
+        },
+        {
+          "id": "t",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "f",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-ml-tree-gini-three",
+      "topic_id": "decision-trees-model",
+      "type": "single-choice",
+      "prompt": "Ein Knoten enthält drei Klassen, alle gleich häufig. Welche Aussage zum Gini-Index stimmt?",
+      "explanation": "$\\text{Gini}=1-3\\cdot(\\frac13)^2=\\frac23$. Das Maximum 0.5 aus den Folien gilt nur für zwei Klassen. Allgemein ist das Maximum $1-\\frac1K$.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Er ist $1-\\frac13=0.667$ und damit grösser als 0.5"
+        },
+        {
+          "id": "o2",
+          "text": "Er ist maximal 0.5, also genau 0.5"
+        },
+        {
+          "id": "o3",
+          "text": "Er ist 0, weil alle Klassen gleich häufig sind"
+        },
+        {
+          "id": "o4",
+          "text": "Er ist 1"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 3,
+      "enabled": true
+    },
+    {
+      "id": "exam-ml-voting-conflict",
+      "topic_id": "ensemble-basics",
+      "type": "single-choice",
+      "prompt": "Drei Modelle geben für Klasse A die Wahrscheinlichkeiten 0.51, 0.51 und 0.05. Was entscheiden Hard und Soft Voting?",
+      "explanation": "Hard Voting: 2 Stimmen für A gegen 1. Soft Voting: Mittelwert $\\frac{0.51+0.51+0.05}{3}\\approx0.36<0.5$, also nicht A. Soft Voting berücksichtigt, wie sicher die Modelle sind.",
+      "options": [
+        {
+          "id": "o4",
+          "text": "Beide: nicht A"
+        },
+        {
+          "id": "o2",
+          "text": "Hard: A, Soft: A"
+        },
+        {
+          "id": "o1",
+          "text": "Hard: A, Soft: nicht A"
+        },
+        {
+          "id": "o3",
+          "text": "Hard: nicht A, Soft: A"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 3,
+      "enabled": true
+    },
+    {
+      "id": "exam-ml-rf-feature-randomness",
+      "topic_id": "random-forest",
+      "type": "single-choice",
+      "prompt": "Wo wird beim Random Forest die zufällige Auswahl von m Merkmalen angewendet?",
+      "explanation": "Ensemble F.15: An jedem Knoten wird der beste Split aus einer Zufallsstichprobe von m Merkmalen gewählt. Das macht die Bäume unähnlicher.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "An jedem Knoten neu"
+        },
+        {
+          "id": "o3",
+          "text": "Einmal für den ganzen Wald"
+        },
+        {
+          "id": "o2",
+          "text": "Einmal pro Baum"
+        },
+        {
+          "id": "o4",
+          "text": "Nur beim Wurzelknoten"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-ml-rf-oob",
+      "topic_id": "random-forest",
+      "type": "true-false",
+      "prompt": "Mit den Out-of-Bag-Beobachtungen kann man den Generalisierungsfehler eines Random Forest ohne separates Validierungsset schätzen.",
+      "explanation": "Richtig. Pro Baum sind etwa 37 % der Beobachtungen nicht im Bootstrap-Sample. Mit ihnen kann der Baum wie auf unbekannten Daten bewertet werden.",
+      "options": [
+        {
+          "id": "f",
+          "text": "Falsch"
+        },
+        {
+          "id": "t",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "t",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-ml-kmeans-scale",
+      "topic_id": "k-means",
+      "type": "single-choice",
+      "prompt": "Ein k-Means-Clustering auf «Alter» (20 bis 80) und «Vermögen» (0 bis 5 Mio.) trennt fast nur nach Vermögen. Warum?",
+      "explanation": "k-Means rechnet Distanzen. Ohne Skalierung zählt das Vermögen fast allein. Gleiches Problem wie bei kNN.",
+      "options": [
+        {
+          "id": "o2",
+          "text": "k ist zu klein gewählt"
+        },
+        {
+          "id": "o1",
+          "text": "Die Distanz wird vom Feature mit der grössten Skala dominiert, die Features müssen skaliert werden"
+        },
+        {
+          "id": "o3",
+          "text": "k-Means ignoriert das Alter immer"
+        },
+        {
+          "id": "o4",
+          "text": "k-Means braucht Labels"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-ml-kmeans-convergence",
+      "topic_id": "k-means",
+      "type": "true-false",
+      "prompt": "Wenn k-Means konvergiert ist, hat es garantiert die beste mögliche Einteilung gefunden.",
+      "explanation": "Falsch. k-Means kann in einem schlechten lokalen Minimum enden, je nach Startzentren (Clustering F.5, F.6). Darum startet man mehrmals.",
+      "options": [
+        {
+          "id": "f",
+          "text": "Falsch"
+        },
+        {
+          "id": "t",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "f",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-dl-revolution",
+      "topic_id": "dl-ai-ml-dl",
+      "type": "single-choice",
+      "prompt": "Welche zwei Faktoren haben die Deep-Learning-Revolution hauptsächlich angetrieben?",
+      "explanation": "DL Tag 1 F.9: Verfügbarkeit grosser gelabelter Datensätze und massiv paralleles Rechnen mit GPUs.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Grosse gelabelte Datensätze und paralleles Rechnen mit GPUs"
+        },
+        {
+          "id": "o4",
+          "text": "Entscheidungsbäume und k-Means"
+        },
+        {
+          "id": "o2",
+          "text": "Neue Programmiersprachen und schnellere Festplatten"
+        },
+        {
+          "id": "o3",
+          "text": "Kleinere Netze und weniger Daten"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-dl-gpu-why",
+      "topic_id": "dl-ai-ml-dl",
+      "type": "single-choice",
+      "prompt": "Warum ist eine GPU für das Training neuronaler Netze schneller als eine CPU?",
+      "explanation": "DL Tag 1 F.97: CPU hat wenige schnelle Kerne für sequenzielle Aufgaben, GPU tausende langsamere Kerne für parallele Aufgaben. Netze bestehen vor allem aus parallelisierbaren Matrixoperationen.",
+      "options": [
+        {
+          "id": "o4",
+          "text": "GPUs haben mehr Systemspeicher"
+        },
+        {
+          "id": "o3",
+          "text": "GPUs brauchen keine Gleitkommazahlen"
+        },
+        {
+          "id": "o2",
+          "text": "Jeder GPU-Kern ist höher getaktet als ein CPU-Kern"
+        },
+        {
+          "id": "o1",
+          "text": "Viele einfache Kerne rechnen die Matrixoperationen parallel"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-dl-ingredients-metric",
+      "topic_id": "dl-learning-ingredients",
+      "type": "single-choice",
+      "prompt": "Ein Team trainiert mit Cross-Entropy und meldet am Schluss die Accuracy. Welche Aussage trifft zu?",
+      "explanation": "DL Tag 1 F.14: Cost Function (was optimiert wird) und Metric (wie die Güte beurteilt wird) sind verschiedene Zutaten. Accuracy ist nicht ableitbar und eignet sich nicht als Loss.",
+      "options": [
+        {
+          "id": "o3",
+          "text": "Cross-Entropy und Accuracy sind dieselbe Zutat"
+        },
+        {
+          "id": "o2",
+          "text": "Falsch: Man muss mit Accuracy trainieren"
+        },
+        {
+          "id": "o1",
+          "text": "Korrekt: Cross-Entropy ist die Cost Function, Accuracy die Metric"
+        },
+        {
+          "id": "o4",
+          "text": "Accuracy ist die Optimization Procedure"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-dl-output-activation",
+      "topic_id": "activation-functions",
+      "type": "single-choice",
+      "prompt": "Ein Netz soll aus einem Röntgenbild erkennen, welche von 4 möglichen Befunden vorhanden sind. Mehrere Befunde gleichzeitig sind möglich. Welcher Output passt?",
+      "explanation": "Softmax erzwingt Summe 1, also genau eine Klasse. Bei mehreren gleichzeitig möglichen Befunden braucht jeder Ausgang eine eigene Wahrscheinlichkeit: Sigmoid pro Neuron.",
+      "options": [
+        {
+          "id": "o3",
+          "text": "1 Neuron ohne Aktivierung"
+        },
+        {
+          "id": "o2",
+          "text": "4 Neuronen mit Softmax"
+        },
+        {
+          "id": "o1",
+          "text": "4 Neuronen mit Sigmoid"
+        },
+        {
+          "id": "o4",
+          "text": "4 Neuronen mit ReLU"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 3,
+      "enabled": true
+    },
+    {
+      "id": "exam-dl-linear-stack",
+      "topic_id": "neural-network-architecture",
+      "type": "true-false",
+      "prompt": "Ein Netz mit fünf Hidden Layers ohne nichtlineare Aktivierungsfunktion kann nichtlineare Zusammenhänge lernen, weil es tief ist.",
+      "explanation": "Falsch. Hintereinander geschaltete lineare Abbildungen ergeben wieder eine lineare Abbildung: $W_3W_2W_1x=W'x$. Erst eine nichtlineare Aktivierung bringt Nichtlinearität (DL Tag 1 F.28).",
+      "options": [
+        {
+          "id": "f",
+          "text": "Falsch"
+        },
+        {
+          "id": "t",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "f",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-dl-neuron-logreg",
+      "topic_id": "artificial-neuron",
+      "type": "single-choice",
+      "prompt": "Welchem ML-Modell entspricht ein einzelnes Neuron mit Sigmoid-Aktivierung?",
+      "explanation": "Gewichtete Summe plus Bias, dann Sigmoid: $a=\\sigma(\\sum w_ix_i+b)$. Das ist genau die logistische Regression mit Link-Funktion und logistischer Transformation.",
+      "options": [
+        {
+          "id": "o3",
+          "text": "Entscheidungsbaum"
+        },
+        {
+          "id": "o1",
+          "text": "Logistische Regression"
+        },
+        {
+          "id": "o2",
+          "text": "k-Means"
+        },
+        {
+          "id": "o4",
+          "text": "Random Forest"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-dl-backprop-dead-relu",
+      "topic_id": "backpropagation",
+      "type": "single-choice",
+      "prompt": "Ein Neuron der Vorschicht hat wegen ReLU die Aktivierung $a_k^{l-1}=0$. Was gilt für den Gradienten des Gewichts $w_{ik}^l$ in diesem Schritt?",
+      "explanation": "BP4: $\\frac{\\partial C}{\\partial w_{ik}^l}=a_k^{l-1}e_i^l$. Ist $a_k^{l-1}=0$, ist der Gradient 0.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Er ist 0, das Gewicht wird in diesem Schritt nicht verändert"
+        },
+        {
+          "id": "o4",
+          "text": "Er ist gleich dem Bias"
+        },
+        {
+          "id": "o3",
+          "text": "Er ist gleich der Lernrate"
+        },
+        {
+          "id": "o2",
+          "text": "Er ist maximal"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 3,
+      "enabled": true
+    },
+    {
+      "id": "exam-dl-sigmoid-saturation",
+      "topic_id": "vanishing-gradients",
+      "type": "single-choice",
+      "prompt": "Warum lernen die ersten Schichten eines tiefen Netzes mit Sigmoid-Aktivierungen oft kaum?",
+      "explanation": "DL Tag 1 F.71 bis F.75: Gesättigte Neuronen haben fast keine Steigung. Viele kleine Faktoren ergeben einen verschwindenden Gradienten. ReLU sättigt im positiven Bereich nicht.",
+      "options": [
+        {
+          "id": "o3",
+          "text": "Die ersten Schichten haben keine Gewichte"
+        },
+        {
+          "id": "o1",
+          "text": "Die Ableitung $\\sigma(1-\\sigma)$ ist höchstens 0.25 und wird im Rückwärtsdurchlauf vielfach multipliziert"
+        },
+        {
+          "id": "o4",
+          "text": "Die Lernrate ist in den ersten Schichten immer 0"
+        },
+        {
+          "id": "o2",
+          "text": "Sigmoid hat keine Ableitung"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-dl-batchnorm-train-test",
+      "topic_id": "batch-normalization",
+      "type": "true-false",
+      "prompt": "Batch Normalization verhält sich im Training und im Test gleich.",
+      "explanation": "Falsch. Im Training werden Mittelwert und Varianz des aktuellen Mini-Batches verwendet, im Test gespeicherte Durchschnittswerte. Die Folie nennt das eine sehr häufige Fehlerquelle (DL Tag 1 F.89).",
+      "options": [
+        {
+          "id": "f",
+          "text": "Falsch"
+        },
+        {
+          "id": "t",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "f",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-dl-batchnorm-vs-layernorm",
+      "topic_id": "batch-normalization",
+      "type": "single-choice",
+      "prompt": "Worin unterscheiden sich Batch Normalization und Layer Normalization?",
+      "explanation": "BatchNorm (DL Tag 1 F.88): Statistik je Feature über die N Beispiele im Batch. LayerNorm (Transformer F.38): Statistik je Token über die Feature-Dimensionen, unabhängig von anderen Tokens.",
+      "options": [
+        {
+          "id": "o3",
+          "text": "LayerNorm wird nur in CNNs verwendet"
+        },
+        {
+          "id": "o2",
+          "text": "Beide normieren über den Mini-Batch"
+        },
+        {
+          "id": "o4",
+          "text": "BatchNorm hat keine lernbaren Parameter"
+        },
+        {
+          "id": "o1",
+          "text": "BatchNorm normiert pro Feature über den Mini-Batch, LayerNorm pro Token über seine Features"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-dl-dropout",
+      "topic_id": "dl-regularization",
+      "type": "multiple-select",
+      "prompt": "Welche Aussagen zu Dropout sind korrekt?",
+      "explanation": "DL Tag 1 F.94, F.95: Jede binäre Maske ist ein eigenes Modell mit gemeinsamen Parametern. Die Auswahl ist temporär und nur im Training aktiv.",
+      "options": [
+        {
+          "id": "o2",
+          "text": "Die Dropout-Wahrscheinlichkeit ist ein Hyperparameter, 0.5 ist üblich"
+        },
+        {
+          "id": "o4",
+          "text": "Dropout entfernt Neuronen dauerhaft aus dem Modell"
+        },
+        {
+          "id": "o3",
+          "text": "Dropout wirkt wie ein Ensemble vieler Teilnetze"
+        },
+        {
+          "id": "o1",
+          "text": "In jedem Forward Pass werden zufällig Neuronen auf null gesetzt"
+        },
+        {
+          "id": "o5",
+          "text": "Dropout ist bei der Vorhersage aktiv"
+        }
+      ],
+      "correct_answers": [
+        "o1",
+        "o2",
+        "o3"
+      ],
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-dl-pytorch-graph",
+      "topic_id": "forward-backward-pass",
+      "type": "single-choice",
+      "prompt": "Ein Team verarbeitet Sätze sehr unterschiedlicher Länge und will Zwischenwerte mit dem Python-Debugger prüfen. Welcher Berechnungsgraph passt besser?",
+      "explanation": "DL Tag 1 F.126: Der dynamische Graph wird in jeder Iteration neu aufgebaut, ist flexibel und leicht zu debuggen. Der statische Graph braucht feste Grössen und ist bei variabler Länge (NLP) unpraktisch.",
+      "options": [
+        {
+          "id": "o4",
+          "text": "Beide sind gleich geeignet"
+        },
+        {
+          "id": "o3",
+          "text": "Kein Graph"
+        },
+        {
+          "id": "o1",
+          "text": "Dynamischer Graph (PyTorch)"
+        },
+        {
+          "id": "o2",
+          "text": "Statischer Graph (klassisches TensorFlow)"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-dl-filter-depth",
+      "topic_id": "cnn-architecture",
+      "type": "single-choice",
+      "prompt": "Conv-Schicht 1 erzeugt aus einem RGB-Bild 16 Feature Maps. Welche Form haben die 3 × 3-Filter der zweiten Conv-Schicht?",
+      "explanation": "Ein Filter erstreckt sich immer über die gesamte Tiefe des Inputs (CV F.17). Der Input der zweiten Schicht hat 16 Feature Maps, also Tiefe 16.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "3 × 3 × 16"
+        },
+        {
+          "id": "o2",
+          "text": "3 × 3 × 3"
+        },
+        {
+          "id": "o4",
+          "text": "3 × 3 × 32"
+        },
+        {
+          "id": "o3",
+          "text": "3 × 3 × 1"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-dl-conv-properties",
+      "topic_id": "cnn-convolution",
+      "type": "multiple-select",
+      "prompt": "Welche Aussagen zur Convolution sind korrekt?",
+      "explanation": "Ein Filter verrechnet alle Kanäle zu einer einzigen Feature Map. Filter werden gelernt (CV F.4). Gemeinsame Gewichte machen die Erkennung ortsunabhängig.",
+      "options": [
+        {
+          "id": "o4",
+          "text": "Die räumliche Struktur des Bildes bleibt erhalten"
+        },
+        {
+          "id": "o3",
+          "text": "Ein Filter erzeugt pro Farbkanal eine eigene Feature Map"
+        },
+        {
+          "id": "o5",
+          "text": "Die Filter müssen von Hand programmiert werden"
+        },
+        {
+          "id": "o1",
+          "text": "Alle Neuronen einer Feature Map teilen dieselben Gewichte"
+        },
+        {
+          "id": "o2",
+          "text": "Die Anzahl Filter bestimmt die Tiefe des Outputs"
+        }
+      ],
+      "correct_answers": [
+        "o1",
+        "o2",
+        "o4"
+      ],
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-dl-pooling-depth",
+      "topic_id": "pooling-resnet",
+      "type": "true-false",
+      "prompt": "Ein 2 × 2 Max Pooling mit Stride 2 halbiert Höhe und Breite und reduziert auch die Anzahl Feature Maps.",
+      "explanation": "Falsch. Pooling arbeitet pro Feature Map und verkleinert nur Höhe und Breite. Die Tiefe bleibt gleich, und Pooling hat keine Parameter.",
+      "options": [
+        {
+          "id": "f",
+          "text": "Falsch"
+        },
+        {
+          "id": "t",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "f",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-dl-resnet-skip",
+      "topic_id": "pooling-resnet",
+      "type": "single-choice",
+      "prompt": "Warum lässt sich ein ResNet mit sehr vielen Schichten trainieren?",
+      "explanation": "Die Ableitung ist $F'(x)+1$. Auch bei kleinem $F'(x)$ verschwindet der Gradient nicht. Dazu stabilisiert Batch Normalization das Training (CV F.47).",
+      "options": [
+        {
+          "id": "o4",
+          "text": "Es nutzt Sigmoid in allen Schichten"
+        },
+        {
+          "id": "o1",
+          "text": "Skip-Verbindungen $y=F(x)+x$ lassen den Gradienten direkt zurückfliessen"
+        },
+        {
+          "id": "o3",
+          "text": "Es hat keine Gewichte"
+        },
+        {
+          "id": "o2",
+          "text": "Es verwendet nur Pooling-Schichten"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-dl-rnn-variant",
+      "topic_id": "sequence-modeling",
+      "type": "single-choice",
+      "prompt": "Ein Modell erzeugt zu einem Foto einen beschreibenden Satz. Welche RNN-Variante ist das?",
+      "explanation": "Seq2Seq F.12: Bildbeschriftung bekommt einen Input (Bild) und erzeugt eine Folge von Wörtern. Sentiment-Klassifikation wäre many-to-one.",
+      "options": [
+        {
+          "id": "o2",
+          "text": "Many-to-one"
+        },
+        {
+          "id": "o1",
+          "text": "One-to-many"
+        },
+        {
+          "id": "o3",
+          "text": "Many-to-many synchron"
+        },
+        {
+          "id": "o4",
+          "text": "One-to-one"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-dl-rnn-shared",
+      "topic_id": "rnn-basics",
+      "type": "true-false",
+      "prompt": "Ein RNN lernt für jeden Zeitschritt eine eigene Gewichtsmatrix.",
+      "explanation": "Falsch. In jedem Zeitschritt werden dieselbe Funktion $f_W$ und derselbe Parametersatz W verwendet (Seq2Seq F.9, F.11). Darum kann ein RNN Sequenzen beliebiger Länge verarbeiten.",
+      "options": [
+        {
+          "id": "f",
+          "text": "Falsch"
+        },
+        {
+          "id": "t",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "f",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-dl-bptt-product",
+      "topic_id": "rnn-bptt",
+      "type": "single-choice",
+      "prompt": "Warum lernt ein einfaches RNN langfristige Abhängigkeiten schlecht?",
+      "explanation": "Seq2Seq F.25: Je grösser der Abstand, desto länger das Produkt. Die Verluste werden dagegen summiert, nicht multipliziert.",
+      "options": [
+        {
+          "id": "o4",
+          "text": "Die Softmax am Ausgang verhindert es"
+        },
+        {
+          "id": "o2",
+          "text": "Die Verluste der Zeitschritte werden multipliziert"
+        },
+        {
+          "id": "o1",
+          "text": "Bei BPTT entsteht ein langes Produkt von Faktoren $\\frac{\\partial h_t}{\\partial h_{t-1}}$, das bei kleinen Faktoren verschwindet"
+        },
+        {
+          "id": "o3",
+          "text": "Das RNN hat keine Gewichte"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-dl-lstm-gates",
+      "topic_id": "lstm",
+      "type": "multiple-select",
+      "prompt": "Welche Aussagen zum LSTM sind korrekt?",
+      "explanation": "$c_t=f_t\\odot c_{t-1}+i_t\\odot\\tilde c_t$. Mit $f\\approx1$ bleibt der alte Zustand erhalten und der Gradient fliesst über viele Schritte. Das LSTM rechnet aber weiterhin Schritt für Schritt.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Die Gates nutzen Sigmoid-Werte zwischen 0 und 1"
+        },
+        {
+          "id": "o4",
+          "text": "Ein Forget-Gate-Wert von 1 bedeutet: alles vergessen"
+        },
+        {
+          "id": "o3",
+          "text": "Der Zellzustand wird additiv aktualisiert"
+        },
+        {
+          "id": "o5",
+          "text": "Das LSTM ist besser parallelisierbar als der Transformer"
+        },
+        {
+          "id": "o2",
+          "text": "Ein Forget-Gate-Wert von 1 bedeutet: Information behalten"
+        }
+      ],
+      "correct_answers": [
+        "o1",
+        "o2",
+        "o3"
+      ],
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-dl-bottleneck",
+      "topic_id": "seq2seq-encoder-decoder",
+      "type": "single-choice",
+      "prompt": "Ein Seq2Seq-Modell ohne Attention übersetzt kurze Sätze gut, lange Sätze aber schlecht. Was ist die Hauptursache?",
+      "explanation": "Transformer F.15, F.17: Attention löst genau dieses Engpassproblem, weil der Decoder für jedes Wort neu auf alle Encoder-Zustände zugreifen kann.",
+      "options": [
+        {
+          "id": "o3",
+          "text": "Der Encoder ist zu schnell"
+        },
+        {
+          "id": "o1",
+          "text": "Der ganze Quellsatz muss in einen einzigen Kontextvektor fester Grösse passen"
+        },
+        {
+          "id": "o2",
+          "text": "Der Decoder hat keine Softmax"
+        },
+        {
+          "id": "o4",
+          "text": "Das Vokabular ist zu gross"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-dl-attention-year",
+      "topic_id": "classic-attention",
+      "type": "true-false",
+      "prompt": "Der Attention-Mechanismus wurde erst 2017 zusammen mit dem Transformer erfunden.",
+      "explanation": "Falsch. Attention wurde 2014 von Bahdanau, Cho und Bengio für RNN-basierte Übersetzung eingeführt. Der Transformer (2017) baute darauf auf.",
+      "options": [
+        {
+          "id": "f",
+          "text": "Falsch"
+        },
+        {
+          "id": "t",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "f",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-dl-static-embedding",
+      "topic_id": "text-representations",
+      "type": "single-choice",
+      "prompt": "Das Wort «Schloss» soll im Satz «Das Schloss am Velo klemmt» anders dargestellt werden als in «Das Schloss liegt auf dem Hügel». Was braucht es?",
+      "explanation": "Transformer F.13: Statische Embeddings haben genau einen Vektor pro Wort. Erst kontextabhängige Repräsentationen unterscheiden die Bedeutungen.",
+      "options": [
+        {
+          "id": "o3",
+          "text": "One-Hot-Encoding"
+        },
+        {
+          "id": "o1",
+          "text": "Eine kontextabhängige (universelle) Sprachrepräsentation, z. B. aus einem Transformer"
+        },
+        {
+          "id": "o4",
+          "text": "Eine grössere Embedding-Tabelle"
+        },
+        {
+          "id": "o2",
+          "text": "Ein statisches Word Embedding wie Word2vec"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-dl-qkv-scaling",
+      "topic_id": "self-attention",
+      "type": "single-choice",
+      "prompt": "Warum werden die Scores in der Self-Attention durch $\\sqrt{d_k}$ geteilt?",
+      "explanation": "Transformer F.29: Grosse Scores machen die Softmax sehr spitz, ihr Gradient wird klein. Im Paper ist $d_k=64$, man teilt also durch 8.",
+      "options": [
+        {
+          "id": "o3",
+          "text": "Damit die Attention-Matrix kleiner wird"
+        },
+        {
+          "id": "o4",
+          "text": "Damit die Reihenfolge der Tokens bekannt ist"
+        },
+        {
+          "id": "o2",
+          "text": "Damit die Gewichte negativ werden"
+        },
+        {
+          "id": "o1",
+          "text": "Damit die Skalarprodukte bei grossem $d_k$ nicht zu gross werden und die Softmax nicht sättigt"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-dl-attention-order",
+      "topic_id": "positional-information",
+      "type": "true-false",
+      "prompt": "Ohne Positional Encoding liefert Self-Attention für «Hund beisst Mann» und «Mann beisst Hund» für jedes Wort dieselben Vektoren, nur in anderer Reihenfolge.",
+      "explanation": "Richtig. Self-Attention ist reihenfolgeblind. Darum addiert der Transformer zu jedem Embedding einen Positionsvektor (Transformer F.39).",
+      "options": [
+        {
+          "id": "f",
+          "text": "Falsch"
+        },
+        {
+          "id": "t",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "t",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-dl-multihead-concat",
+      "topic_id": "multi-head-attention",
+      "type": "single-choice",
+      "prompt": "Wie werden im Original-Transformer die Ausgaben der 8 Heads mit je $d_v=64$ kombiniert?",
+      "explanation": "Transformer F.31: $8\\cdot64=512=d_o$. Die verkettete Matrix wird mit der lernbaren Matrix $W_O$ projiziert, damit die Dimension gleich bleibt wie am Eingang.",
+      "options": [
+        {
+          "id": "o4",
+          "text": "Nur der beste Head wird verwendet"
+        },
+        {
+          "id": "o3",
+          "text": "Addieren zu 64 Features"
+        },
+        {
+          "id": "o2",
+          "text": "Mitteln zu 64 Features"
+        },
+        {
+          "id": "o1",
+          "text": "Konkatenieren zu 512 Features, danach Projektion mit $W_O$"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "exam-dl-transformer-facts",
+      "topic_id": "transformer-architecture",
+      "type": "multiple-select",
+      "prompt": "Welche Aussagen zum Original-Transformer sind korrekt?",
+      "explanation": "Transformer F.36, F.45, F.46. Die Maske braucht nur der Decoder, weil er Text erzeugt. Das Positional Encoding wird addiert, nicht angehängt.",
+      "options": [
+        {
+          "id": "o4",
+          "text": "Der Encoder braucht eine kausale Maske"
+        },
+        {
+          "id": "o2",
+          "text": "In der Encoder-Decoder-Attention kommen die Queries aus dem Decoder"
+        },
+        {
+          "id": "o3",
+          "text": "Das Feed-Forward-Netz arbeitet tokenweise"
+        },
+        {
+          "id": "o5",
+          "text": "Das Positional Encoding wird an das Embedding angehängt"
+        },
+        {
+          "id": "o1",
+          "text": "Encoder und Decoder bestehen je aus N = 6 gleichen Schichten"
+        }
+      ],
+      "correct_answers": [
+        "o1",
+        "o2",
+        "o3"
+      ],
+      "difficulty": 2,
+      "enabled": true
+    }
+  ]
+}

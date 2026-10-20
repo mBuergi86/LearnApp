@@ -4,12 +4,12 @@
   "module_id": "ml-preprocessing",
   "title": "Kategoriale Features encodieren",
   "priority": "core",
-  "summary": "Kategoriale Merkmale werden abhängig von ihrer Ordnung als ordinale, nominale, one-hot-, multi-hot- oder periodische Repräsentation codiert.",
+  "summary": "Kategoriale Merkmale werden je nach Bedeutung ordinal, One-Hot, Multi-Hot (binär nach Folie) oder periodisch codiert.",
   "explanation": [
     "Modelle benötigen numerisch dargestellte Inputs. Encoding stellt Kategorien als Zahlen oder Vektoren dar. Die Darstellung darf keine fachlich falschen Beziehungen behaupten.",
     "Ordinale Kategorien besitzen eine Reihenfolge. niedrig/mittel/hoch kann als 0/1/2 codiert werden, aber eine lineare Rechenregel nimmt dann auch gleiche Abstände an. Das muss zur Aufgabe passen.",
     "Nominale Kategorien wie rot/grün/blau besitzen keine Reihenfolge. One-Hot-Encoding erzeugt eine Indikatorspalte je Kategorie; genau eine ist 1. Zahlen-IDs 1/2/3 könnten dagegen eine künstliche Ordnung und Distanz nahelegen.",
-    "Multi-Hot erlaubt mehrere gleichzeitig zutreffende Eigenschaften, etwa mehrere Sprachen einer Person. Zyklische Merkmale wie Uhrzeit benötigen eine Darstellung, die 23 Uhr und 0 Uhr als nah behandelt.",
+    "Multi-Hot nach den Folien (Preprocessing F.35 bis F.37): Jede Kategorie erhält zuerst ein aufsteigendes Label ab 0. Dieses Label wird als Binärzahl geschrieben, jedes Bit wird eine eigene Spalte. Fünf Berufe brauchen so nur drei Spalten: Nurse=000, Teacher=001, Pilot=010, Advocate=011, Engineer=100. Achtung: Ausserhalb des Kurses bezeichnet «Multi-Hot» oft einen Vektor mit mehreren Einsen für mehrere gleichzeitig zutreffende Kategorien. In der Prüfung gilt die Folie. Zyklische Merkmale wie die Uhrzeit benötigen eine Darstellung, die 23 Uhr und 0 Uhr als nah behandelt.",
     "Der Encoder wird auf Training angepasst. Die Behandlung unbekannter Kategorien und die Spaltenreihenfolge müssen festgelegt sein. One-Hot-Spalten mit zusätzlichem Intercept können in linearer Regression redundant sein; eine Referenzkategorie vermeidet die exakte Abhängigkeit."
   ],
   "sources": [
@@ -33,12 +33,12 @@
   "initial_status": "unlearned",
   "sort_order": 4,
   "steps": [
-    "Nominal, ordinal oder Mehrfachzuordnung bestimmen.",
+    "Nominal oder ordinal bestimmen und die Anzahl Kategorien prüfen.",
     "Passendes Encoding wählen.",
     "Vokabular und Spalten auf Training festlegen.",
     "Unbekannte Kategorien und gleiche Spaltenordnung sicher behandeln."
   ],
-  "example": "Eigener Rechenfall: Kategorien [rot,grün,blau]. grün wird One-Hot zu (0,1,0); Kategorie-ID 1 ist nur ein Index. Für eine Person mit Deutsch und Englisch aus [Deutsch,Französisch,Englisch] ergibt Multi-Hot (1,0,1). Für die Stunde h kann (sin(2πh/24),cos(2πh/24)) verwendet werden: h=0 liefert (0,1), h=12 ungefähr (0,−1).",
+  "example": "Eigener Rechenfall: Kategorien [rot,grün,blau]. grün wird One-Hot zu (0,1,0); Kategorie-ID 1 ist nur ein Index. Multi-Hot nach Folie: Der Beruf Pilot hat das Label 2 und wird zu (0,1,0) in den drei Bit-Spalten. Für die Stunde h kann (sin(2πh/24),cos(2πh/24)) verwendet werden: h=0 liefert (0,1), h=12 ungefähr (0,−1).",
   "formula": {
     "expression": "One-Hot: v_j=1 für zutreffende Kategorie, sonst 0\nZyklisch: (sin(2πh/P),cos(2πh/P))",
     "meaning": "Zyklische Codierung verbindet Anfang und Ende einer Periode.",
@@ -95,7 +95,7 @@
     },
     {
       "term": "One-Hot und Multi-Hot",
-      "note": "Genau eine Kategorie gegenüber mehreren gleichzeitig möglichen Eigenschaften."
+      "note": "One-Hot: K Spalten, genau eine 1. Multi-Hot nach Folie: Label binär, ⌈log₂K⌉ Spalten; ein Code kann auch 000 sein."
     }
   ],
   "illustrations": [
@@ -105,7 +105,7 @@
       "caption": "Erst die Bedeutung entscheidet über die Codierung.",
       "labels": [
         "Kategorie verstehen",
-        "Ordnung oder Mehrfachlabel?",
+        "Ordnung? Wie viele Kategorien?",
         "Encoding auf Training lernen",
         "Gleiche Spalten für neue Daten"
       ]

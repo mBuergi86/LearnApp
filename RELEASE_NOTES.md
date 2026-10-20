@@ -1,5 +1,19 @@
 # Release Notes
 
+## v1.8.0
+
+- 53 calculation questions disabled; 10 typical ones kept and rewritten with
+  real LaTeX in context, prompt and explanation
+- 67 new exam-style questions (scenarios, pitfalls, comparisons) across all
+  ML and DL topics
+- Inline math (`$...$`) is typeset locally as MathML in practice, exam,
+  results and topic checks; no CSP change
+- Larger text for questions, options, given data and explanations
+- Multi-Hot encoding corrected to the binary course definition
+
+Pools (all/core): ML 139/122, DL/DS 131/105. The database schema stays at
+version 7; no migration. Details are in [RELEASE-1.8.0.md](RELEASE-1.8.0.md).
+
 ## v1.7.1
 
 - Fixed the login error `403 Fremde Herkunft abgelehnt.` (foreign origin

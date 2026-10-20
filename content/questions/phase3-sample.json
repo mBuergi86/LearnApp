@@ -264,7 +264,7 @@
       "context": "Ein einzelner Gradient-Descent-Schritt",
       "explanation": "Der ganze Schritt ist η·Gradient=0.1·8=0.8. Diesen vom alten Parameter abziehen: 4−0.8=3.2. Der Gradient 8 und die Änderung 0.8 sind nicht der neue Parameter. Ein Plus vor dem Schritt würde lokal die entgegengesetzte Richtung wählen.",
       "difficulty": 2,
-      "enabled": true,
+      "enabled": false,
       "options": [
         {
           "id": "value-32",
@@ -385,7 +385,7 @@
       "prompt": "Wie viele Komponenten hat das Skalarprodukt eines 5 × 5 × 3 Filters?",
       "explanation": "Der Filter umfasst 5 · 5 räumliche Positionen und alle 3 RGB-Kanäle: 5 · 5 · 3 = 75.",
       "difficulty": 1,
-      "enabled": true,
+      "enabled": false,
       "options": [
         {
           "id": "components-25",

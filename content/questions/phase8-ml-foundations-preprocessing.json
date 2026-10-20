@@ -88,7 +88,7 @@
       "prompt": "Welche Vorhersage liefert das Modell für 90 m²?",
       "explanation": "Zuerst 2000·90=180000, dann Bias 50000 addieren: ŷ=230000 CHF. 180000 lässt den Bias weg; 250000 entspricht 100 statt 90 m²; 90000 verwechselt Input und Zielskala. Fläche ist Input, die beiden Koeffizienten sind Modellparameter.",
       "difficulty": 2,
-      "enabled": true,
+      "enabled": false,
       "options": [
         {
           "id": "answer-1",
@@ -117,7 +117,7 @@
       "prompt": "Wie viele Featurewerte enthält X?",
       "explanation": "X hat 8 Zeilen und 3 Spalten, also 8·3=24 Featurewerte. 8 zählt Fälle, 3 zählt Spalten; 11 addiert Dimensionen statt Einträge zu zählen. Die acht Labels zählen nicht zu X.",
       "difficulty": 2,
-      "enabled": true,
+      "enabled": false,
       "options": [
         {
           "id": "answer-1",
@@ -319,7 +319,7 @@
       "prompt": "Wie gross ist der Anteil fehlender Alterswerte?",
       "explanation": "Anteil=18/120=0.15, also 15 %. 18 % setzt die Fallzahl mit dem Prozentwert gleich; 6.67 % verwendet eine andere Rechnung; 85 % ist der Anteil vorhandener Werte. Vor einer Behandlung werden Ausmass und Gründe untersucht.",
       "difficulty": 2,
-      "enabled": true,
+      "enabled": false,
       "options": [
         {
           "id": "answer-1",
@@ -376,7 +376,7 @@
       "prompt": "Welche Populationsvarianz ergibt sich, auf drei Dezimalstellen gerundet?",
       "explanation": "Mittelwert=3. Abweichungen −2,0,2; Quadrate 4,0,4. Varianz=8/3≈2.667. 4.000 wäre die Stichprobenvarianz mit Nenner 2; 1.633 die Populationsstandardabweichung; 2.000 ist keine dieser verlangten Varianzen.",
       "difficulty": 2,
-      "enabled": true,
+      "enabled": false,
       "options": [
         {
           "id": "answer-1",
@@ -433,7 +433,7 @@
       "prompt": "Wie gross ist der Korrelationskoeffizient?",
       "explanation": "Alle Punkte liegen auf y=3x, einer exakt steigenden Geraden. r=1. Die Steigung 3 ist nicht r; r liegt immer zwischen −1 und 1. 0 würde keinen linearen Trend anzeigen, −1 einen exakt fallenden. Auch r=1 beweist keine Ursache.",
       "difficulty": 2,
-      "enabled": true,
+      "enabled": false,
       "options": [
         {
           "id": "answer-1",
@@ -592,7 +592,7 @@
       "prompt": "Welcher gefilterte Wert entsteht?",
       "explanation": "Sortieren ergibt (3,5,99), der mittlere Wert ist 5. 35.667 wäre ungefähr der Mittelwert; 99 ist das Maximum und 3 das Minimum. Der Median ist robust gegen eine einzelne Spitze, beweist aber nicht, dass 99 ein Messfehler war.",
       "difficulty": 2,
-      "enabled": true,
+      "enabled": false,
       "options": [
         {
           "id": "answer-1",
@@ -754,26 +754,26 @@
       "id": "ml-encoding-multihot",
       "topic_id": "feature-encoding",
       "type": "single-choice",
-      "prompt": "Wann ist Multi-Hot-Encoding passend?",
-      "explanation": "Multi-Hot passt, wenn mehrere Kategorien gleichzeitig zutreffen: Deutsch und Englisch kann (1,0,1) sein. One-Hot erlaubt im gewöhnlichen Fall genau eine aktive Kategorie. Die Wahl richtet sich nach Bedeutung, nicht danach, welches Encoding kürzer aussieht.",
+      "prompt": "Wie codiert Multi-Hot-Encoding im Kurs das nominale Merkmal «Beruf» mit fünf Ausprägungen?",
+      "explanation": "Preprocessing F.35 bis F.37: Nurse 0, Teacher 1, Pilot 2, Advocate 3, Engineer 4. Binär: 000, 001, 010, 011, 100. Für $K=5$ reichen $\\lceil\\log_2 5\\rceil=3$ Spalten. Antwort b ist One-Hot, c wäre eine falsche Ordinalcodierung, d ist das periodische Encoding. Ausserhalb des Kurses heisst «Multi-Hot» oft «mehrere Einsen für mehrere Kategorien». In der Prüfung gilt die Folie.",
       "difficulty": 2,
       "enabled": true,
       "options": [
         {
           "id": "a",
-          "text": "Wenn mehrere Kategorien zugleich zutreffen können"
+          "text": "Jede Ausprägung erhält ein Label ab 0, das Label wird binär geschrieben und jedes Bit ist eine eigene Spalte"
         },
         {
           "id": "b",
-          "text": "Wenn ein Feature immer kontinuierlich ist"
+          "text": "Fünf Spalten, in jeder Zeile genau eine 1"
         },
         {
           "id": "c",
-          "text": "Wenn keine Daten vorhanden sind"
+          "text": "Eine einzige Spalte mit den Werten 1 bis 5"
         },
         {
           "id": "d",
-          "text": "Wenn der Testsetanteil berechnet wird"
+          "text": "Zwei Spalten mit Sinus und Cosinus des Labels"
         }
       ],
       "correct_answer": "a"
@@ -785,7 +785,7 @@
       "prompt": "Welcher Vektor gehört zu h=0?",
       "explanation": "Bei h=0 ist der Winkel 0: sin(0)=0 und cos(0)=1. Daher (0,1). (0,0) übersieht den Cosinus; (1,0) vertauscht die Werte; (1,1) setzt Sinus fälschlich auf 1. Die zwei Komponenten halten Tagesanfang und -ende geometrisch nah.",
       "difficulty": 2,
-      "enabled": true,
+      "enabled": false,
       "options": [
         {
           "id": "answer-1",
@@ -842,7 +842,7 @@
       "prompt": "Welche Vorhersage ergibt sich bei x₁=3?",
       "explanation": "x₂=6, deshalb ŷ=1·3+2·6=15. Effektives Gewicht auf x₁ ist 1+2·2=5. 5 lässt die Multiplikation mit x₁ weg; 9 verwechselt Feature oder Gewicht; 18 verwendet zwei Beiträge von 9. Abhängige Features können denselben effektiven Zusammenhang mit anderen Einzelgewichten darstellen.",
       "difficulty": 2,
-      "enabled": true,
+      "enabled": false,
       "options": [
         {
           "id": "answer-1",

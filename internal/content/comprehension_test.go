@@ -23,7 +23,7 @@ func TestEveryTopicHasComprehensionWithoutChangingExamQuestions(t *testing.T) {
 			}
 		}
 	}
-	if active != 256 {
+	if active != 270 {
 		t.Fatalf("exam questions=%d", active)
 	}
 	for _, topic := range catalog.Topics {
@@ -40,7 +40,7 @@ func TestEveryTopicHasComprehensionWithoutChangingExamQuestions(t *testing.T) {
 			}
 		})
 	}
-	if totalChecks != 68 {
+	if totalChecks != 84 {
 		t.Fatalf("checks=%d", totalChecks)
 	}
 	if len(ComprehensionQuestions(catalog, "does-not-exist")) != 0 {

@@ -1,5 +1,5 @@
 (function initializeUIState(scope) {
-  const APP_VERSION = '1.7.1';
+  const APP_VERSION = '1.8.0';
   const AUTH = Object.freeze({ UNKNOWN: 'unknown', AUTHENTICATED: 'authenticated', UNAUTHENTICATED: 'unauthenticated' });
   const THEMES = Object.freeze(['system', 'light', 'dark']);
 

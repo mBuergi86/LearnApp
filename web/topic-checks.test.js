@@ -3,6 +3,7 @@ const assert = require('node:assert/strict');
 const {readFileSync} = require('node:fs');
 const {join} = require('node:path');
 const vm = require('node:vm');
+const {inline: richText} = require('./formula-renderer.js');
 const {topicNavigation} = require('./ui-state.js');
 const script = readFileSync(join(__dirname, 'app.js'), 'utf8');
 const start = script.indexOf('async function loadTopicChecks(');
@@ -11,7 +12,7 @@ const loader = script.slice(start, end);
 const escapeHTML = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
 function sandbox(requestJSON) {
-  const context = vm.createContext({requestJSON, escapeHTML, optionText:(question,id)=>question.options.find(o=>o.id===id)?.text});
+  const context = vm.createContext({requestJSON, escapeHTML, richText, optionText:(question,id)=>question.options.find(o=>o.id===id)?.text});
   vm.runInContext(loader, context);
   return context;
 }

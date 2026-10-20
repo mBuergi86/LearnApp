@@ -303,7 +303,7 @@
       "prompt": "Wie viele Fälle werden positiv vorhergesagt?",
       "explanation": "0.8 und 0.5 erfüllen ≥0.5; 0.3 nicht. Also zwei positive Entscheidungen. Nur einen zu zählen würde die ausdrücklich eingeschlossene Gleichheit übersehen. Drei würde die Schwelle ignorieren; null alle Vergleiche umkehren. Ohne wahre Labels wissen wir noch nicht, ob die Entscheidungen richtig sind.",
       "difficulty": 2,
-      "enabled": true,
+      "enabled": false,
       "options": [
         {
           "id": "answer-1",
@@ -624,7 +624,7 @@
       "topic_id": "confusion-matrix",
       "type": "numeric-choice",
       "prompt": "Wie gross ist der Recall?",
-      "explanation": "Tatsächlich positive Fälle sind TP+FN=16; davon sind 12 erkannt. Recall=12/16=0.75. 0.8 ist Precision=12/(12+3); 0.825 Accuracy=33/40; 0.3 teilt TP durch alle Fälle. Der Nenner muss zur Frage passen.",
+      "explanation": "$\\text{Recall}=\\frac{TP}{TP+FN}=\\frac{12}{12+4}=\\frac{12}{16}=0.75$. Der Nenner sind die tatsächlich Kranken. 0.8 ist die Precision $\\frac{12}{12+3}$, 0.825 die Accuracy $\\frac{33}{40}$.",
       "difficulty": 2,
       "enabled": true,
       "options": [
@@ -646,7 +646,7 @@
         }
       ],
       "correct_answer": "answer-2",
-      "context": "Positive Klasse ist «krank». TP=12,FP=3,FN=4,TN=21. Recall misst erkannte unter tatsächlich positiven Fällen."
+      "context": "Positive Klasse ist «krank». $TP=12,\\ FP=3,\\ FN=4,\\ TN=21$."
     },
     {
       "id": "ml-performance-regression",
@@ -680,8 +680,8 @@
       "id": "ml-performance-f1",
       "topic_id": "performance-metrics",
       "type": "numeric-choice",
-      "prompt": "Welcher F1-Score ergibt sich, auf drei Dezimalstellen gerundet?",
-      "explanation": "2TP=12, Nenner=12+2+4=18, F1=12/18≈0.667. 0.750 ist Precision; 0.600 ist Recall; 0.675 ihr arithmetischer Mittelwert. F1 verwendet das harmonische Mittel. TN ist für diese Formel nicht erforderlich.",
+      "prompt": "Wie gross ist der F1-Score (drei Dezimalstellen)?",
+      "explanation": "$P=\\frac{6}{8}=0.75$, $R=\\frac{6}{10}=0.6$. $F_1=\\frac{2PR}{P+R}=\\frac{2\\cdot0.75\\cdot0.6}{1.35}=0.667$. Kurzform: $F_1=\\frac{2TP}{2TP+FP+FN}=\\frac{12}{18}$. 0.675 ist das arithmetische Mittel, F1 nutzt das harmonische Mittel.",
       "difficulty": 2,
       "enabled": true,
       "options": [
@@ -703,7 +703,7 @@
         }
       ],
       "correct_answer": "answer-4",
-      "context": "Ein Klassifikator hat TP=6,FP=2,FN=4. F1=2TP/(2TP+FP+FN)."
+      "context": "Ein Klassifikator hat $TP=6,\\ FP=2,\\ FN=4$."
     },
     {
       "id": "ml-hyperparameter-definition",
