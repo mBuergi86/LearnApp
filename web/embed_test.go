@@ -285,7 +285,7 @@ func TestInitialAuthStateKeepsProtectedShellHiddenUntilServerResult(t *testing.T
 		t.Fatal(err)
 	}
 	index, script, styles := string(indexBytes), string(scriptBytes), string(styleBytes)
-	for _, marker := range []string{`<body data-auth-state="unknown">`, `class="auth-loading"`, `Sitzung wird geprüft`, `/ui-state.js?v=17.1`} {
+	for _, marker := range []string{`<body data-auth-state="unknown">`, `class="auth-loading"`, `Sitzung wird geprüft`, `/ui-state.js?v=18.0`} {
 		if !strings.Contains(index, marker) {
 			t.Fatalf("initial HTML missing %q", marker)
 		}
@@ -377,17 +377,17 @@ func TestVersionThirteenFooterUsesCentralVersionSource(t *testing.T) {
 		t.Fatal(err)
 	}
 	index, script, state, styles := string(indexBytes), string(scriptBytes), string(stateBytes), string(stylesBytes)
-	for _, marker := range []string{"?v=17.1", `id="app-footer"`, `id="app-version"`, `aria-label="Anwendungsversion"`} {
+	for _, marker := range []string{"?v=18.0", `id="app-footer"`, `id="app-version"`, `aria-label="Anwendungsversion"`} {
 		if !strings.Contains(index, marker) {
-			t.Fatalf("v1.7.1 footer metadata is missing %q", marker)
+			t.Fatalf("v1.8.0 footer metadata is missing %q", marker)
 		}
 	}
-	for _, marker := range []string{`const APP_VERSION = '1.7.1'`, `Object.freeze({ APP_VERSION,`, `appVersion.textContent = ` + "`ML/DL Exam Trainer · v${APP_VERSION}`"} {
+	for _, marker := range []string{`const APP_VERSION = '1.8.0'`, `Object.freeze({ APP_VERSION,`, `appVersion.textContent = ` + "`ML/DL Exam Trainer · v${APP_VERSION}`"} {
 		if !strings.Contains(state+script, marker) {
 			t.Fatalf("central version source is missing %q", marker)
 		}
 	}
-	if strings.Contains(script, "1.7.1") {
+	if strings.Contains(script, "1.8.0") {
 		t.Fatal("application version is duplicated in app.js")
 	}
 	footerRule := functionBody(t, styles, ".app-footer {", "body[data-auth-state=\"unknown\"]")

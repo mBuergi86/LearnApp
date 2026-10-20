@@ -64,3 +64,31 @@ test('vendored renderer is pinned and unchanged from the integrity-checked packa
   const hash=createHash('sha256').update(readFileSync(join(__dirname,'vendor','katex','katex.min.js'))).digest('hex');
   assert.equal(hash,'103a53763cc033bba8d175bf3f0ba597c3505c9b6747dd3f2c7bc2a6bfcc8ae7');
 });
+
+test('inline math in question text becomes MathML and plain text stays escaped', () => {
+  const html = renderer.inline(String.raw`Recall <b> $\frac{TP}{TP+FN}=0.75$ ok`);
+  assert.match(html, /^Recall &lt;b&gt; <span class="inline-math">/);
+  assert.match(html, /<mfrac>/);
+  assert.match(html, / ok$/);
+  assert.doesNotMatch(html, / style=|<script\b/);
+  assert.equal(renderer.inline('ohne Formel & <i>'), 'ohne Formel &amp; &lt;i&gt;');
+  assert.equal(renderer.inline(String.raw`kaputt $\bad{$ <x>`), String.raw`kaputt $\bad{$ &lt;x&gt;`);
+  assert.equal(renderer.plain(String.raw`$z=\frac{x-\mu}{\sigma}$ und $\eta$`), 'z=(x-μ)/(σ) und η');
+});
+
+test('every inline formula in the question pools compiles', () => {
+  const dir = join(__dirname, '..', 'content', 'questions');
+  let formulas = 0;
+  for (const file of readdirSync(dir)) {
+    for (const question of JSON.parse(readFileSync(join(dir, file), 'utf8')).questions) {
+      const texts = [question.prompt, question.context, question.explanation, ...(question.options || []).map((option) => option.text)].filter(Boolean);
+      for (const text of texts) {
+        for (const match of text.matchAll(/\$([^$\n]{1,400})\$/g)) {
+          assert.doesNotThrow(() => katex.renderToString(match[1], { ...renderer.OPTIONS, displayMode: false }), `${question.id}: ${match[1]}`);
+          formulas++;
+        }
+      }
+    }
+  }
+  assert.ok(formulas >= 40, `only ${formulas} inline formulas`);
+});

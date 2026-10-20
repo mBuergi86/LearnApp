@@ -64,7 +64,7 @@
       "topic_id": "decision-trees-model",
       "type": "numeric-choice",
       "prompt": "Wie hoch ist die Gini-Impurity?",
-      "explanation": "Anteile 0.75 und 0.25. Gini=1−0.75²−0.25²=1−0.5625−0.0625=0.375. 0.25 und 0.75 sind Klassenanteile; 0.5 wäre der maximal gemischte binäre 50/50-Knoten. Gini ist keine Fehlerrate des ganzen Baums.",
+      "explanation": "$p=(0.75,\\,0.25)$. $\\text{Gini}=1-0.75^2-0.25^2=1-0.5625-0.0625=0.375$. 0.5 wäre ein 50:50-Knoten (Maximum bei zwei Klassen). 0.25 und 0.75 sind nur die Klassenanteile, kein Gini-Wert.",
       "difficulty": 2,
       "enabled": true,
       "options": [
@@ -86,7 +86,7 @@
         }
       ],
       "correct_answer": "answer-2",
-      "context": "In einem Klassifikationsknoten sind drei von vier Fällen positiv, einer negativ. Gini=1−Σp_c²."
+      "context": "In einem Knoten sind 3 von 4 Fällen positiv und 1 negativ. $\\text{Gini}=1-\\sum_c p_c^2$."
     },
     {
       "id": "ml-tree-overfit",
@@ -115,7 +115,7 @@
       "prompt": "Welche Vorhersage erzeugt das Ensemble?",
       "explanation": "(6+9+12)/3=27/3=9. 27 ist die Summe ohne Division; 6 und 12 wählen einzelne Modelle statt die geforderte Aggregation. Für Regression wird eine Zahl gemittelt, nicht eine Klasse per Hard Voting gewählt.",
       "difficulty": 2,
-      "enabled": true,
+      "enabled": false,
       "options": [
         {
           "id": "answer-1",
@@ -212,7 +212,7 @@
       "prompt": "Welche Vorhersage entsteht bei x=4?",
       "explanation": "3·4=12, plus Bias 2 ergibt 14. 12 vergisst den Bias, 6 addiert Input und Bias ohne Gewicht, 20 multipliziert den Bias fälschlich mit x. Die Ausgabe ist ein numerischer Wert, keine Wahrscheinlichkeit.",
       "difficulty": 2,
-      "enabled": true,
+      "enabled": false,
       "options": [
         {
           "id": "answer-1",
@@ -241,7 +241,7 @@
       "prompt": "Welche Vorhersage ergibt sich?",
       "explanation": "4·0+7=7. Der additive Bias kann bei null Input einen Output erzeugen. 0 ignoriert den Bias, 4 ist nur das Gewicht, 11 addiert das Gewicht statt dessen Beitrag. b wird im Training gelernt und ist nicht der statistische Bias im Bias-Variance-Tradeoff.",
       "difficulty": 2,
-      "enabled": true,
+      "enabled": false,
       "options": [
         {
           "id": "answer-1",
@@ -298,7 +298,7 @@
       "prompt": "Welche Vorhersagevarianz liegt um deren Mittelwert vor?",
       "explanation": "Mittelwert=(3+7)/2=5. Varianz=[(3−5)²+(7−5)²]/2=4. Bias ist hier 0, aber Varianz nicht. 2 wäre Standardabweichung; 5 der Vorhersagemittelwert. Diese Varianz beschreibt Modellschwankung über Training, nicht Feature-Streuung.",
       "difficulty": 2,
-      "enabled": true,
+      "enabled": false,
       "options": [
         {
           "id": "answer-1",
@@ -327,7 +327,7 @@
       "prompt": "Wie viele Modellanpassungen erfolgen?",
       "explanation": "Drei mal zwei ergibt sechs Konfigurationen, je fünf Fold-Trainings: 6·5=30. 6 zählt nur Konfigurationen; 10 ignoriert eine Hyperparameterliste. 31 wäre korrekt mit einem zusätzlichen Refit, der hier ausgeschlossen ist.",
       "difficulty": 2,
-      "enabled": true,
+      "enabled": false,
       "options": [
         {
           "id": "answer-1",
@@ -376,7 +376,7 @@
       "prompt": "Welcher Ersatzwert wird verwendet?",
       "explanation": "(4+8+12)/3=8. Der fehlende Wert wird nicht als null gezählt: Teilen durch 4 ergäbe fälschlich 6. 12 ist nur der grösste Messwert; 0 ist kein gemessener Ersatz. Auch ein fehlender Testwert erhält den aus Training gelernten Wert 8.",
       "difficulty": 2,
-      "enabled": true,
+      "enabled": false,
       "options": [
         {
           "id": "answer-1",
@@ -405,7 +405,7 @@
       "prompt": "Wie gross ist die Generalisierungslücke?",
       "explanation": "17−2=15. −15 kehrt die definierte Richtung um; 19 addiert Verluste; 8.5 halbiert nur Validation. Die starke Lücke ist ein Overfitting-Hinweis, aber auch Datenunterschiede müssen geprüft werden. Die Zahl allein beweist die Ursache nicht.",
       "difficulty": 2,
-      "enabled": true,
+      "enabled": false,
       "options": [
         {
           "id": "answer-1",
@@ -432,7 +432,7 @@
       "topic_id": "logistic-regression-model",
       "type": "numeric-choice",
       "prompt": "Welche Wahrscheinlichkeit für Klasse 1 entsteht?",
-      "explanation": "e^(−ln4)=1/4; p=1/(1+1/4)=0.8. 0.2 ist die Gegenwahrscheinlichkeit 1−p; 0.5 gehört zu z=0. Die Zahl 4 ist kein gültiger Wahrscheinlichkeitswert. Erst eine gesonderte Schwelle übersetzt p in eine Klasse.",
+      "explanation": "$e^{-\\ln 4}=\\frac14$, also $p=\\frac{1}{1+\\frac14}=0.8$. Die Odds sind $\\frac{p}{1-p}=4$. 0.2 ist $1-p$, 0.5 gehört zu $z=0$. Die Zahl 4 ist keine gültige Wahrscheinlichkeit, sondern sind die Odds. Erst eine Schwelle macht aus p eine Klasse.",
       "difficulty": 2,
       "enabled": true,
       "options": [
@@ -454,7 +454,7 @@
         }
       ],
       "correct_answer": "answer-3",
-      "context": "Eine binäre logistische Regression liefert den linearen Score z=ln(4). Sigmoid ist p=1/(1+e^(−z))."
+      "context": "Eine logistische Regression liefert den linearen Score $z=\\ln 4$. $p=\\frac{1}{1+e^{-z}}$."
     },
     {
       "id": "ml-eda-correlation-linear",
@@ -481,7 +481,7 @@
       "topic_id": "feature-scaling",
       "type": "numeric-choice",
       "prompt": "Welcher standardisierte Testwert entsteht?",
-      "explanation": "Die Trainingsstatistik bleibt fest: z=(16−10)/2=3. 8 lässt die Zentrierung weg; −3 kehrt die Subtraktion um; 0 würde den einzelnen Testwert als eigenen Mittelwert benutzen. Auf Test wird transformiert, nicht erneut gefittet.",
+      "explanation": "$z=\\frac{x-\\mu}{\\sigma}=\\frac{16-10}{2}=3$. Für Testdaten gelten $\\mu$ und $\\sigma$ aus dem Training, es wird nicht neu gefittet. Falsch wäre 8 (Zentrierung vergessen), −3 (Subtraktion umgedreht) oder 0 (Testwert als eigener Mittelwert).",
       "difficulty": 2,
       "enabled": true,
       "options": [
@@ -503,7 +503,7 @@
         }
       ],
       "correct_answer": "answer-3",
-      "context": "Der Scaler wurde auf Training mit μ=10 und σ=2 gelernt. Ein neuer Testwert ist x=16; die Standardisierung lautet z=(x−μ)/σ."
+      "context": "Der StandardScaler wurde auf den Trainingsdaten gefittet: $\\mu=10,\\ \\sigma=2$. Neuer Testwert $x=16$."
     },
     {
       "id": "ml-gradient-direction",
@@ -532,7 +532,7 @@
       "prompt": "Welcher Parameterwert entsteht nach genau einem Schritt?",
       "explanation": "J′(w)=2(w−2), bei w=5 also 6. Schritt=0.1·6=0.6; w_neu=5−0.6=4.4. 5.6 geht mit dem Gradienten bergauf; 0.6 ist nur die Änderung; 2 ist das Minimum, das ein einzelner Schritt hier nicht erreicht.",
       "difficulty": 2,
-      "enabled": true,
+      "enabled": false,
       "options": [
         {
           "id": "answer-1",
@@ -559,7 +559,7 @@
       "topic_id": "loss-functions-ml",
       "type": "numeric-choice",
       "prompt": "Wie gross ist der MSE?",
-      "explanation": "Fehler=(2,−1), Quadrate=(4,1); MSE=(4+1)/2=2.5. 5 vergisst die Mittelung; 1.5 wäre MAE; −0.5 ist kein MSE, der immer nichtnegativ ist. Vorzeichen dürfen vor dem Quadrieren nicht verloren oder miteinander verrechnet werden.",
+      "explanation": "Fehler $(3-1,\\ 3-4)=(2,\\,-1)$, Quadrate $(4,\\,1)$. $\\text{MSE}=\\frac{4+1}{2}=2.5$. 1.5 wäre der MAE $\\frac{2+1}{2}$, 5 vergisst das Teilen durch $N$.",
       "difficulty": 2,
       "enabled": true,
       "options": [
@@ -581,7 +581,7 @@
         }
       ],
       "correct_answer": "answer-2",
-      "context": "Regression: Ziele y=(1,4), Vorhersagen ŷ=(3,3). MSE mittelt die quadrierten Fehler."
+      "context": "Regression mit Zielen $y=(1,\\,4)$ und Vorhersagen $\\hat y=(3,\\,3)$."
     },
     {
       "id": "ml-loss-classification",
@@ -698,7 +698,7 @@
       "prompt": "Welches Gewicht minimiert den quadratischen Fehler?",
       "explanation": "Zähler=1·3+2·6=15. Nenner=1²+2²=5. Daher w=15/5=3; beide Vorhersagen passen exakt. 15 lässt den Nenner weg, 5 ist nur der Nenner, 1.5 verwendet einen falschen zusätzlichen Faktor. Die Formel gilt hier für die angegebene Regression ohne Bias.",
       "difficulty": 2,
-      "enabled": true,
+      "enabled": false,
       "options": [
         {
           "id": "answer-1",

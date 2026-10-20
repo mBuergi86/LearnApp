@@ -35,7 +35,7 @@
       "prompt": "Welcher vorzeichenbehaftete Fehler entsteht?",
       "explanation": "Fehler=10500−12000=−1500 CHF. Das Minus bedeutet zu niedrig vorhergesagt. +1500 kehrt die definierte Subtraktion um; 2250000 wäre der quadrierte Fehler mit Einheit CHF²; 10500 ist die Vorhersage selbst. Das numerische Ziel macht die Aufgabe zur Regression.",
       "difficulty": 2,
-      "enabled": true,
+      "enabled": false,
       "options": [
         {
           "id": "answer-1",
@@ -192,7 +192,7 @@
       "prompt": "Wie viele Fälle gehören zum Validierungsset?",
       "explanation": "20 % sind 20/100=0.2. Deshalb 0.2·1000=200 Validierungsfälle. 20 verwechselt Prozent und Fallzahl; 600 gehört zum Training; 800 zu Training plus Validation. Die Zahlen gelten für diesen genannten Split, nicht als allgemeine Pflichtaufteilung.",
       "difficulty": 1,
-      "enabled": true,
+      "enabled": false,
       "options": [
         {
           "id": "share-20",
@@ -333,7 +333,7 @@
       "prompt": "Wie viele Bäume unterstützen die Mehrheitsklasse?",
       "explanation": "Klasse 1 erhält drei Stimmen, Klasse 0 zwei. Die Mehrheitsklasse wird somit von drei Bäumen unterstützt. 1 ist das Klassenlabel, nicht die Stimmenzahl; 2 zählt die Minderheit; 5 alle Bäume. Andere Bibliotheks-Aggregationen können Wahrscheinlichkeiten statt harter Stimmen mitteln.",
       "difficulty": 2,
-      "enabled": true,
+      "enabled": false,
       "options": [
         {
           "id": "answer-1",
@@ -362,7 +362,7 @@
       "prompt": "Welche numerische Vorhersage entsteht?",
       "explanation": "Summe=8+12+10=30, geteilt durch drei Bäume ergibt 10. 30 lässt die Mittelung weg; 8 und 12 sind nur Einzelvorhersagen. Die Baumzahl ist ein Hyperparameter; Outputwerte sind keine Blätterzahl.",
       "difficulty": 2,
-      "enabled": true,
+      "enabled": false,
       "options": [
         {
           "id": "answer-1",
@@ -472,7 +472,7 @@
       "prompt": "Wo liegt das neue Clusterzentrum?",
       "explanation": "μ=(2+4+6)/3=4. 12 ist nur die Summe; 3 zählt Punkte; 2 ist ein einzelner Punkt. Das Zentrum wird aus den zugeordneten Daten berechnet. k bezeichnet dagegen die zuvor festgelegte Anzahl Cluster.",
       "difficulty": 2,
-      "enabled": true,
+      "enabled": false,
       "options": [
         {
           "id": "answer-1",
@@ -762,7 +762,7 @@
       "context": "Xₖ₊₁ = Xₖ − η · gradient(Xₖ)",
       "explanation": "η·Gradient=0.5·(−2)=−1. Der Updatewert ist 4−(−1)=5. Eine negative Ableitung lässt den Parameter hier steigen. Das bedeutet nicht, dass der Loss negativ ist; Ableitung und Loss sind verschiedene Grössen.",
       "difficulty": 2,
-      "enabled": true,
+      "enabled": false,
       "options": [
         {
           "id": "value-3",
@@ -787,26 +787,26 @@
       "id": "dl-backprop-error-definition",
       "topic_id": "backpropagation",
       "type": "single-choice",
-      "prompt": "Was beschreibt der lokale Fehler eᵢˡ=∂C/∂zᵢˡ bei Backpropagation?",
-      "explanation": "Er beschreibt, wie empfindlich die Kosten C auf eine kleine Änderung des gewichteten Inputs zᵢˡ reagieren. Das ist eine Ableitung, nicht die Aktivierung aᵢˡ und nicht einfach die Differenz zwischen irgendeinem Input und Ziel. Daraus werden die Gradienten für Gewichte und Bias berechnet.",
+      "prompt": "Was beschreibt der lokale Fehler $e_i^l$ eines Neurons bei der Backpropagation?",
+      "explanation": "Definition DL Tag 1 F.51: $e_i^l=\\frac{\\partial C}{\\partial z_i^l}$, also die Ableitung nach der gewichteten Eingabe $z$. Die Ableitung nach einem Gewicht folgt erst daraus mit BP4: $\\frac{\\partial C}{\\partial w_{ik}^l}=a_k^{l-1}e_i^l$. Die Aktivierung $a$ und die Lernrate $\\eta$ sind keine Ableitungen.",
       "difficulty": 2,
       "enabled": true,
       "options": [
         {
           "id": "cost-z",
-          "text": "∂C/∂zᵢˡ"
+          "text": "Wie stark sich die Kosten ändern, wenn sich die gewichtete Eingabe des Neurons ändert"
         },
         {
           "id": "cost-weight",
-          "text": "∂C/∂wᵢₖˡ"
+          "text": "Wie stark sich die Kosten ändern, wenn sich ein einzelnes Gewicht ändert"
         },
         {
           "id": "activation-only",
-          "text": "aᵢˡ"
+          "text": "Die Aktivierung des Neurons nach der Aktivierungsfunktion"
         },
         {
           "id": "learning-rate",
-          "text": "η"
+          "text": "Die Schrittweite des Gradientenschritts"
         }
       ],
       "correct_answer": "cost-z"
@@ -946,7 +946,7 @@
       "prompt": "Für y = (1, 0) und aᴸ = (0.8, 0.3) gilt Cₓ = 1/2 · [(y₁ − a₁ᴸ)² + (y₂ − a₂ᴸ)²]. Wie gross ist Cₓ?",
       "explanation": "1/2 · [(1 − 0.8)² + (0 − 0.3)²] = 1/2 · (0.04 + 0.09) = 0.065.",
       "difficulty": 3,
-      "enabled": true,
+      "enabled": false,
       "options": [
         {
           "id": "cost-0065",
@@ -974,7 +974,7 @@
       "prompt": "Wie viele gekoppelte Farbkanäle besitzt ein RGB-Bild?",
       "explanation": "RGB steht für drei Kanäle. Ein entsprechender Filter erstreckt sich über diese gesamte Input-Tiefe.",
       "difficulty": 1,
-      "enabled": true,
+      "enabled": false,
       "options": [
         {
           "id": "depth-1",
@@ -999,8 +999,8 @@
       "id": "dl-cnn-output-width",
       "topic_id": "cnn-convolution",
       "type": "numeric-choice",
-      "prompt": "5 × 5 Filter auf 32 × 32 Input, Stride 1, Padding 0, Dilatation 1: Welche räumliche Breite besitzt die Feature Map?",
-      "explanation": "Mit den angegebenen Voraussetzungen gilt floor((32−5)/1)+1=28. Ein anderer Stride oder eine andere Dilatation könnte die Breite ändern.",
+      "prompt": "Ein $5\\times5$-Filter läuft über einen $32\\times32$-Input, Stride 1, Padding 0. Welche Breite hat die Feature Map?",
+      "explanation": "$O=\\frac{N+2P-F}{S}+1=\\frac{32+0-5}{1}+1=28$. Achtung: $N-F$, nicht $N+F$.",
       "difficulty": 2,
       "enabled": true,
       "options": [
@@ -1030,7 +1030,7 @@
       "prompt": "Sechs verschiedene Filter werden auf dasselbe Eingangsvolumen angewendet. Welche Output-Tiefe entsteht?",
       "explanation": "Jeder Filter erzeugt eine Feature Map. Sechs Filter ergeben deshalb eine Output-Tiefe von 6.",
       "difficulty": 1,
-      "enabled": true,
+      "enabled": false,
       "options": [
         {
           "id": "depth-1",
@@ -1122,7 +1122,7 @@
       "prompt": "Wie viele Gewichte enthält W_Q?",
       "explanation": "W_Q hat Form 8×2, also 16 Gewichte. Tokenzahl verändert diese Projektionsparameter nicht, weil die Matrix auf alle Positionen angewendet wird. 8 zählt nur Inputs; 4 könnte zwei Dimensionen quadrieren; 64 wäre 8×8 statt der geforderten Projektion. Die historische 512 ist eine Architekturwahl, keine allgemeine Pflichtdimension.",
       "difficulty": 1,
-      "enabled": true,
+      "enabled": false,
       "options": [
         {
           "id": "weights-4",

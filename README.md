@@ -1,6 +1,6 @@
 # ML/DL Exam Trainer
 
-Web app for exam preparation in Machine Learning and Deep Learning & Data Science. The current version is 1.7.1 (2026-10-20), a bugfix release for login behind the TLS proxy. The image is in the registry; server deployment remains a separate step. Version 1.7.0 (2026-10-13) introduced real LaTeX typesetting rendered as native MathML, simple worked examples in 49 formula cards, and per-topic quick checks. The navigation from 1.6.0 is unchanged.
+Web app for exam preparation in Machine Learning and Deep Learning & Data Science. The current version is 1.8.0 (2026-10-20): practice focuses on exam-style questions, formulas in questions are typeset with LaTeX, and the text is larger. Version 1.7.1 (2026-10-20) fixed login behind the TLS proxy. Version 1.7.0 (2026-10-13) introduced real LaTeX typesetting rendered as native MathML, simple worked examples in 49 formula cards, and per-topic quick checks. The navigation from 1.6.0 is unchanged.
 
 The user interface and the learning content are in German.
 
@@ -192,18 +192,25 @@ calculation questions are verified independently. The pools remain 122/104 for
 ML and 134/110 for DL/DS (all/core). Details and limitations are in the
 [content review](content/audit/dl-ds-quality-review.md).
 
-### Release build 1.7.1
+### Release build 1.8.0
 
 ```powershell
 $appVersion = node -p "require('./web/ui-state.js').APP_VERSION"
 podman build --platform linux/amd64 --build-arg "APP_VERSION=$appVersion" -t "localhost/mldl-exam-trainer:$appVersion" -f Containerfile .
 ```
 
-The image tag is explicitly `:1.7.1`; the shared login/app footer shows
-`ML/DL Exam Trainer · v1.7.1`. The version source is `web/ui-state.js`; the
+The image tag is explicitly `:1.8.0`; the shared login/app footer shows
+`ML/DL Exam Trainer · v1.8.0`. The version source is `web/ui-state.js`; the
 build also applies it as an OCI image label. The approved registry tag is
-`<registry>/learn/mldl-exam-trainer:1.7.1`. No server deployment.
+`<registry>/learn/mldl-exam-trainer:1.8.0`. Not built or deployed yet.
 Local verification uses dedicated test volumes, not existing learning data.
+
+### Release notes 1.8.0
+
+- 53 calculation questions disabled, 10 typical ones kept with LaTeX.
+- 67 new exam-style questions in `content/questions/phase9-exam-style.json`.
+- Inline math `$...$` rendered as MathML; larger text.
+- Multi-Hot encoding corrected. Details: [RELEASE-1.8.0.md](RELEASE-1.8.0.md).
 
 ### Release notes 1.7.1
 

@@ -26,7 +26,7 @@
       ],
       "correct_answer": "o1",
       "difficulty": 2,
-      "enabled": true
+      "enabled": false
     },
     {
       "id": "dl-activation-functions-fact",
@@ -105,7 +105,7 @@
       ],
       "correct_answer": "o4",
       "difficulty": 2,
-      "enabled": true
+      "enabled": false
     },
     {
       "id": "dl-artificial-neuron-core",
@@ -133,7 +133,7 @@
       ],
       "correct_answer": "o4",
       "difficulty": 2,
-      "enabled": true
+      "enabled": false
     },
     {
       "id": "dl-artificial-neuron-fact",
@@ -223,8 +223,8 @@
       "id": "dl-batch-iteration-epoch-core",
       "topic_id": "batch-iteration-epoch",
       "type": "numeric-choice",
-      "prompt": "1000 Trainingsbeispiele, Batchgrösse 250, ein Update pro Batch: Wie viele Iterationen hat eine Epoche?",
-      "explanation": "1000/250=4 Batches. Jeder Batch erzeugt eine Iteration; nach vier Iterationen wurden alle Beispiele einmal gesehen.",
+      "prompt": "1000 Trainingsbeispiele, Batch-Grösse 250. Wie viele Iterationen hat eine Epoche?",
+      "explanation": "$\\frac{1000}{250}=4$ Mini-Batches, jeder ist eine Iteration (ein Update). Nach 4 Iterationen ist eine Epoche fertig (DL Tag 1 F.62).",
       "options": [
         {
           "id": "o1",
@@ -333,7 +333,7 @@
       ],
       "correct_answer": "o2",
       "difficulty": 2,
-      "enabled": true
+      "enabled": false
     },
     {
       "id": "dl-batch-normalization-core",
@@ -440,7 +440,7 @@
       ],
       "correct_answer": "o1",
       "difficulty": 2,
-      "enabled": true
+      "enabled": false
     },
     {
       "id": "dl-classic-attention-core",
@@ -547,7 +547,7 @@
       ],
       "correct_answer": "o4",
       "difficulty": 2,
-      "enabled": true
+      "enabled": false
     },
     {
       "id": "dl-cnn-architecture-core",
@@ -632,8 +632,8 @@
       "id": "dl-cnn-architecture-detail",
       "topic_id": "cnn-architecture",
       "type": "numeric-choice",
-      "prompt": "Die zweite Layer erhält sechs Maps und nutzt zehn 5 × 5 Filter mit einem Bias je Filter. Wie viele Parameter hat sie?",
-      "explanation": "Die Layer erhält sechs Kanäle, nicht mehr die ursprünglichen drei RGB-Kanäle. Ein Filter besitzt 5·5·6=150 Gewichte plus einen Bias. Zehn Filter: 10·151=1510 Parameter. Anzahl räumlicher Filterpositionen vervielfacht diese Zahl nicht, weil Gewichte geteilt werden.",
+      "prompt": "Die zweite Conv-Schicht erhält 6 Feature Maps und hat zehn Filter $5\\times5$ mit je einem Bias. Wie viele Parameter hat sie?",
+      "explanation": "Filtertiefe = Anzahl Input-Maps = 6. Pro Filter $5\\cdot5\\cdot6+1=151$. Zehn Filter: $10\\cdot151=1510$. 760 wäre richtig für ein RGB-Bild (Tiefe 3).",
       "options": [
         {
           "id": "o1",
@@ -682,7 +682,7 @@
       ],
       "correct_answer": "o3",
       "difficulty": 2,
-      "enabled": true
+      "enabled": false
     },
     {
       "id": "dl-cnn-spatial-dimensions-fact",
@@ -739,8 +739,8 @@
       "id": "dl-cnn-spatial-dimensions-detail",
       "topic_id": "cnn-spatial-dimensions",
       "type": "numeric-choice",
-      "prompt": "32 × 32 × 3 Input, zehn 5 × 5 Filter, ein Bias je Filter: Wie viele trainierbare Parameter enthält diese gewöhnliche Convolution?",
-      "explanation": "Pro Filter: 5·5·3=75 Gewichte plus ein Bias, also 76. Zehn Filter ergeben 760. Die 32×32 Inputpositionen werden nicht zusätzlich multipliziert, weil derselbe Filter räumlich wiederverwendet wird. Padding und Stride betreffen Outputpositionen, nicht diese Kernelparameter.",
+      "prompt": "Input $32\\times32\\times3$, zehn Filter $5\\times5$, ein Bias je Filter. Wie viele trainierbare Parameter hat die Schicht?",
+      "explanation": "Pro Filter $5\\cdot5\\cdot3+1=76$. Zehn Filter: $10\\cdot76=760$ (Folie CV F.43). Die Bildgrösse $32\\times32$ zählt nicht, die Gewichte werden geteilt.",
       "options": [
         {
           "id": "o1",
@@ -789,7 +789,7 @@
       ],
       "correct_answer": "o2",
       "difficulty": 2,
-      "enabled": true
+      "enabled": false
     },
     {
       "id": "dl-computer-vision-images-fact",
@@ -1210,7 +1210,7 @@
       ],
       "correct_answer": "o2",
       "difficulty": 2,
-      "enabled": true
+      "enabled": false
     },
     {
       "id": "dl-dl-regularization-core",
@@ -1317,7 +1317,7 @@
       ],
       "correct_answer": "o1",
       "difficulty": 2,
-      "enabled": true
+      "enabled": false
     },
     {
       "id": "dl-forward-backward-pass-core",
@@ -1426,7 +1426,7 @@
       ],
       "correct_answer": "o4",
       "difficulty": 2,
-      "enabled": true
+      "enabled": false
     },
     {
       "id": "dl-lstm-core",
@@ -1545,7 +1545,7 @@
       ],
       "correct_answer": "o3",
       "difficulty": 2,
-      "enabled": true
+      "enabled": false
     },
     {
       "id": "dl-multi-head-attention-core",
@@ -1652,7 +1652,7 @@
       ],
       "correct_answer": "o2",
       "difficulty": 2,
-      "enabled": true
+      "enabled": false
     },
     {
       "id": "dl-neural-network-architecture-core",
@@ -1759,7 +1759,7 @@
       ],
       "correct_answer": "o1",
       "difficulty": 2,
-      "enabled": true
+      "enabled": false
     },
     {
       "id": "dl-pooling-resnet-core",
@@ -1787,7 +1787,7 @@
       ],
       "correct_answer": "o1",
       "difficulty": 2,
-      "enabled": true
+      "enabled": false
     },
     {
       "id": "dl-pooling-resnet-fact",
@@ -1866,7 +1866,7 @@
       ],
       "correct_answer": "o4",
       "difficulty": 2,
-      "enabled": true
+      "enabled": false
     },
     {
       "id": "dl-positional-information-core",
@@ -1973,7 +1973,7 @@
       ],
       "correct_answer": "o3",
       "difficulty": 2,
-      "enabled": true
+      "enabled": false
     },
     {
       "id": "dl-rnn-basics-core",
@@ -2080,7 +2080,7 @@
       ],
       "correct_answer": "o2",
       "difficulty": 2,
-      "enabled": true
+      "enabled": false
     },
     {
       "id": "dl-rnn-bptt-core",
@@ -2187,7 +2187,7 @@
       ],
       "correct_answer": "o1",
       "difficulty": 2,
-      "enabled": true
+      "enabled": false
     },
     {
       "id": "dl-self-attention-core",
@@ -2294,7 +2294,7 @@
       ],
       "correct_answer": "o4",
       "difficulty": 2,
-      "enabled": true
+      "enabled": false
     },
     {
       "id": "dl-seq2seq-encoder-decoder-core",
@@ -2617,7 +2617,7 @@
       ],
       "correct_answer": "o1",
       "difficulty": 2,
-      "enabled": true
+      "enabled": false
     },
     {
       "id": "dl-transformer-architecture-core",
@@ -2724,7 +2724,7 @@
       ],
       "correct_answer": "o4",
       "difficulty": 2,
-      "enabled": true
+      "enabled": false
     },
     {
       "id": "dl-vanishing-gradients-core",
@@ -2831,7 +2831,7 @@
       ],
       "correct_answer": "o3",
       "difficulty": 2,
-      "enabled": true
+      "enabled": false
     }
   ]
 }
