@@ -1,0 +1,127 @@
+{
+  "id": "random-forest",
+  "exam_id": "machine-learning",
+  "module_id": "ml-ensemble",
+  "title": "Random Forest",
+  "priority": "core",
+  "summary": "Ein Random Forest kombiniert viele Entscheidungsbäume und führt ihre Klassifikationen durch Voting zusammen.",
+  "explanation": [
+    "Random Forest ist ein Ensemble von Entscheidungsbäumen. Für Klassifikation kombiniert es Klasseninformationen, für Regression numerische Outputs. Die Bäume sollen nicht alle dieselben Fehler machen.",
+    "Jeder Baum erhält typischerweise eine Bootstrap-Stichprobe mit Zurücklegen. Einige Trainingsfälle tauchen mehrfach auf, andere in dieser Stichprobe gar nicht. Nicht gezogene Fälle heissen für diesen Baum Out-of-Bag.",
+    "Zusätzlich wird an jedem Split nur eine zufällige Teilmenge von Features als Kandidaten betrachtet. Das reduziert Ähnlichkeit zwischen Bäumen. Die Featureauswahl erfolgt nicht bloss einmal für den gesamten Wald.",
+    "Eine vereinfachte Klassifikation zählt Mehrheitsstimmen. Bibliotheken können stattdessen Blatt-Klassenwahrscheinlichkeiten mitteln und davon Argmax nehmen; diese Regeln müssen nicht für jede Konstellation identisch entscheiden. Für Rechenfragen wird die Aggregation deshalb genannt.",
+    "Anzahl Bäume, maximale Tiefe, Blattgrösse und betrachtete Features sind Hyperparameter. Das Vorlesungsbeispiel mit 2000 Bäumen und max_leaf_nodes=20 ist eine konkrete Konfiguration, kein allgemeiner Pflichtwert. Impurity-basierte Importance ist kein Beweis kausalen Einflusses."
+  ],
+  "steps": [
+    "Bootstrap-Stichprobe für jeden Baum ziehen.",
+    "Bei jedem Split zufällige Featurekandidaten betrachten.",
+    "Bäume trainieren und Vorhersagen sammeln.",
+    "Mit ausdrücklich festgelegter Regel aggregieren."
+  ],
+  "example": "Eigener Rechenfall: Fünf Bäume stimmen nach einer vereinfachten Hard-Voting-Regel (1,0,1,1,0). Drei Stimmen für 1 und zwei für 0 ergeben Klasse 1. Regressionswerte (8,10,12,9,11) ergeben Mittelwert 50/5=10. Mehr Bäume bedeutet nicht fünf neue Zielklassen.",
+  "confusions": [
+    {
+      "term": "Bootstrap und Featurezufall",
+      "note": "Die eine Zufallsquelle variiert Fälle, die andere Split-Kandidaten."
+    },
+    {
+      "term": "Feature Importance und Ursache",
+      "note": "Eine wichtige Vorhersagevariable muss keine kausale Ursache sein."
+    }
+  ],
+  "sources": [
+    {
+      "file": "Machine_Learning_Tag3_Ensemble_Learning_2026_ShaoJuWoo.pdf",
+      "pages": [
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 3,
+  "formula": {
+    "expression": "Hard Voting: häufigste Klasse\nRegression: ŷ=(1/M)Σ_m ŷ_m",
+    "meaning": "Die Rechnung setzt die hier ausdrücklich vereinbarte Aggregation voraus.",
+    "variables": [
+      {
+        "symbol": "M",
+        "meaning": "Anzahl Bäume"
+      },
+      {
+        "symbol": "ŷ_m",
+        "meaning": "Vorhersage des m-ten Baums"
+      },
+      {
+        "symbol": "c",
+        "meaning": "mögliche Klasse"
+      },
+      {
+        "symbol": "1[ · ]",
+        "meaning": "Indikator: 1 wenn Bedingung stimmt, sonst 0"
+      }
+    ],
+    "latex": [
+      "\\hat y_{\\mathrm{Hard}}=\\operatorname*{arg\\,max}_c\\sum_m\\mathbf1[\\hat y_m=c]",
+      "\\hat y_{\\mathrm{Reg}}=\\frac1M\\sum_m\\hat y_m"
+    ],
+    "worked_example": {
+      "title": "Explizite Aggregationsregel verwenden",
+      "given": [
+        "Hard Voting mit Klassen (1,0,1,1,0).",
+        "Separater Forest-Regressor mit Outputs (8,10,12,9,11)."
+      ],
+      "steps": [
+        {
+          "text": "Stimmen pro Klasse zählen.",
+          "latex": "n_1=3,\\quad n_0=2"
+        },
+        {
+          "text": "Nach der vereinbarten Hard-Voting-Regel die häufigste Klasse auswählen.",
+          "latex": "\\hat y_{\\mathrm{Hard}}=1"
+        },
+        {
+          "text": "Im Regressionsfall stattdessen numerische Outputs mitteln.",
+          "latex": "\\hat y_{\\mathrm{Reg}}=\\frac{8+10+12+9+11}{5}=10"
+        }
+      ],
+      "result": "Die Klassifikation ergibt Label 1, die Regression Zahl 10. Manche Bibliotheken mitteln Klassenwahrscheinlichkeiten statt harter Stimmen; die Aufgabe muss die Regel nennen.",
+      "result_latex": "\\hat y_{\\mathrm{Hard}}=1,\\quad\\hat y_{\\mathrm{Reg}}=10"
+    }
+  },
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "Zwei Zufallsquellen im Forest",
+      "caption": "Fälle werden je Baum, Featurekandidaten je Knoten variiert.",
+      "labels": [
+        "Trainingsfälle",
+        "Bootstrap je Baum",
+        "Featureauswahl je Split",
+        "Mehrere Bäume",
+        "Vorhersagen kombinieren"
+      ]
+    },
+    {
+      "kind": "bars",
+      "title": "Mehrheitsentscheidung im Beispiel",
+      "caption": "Unter ausdrücklich festgelegtem Hard Voting gewinnt Klasse 1 mit drei von fünf Stimmen.",
+      "labels": [
+        "Stimmen Klasse 0",
+        "Stimmen Klasse 1"
+      ],
+      "values": [
+        [
+          2,
+          3
+        ]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "id": "eda-workflow",
+  "exam_id": "machine-learning",
+  "module_id": "ml-eda",
+  "title": "Explorative Datenanalyse (EDA)",
+  "priority": "core",
+  "summary": "EDA untersucht Struktur, Verteilungen, Qualität und Zusammenhänge eines Datensatzes, bevor ein Modell trainiert wird.",
+  "explanation": [
+    "Explorative Datenanalyse bedeutet, Daten vor dem Modellieren zu verstehen. Sie fragt: Was bedeutet jede Spalte, welche Werte sind plausibel und welche Fälle fehlen? Ein Diagramm ist ein Werkzeug für eine konkrete Frage, kein Selbstzweck.",
+    "Zuerst werden Zeilenanzahl, Spaltentypen, Einheiten und fehlende Werte geprüft. Ein Alter von 250 kann ein Eingabefehler sein; eine hohe Rechnung kann ein echter seltener Fall sein. Auffällig bedeutet nicht automatisch falsch.",
+    "Verteilungen und Kennzahlen zeigen typische Werte und Streuung. Ein Histogramm zeigt Häufigkeiten, ein Boxplot Quartile und mögliche Ausreisser. Kategorien werden meist über Häufigkeiten statt einen sinnlosen Mittelwert ihrer IDs betrachtet.",
+    "Scatterplots untersuchen zwei numerische Merkmale gemeinsam. Korrelation beschreibt einen linearen Zusammenhang, nicht dessen Ursache. EDA kann Hinweise auf redundante Merkmale, Leakage oder unausgewogene Klassen liefern.",
+    "Für die Modellentscheidung wird EDA auf Trainingsdaten durchgeführt. Wer anhand des Testsets Features auswählt oder Regeln nachbessert, lässt Testinformation in das Verfahren einfliessen. Ergebnisse und offene Fragen werden dokumentiert."
+  ],
+  "steps": [
+    "Bedeutung, Einheiten und Struktur prüfen.",
+    "Fehlende Werte und Plausibilität zählen.",
+    "Verteilungen und Beziehungen untersuchen.",
+    "Befunde festhalten und Vorbereitung auf Training definieren."
+  ],
+  "sources": [
+    {
+      "file": "MachineLearning_Tag1_EDA_2026_ShaoJuWoo.pdf",
+      "pages": [
+        4,
+        5,
+        13,
+        25,
+        43,
+        44,
+        55
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 1,
+  "example": "Eigener Rechenfall: Ein Trainingsdatensatz enthält 100 Personen. Bei 15 fehlt das Alter: 15/100=15 %. Von 100 Labels sind 90 negativ und 10 positiv. Ein Modell, das immer negativ vorhersagt, erreicht 90 % Accuracy, erkennt aber keinen positiven Fall. EDA zeigt daher schon vor dem Training, warum Accuracy allein hier irreführend sein kann.",
+  "formula": {
+    "expression": "Anteil=Anzahl betroffener Fälle/N",
+    "meaning": "Eine Häufigkeit wird erst durch Bezug auf die Gesamtzahl vergleichbar.",
+    "variables": [
+      {
+        "symbol": "N",
+        "meaning": "Anzahl betrachteter Fälle"
+      },
+      {
+        "symbol": "n_betroffen",
+        "meaning": "Anzahl Fälle mit dem betrachteten Problem"
+      }
+    ],
+    "latex": [
+      "\\mathrm{Anteil}=\\frac{n_{\\mathrm{betroffen}}}{N}"
+    ],
+    "worked_example": {
+      "title": "Fehlende Alterswerte als Anteil",
+      "given": [
+        "100 Trainingsfälle insgesamt.",
+        "Bei 15 Fällen fehlt das Alter."
+      ],
+      "steps": [
+        {
+          "text": "Zähler und Nenner unterscheiden: fehlende Fälle gegenüber allen Fällen.",
+          "latex": "n_{\\mathrm{betroffen}}=15,\\quad N=100"
+        },
+        {
+          "text": "Durch die Gesamtzahl teilen.",
+          "latex": "\\mathrm{Anteil}=\\frac{15}{100}=0.15"
+        },
+        {
+          "text": "Den Anteil in Prozent umrechnen.",
+          "latex": "0.15\\cdot100\\%=15\\%"
+        }
+      ],
+      "result": "15 % der Alterswerte fehlen. Die Rechnung beschreibt das Ausmass, entscheidet aber noch nicht zwischen Löschen und Imputation.",
+      "result_latex": "\\mathrm{Fehlend}=15\\%"
+    }
+  },
+  "confusions": [
+    {
+      "term": "EDA und Training",
+      "note": "EDA untersucht Daten; Training passt die Modellparameter an."
+    },
+    {
+      "term": "Auffällig und falsch",
+      "note": "Seltene Werte werden fachlich geprüft, nicht automatisch gelöscht."
+    }
+  ],
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "Fragen an die Daten",
+      "caption": "Die Analyse führt zu begründeter Vorbereitung, nicht direkt zu bewiesener Kausalität.",
+      "labels": [
+        "Struktur und Einheiten",
+        "Fehlende und unplausible Werte",
+        "Verteilungen",
+        "Zusammenhänge",
+        "Vorbereitung begründen"
+      ]
+    },
+    {
+      "kind": "bars",
+      "title": "Klassenverteilung vor dem Training",
+      "caption": "90 negative und 10 positive Fälle erklären die Schwäche einer reinen Accuracy-Bewertung.",
+      "labels": [
+        "Negativ",
+        "Positiv"
+      ],
+      "values": [
+        [
+          90,
+          10
+        ]
+      ]
+    }
+  ]
+}

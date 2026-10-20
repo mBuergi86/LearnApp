@@ -1,0 +1,127 @@
+{
+  "id": "k-means",
+  "exam_id": "machine-learning",
+  "module_id": "ml-clustering",
+  "title": "K-Means",
+  "priority": "core",
+  "summary": "K-Means teilt einen Datensatz ohne Labels in k disjunkte Cluster und aktualisiert deren Zentren bis zur Konvergenz.",
+  "explanation": [
+    "K-Means sucht k Gruppen in numerischen Features ohne bekannte Labels. k wird vorgegeben und ist ein Hyperparameter. Ein Zentrum ist der Mittelwert der aktuell zugeordneten Punkte und wird aus den Daten berechnet.",
+    "Zuerst werden Startzentren gewählt. Jeder Punkt wird dem nächstgelegenen Zentrum zugeordnet, gewöhnlich nach euklidischer Distanz. Danach wird jedes Zentrum aus seinen zugeordneten Punkten neu berechnet.",
+    "Das Verfahren minimiert innerhalb der gewählten Gruppierung die Summe quadrierter Abstände. Zuordnung und Zentren werden wiederholt aktualisiert. Unterschiedliche Initialisierung kann unterschiedliche lokale Lösungen ergeben.",
+    "Features mit grosser Skala können die Distanz dominieren, daher ist geeignete Skalierung wichtig. Ein Cluster kann ohne Zusatzwissen nicht automatisch als fachlich bekannte Klasse interpretiert werden.",
+    "K-Means passt besonders zu kompakten, ungefähr kugelförmigen Gruppen und ist empfindlich gegenüber Ausreissern. k, Initialisierung, leere Cluster und Gleichstände benötigen definierte Regeln. Die Vorlesung verwendet beispielhaft k=3, nicht immer zwingend drei Gruppen."
+  ],
+  "steps": [
+    "k, Skalierung und Startzentren festlegen.",
+    "Jeden Punkt dem nächsten Zentrum zuordnen.",
+    "Zentren als Mittel der zugeordneten Punkte aktualisieren.",
+    "Bis zu stabiler Lösung oder Stoppkriterium wiederholen."
+  ],
+  "example": "Eigener Rechenfall in einer Dimension: Punkte (1,2,8,9), k=2, Startzentren 1 und 8. Die ersten beiden Punkte gehören zum ersten, die letzten beiden zum zweiten Zentrum. Neue Zentren sind (1+2)/2=1.5 und (8+9)/2=8.5. Quadratische Abstände sind viermal 0.25, Summe=1. Cluster-ID 0 oder 1 ist dabei nur ein Gruppenname.",
+  "formula": {
+    "expression": "μ_j=(1/|C_j|)Σ_(x∈C_j)x\nJ=Σ_jΣ_(x∈C_j)‖x−μ_j‖²",
+    "meaning": "Zentren werden berechnet; k wird vorgegeben. Diese Formel setzt nichtleere Cluster voraus.",
+    "variables": [
+      {
+        "symbol": "C_j",
+        "meaning": "Punkte im j-ten Cluster"
+      },
+      {
+        "symbol": "|C_j|",
+        "meaning": "Anzahl dieser Punkte"
+      },
+      {
+        "symbol": "μ_j",
+        "meaning": "Clusterzentrum"
+      },
+      {
+        "symbol": "k",
+        "meaning": "vorgegebene Clusterzahl"
+      },
+      {
+        "symbol": "‖ · ‖²",
+        "meaning": "quadrierte euklidische Distanz"
+      }
+    ],
+    "latex": [
+      "\\mu_j=\\frac1{|C_j|}\\sum_{x\\in C_j}x",
+      "J=\\sum_{j=1}^k\\sum_{x\\in C_j}\\lVert x-\\mu_j\\rVert^2"
+    ],
+    "worked_example": {
+      "title": "Zentren nach einer Zuordnung aktualisieren",
+      "given": [
+        "Punkte (1,2,8,9), k=2.",
+        "Startzentren 1 und 8; euklidische Distanz."
+      ],
+      "steps": [
+        {
+          "text": "Punkte dem jeweils nächsten Startzentrum zuordnen.",
+          "latex": "C_1=\\{1,2\\},\\qquad C_2=\\{8,9\\}"
+        },
+        {
+          "text": "Mittelwerte der zugeordneten Punkte berechnen.",
+          "latex": "\\mu_1=\\frac{1+2}{2}=1.5,\\qquad \\mu_2=\\frac{8+9}{2}=8.5"
+        },
+        {
+          "text": "Quadrierte Abstände zu den neuen Zentren summieren.",
+          "latex": "J=4\\cdot(0.5)^2=1"
+        }
+      ],
+      "result": "Die aktualisierten Zentren sind 1.5 und 8.5. k bleibt der vorher gewählte Hyperparameter; Zentren werden aus den Daten berechnet.",
+      "result_latex": "(\\mu_1,\\mu_2)=(1.5,8.5),\\quad J=1"
+    }
+  },
+  "confusions": [
+    {
+      "term": "k und Zentrum",
+      "note": "k ist Konfiguration; Zentren sind gelernte Modellgrössen."
+    },
+    {
+      "term": "Cluster und Klassenlabel",
+      "note": "Ohne bekannte Labels entsteht keine garantierte fachliche Klassenbedeutung."
+    }
+  ],
+  "sources": [
+    {
+      "file": "Machine_Learning_Tag3_Clustering_2026_ShaoJuWoo.pdf",
+      "pages": [
+        3,
+        4,
+        5,
+        6
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 4,
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "Zuordnen und aktualisieren",
+      "caption": "Die Schritte werden abwechselnd wiederholt.",
+      "labels": [
+        "Startzentren",
+        "Nächste Zentren zuordnen",
+        "Mittelwerte berechnen",
+        "Zentren aktualisieren",
+        "Konvergenz prüfen"
+      ]
+    },
+    {
+      "kind": "bars",
+      "title": "Zwei neue Zentren",
+      "caption": "Die Gruppen {1,2} und {8,9} besitzen Mittelwerte 1.5 und 8.5.",
+      "labels": [
+        "Zentrum 1",
+        "Zentrum 2"
+      ],
+      "values": [
+        [
+          1.5,
+          8.5
+        ]
+      ]
+    }
+  ]
+}

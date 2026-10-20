@@ -1,0 +1,159 @@
+{
+  "id": "vanishing-gradients",
+  "exam_id": "deep-learning-data-science",
+  "module_id": "dl-training",
+  "title": "Vanishing Gradient und Aktivierungswahl",
+  "priority": "core",
+  "summary": "Bei sehr kleinen Ableitungen können Gradienten durch viele Schichten verschwinden und das Lernen erschweren.",
+  "explanation": [
+    "Vorwissen: Bei einer Kette von Rechenschritten werden Ableitungsfaktoren multipliziert. Ein einzelner Faktor 0.5 ist nicht null, doch viele solcher Faktoren können fast null ergeben. Potenzschreibweise 0.5^10 bedeutet zehnmal denselben Faktor multiplizieren.",
+    "Beim Backward Pass werden lokale Ableitungen entlang eines Berechnungspfads multipliziert. Sind viele Faktoren kleiner als 1, kann das Produkt sehr klein werden. Frühe Schichten erhalten dann schwache Gradienten und ihre Gewichte ändern sich trotz vorhandener Fehler nur wenig.",
+    "Für Sigmoid gilt σ′(z)=σ(z)(1−σ(z)). Der grösste Wert ist 0.25 bei z=0. Bei z=10 oder z=−10 liegt die Ableitung dagegen nahe null: Die Funktion ist gesättigt. Lange Ketten solcher Ableitungen können deshalb einen Gradient stark abschwächen.",
+    "Ein kleiner Gradient ist nicht dasselbe wie eine kleine Loss. Ein Modell kann eine schlechte Vorhersage machen, aber in gesättigten oder ungünstigen Bereichen kaum hilfreiche Ableitungen erhalten. Mehr Epochen beheben dieses Problem nicht zwangsläufig.",
+    "ReLU besitzt im positiven Bereich Ableitung 1 und vermeidet dort die Sigmoid-Sättigung. Für negative Inputs ist die Ableitung aber 0. Leaky ReLU lässt dort einen kleinen positiven Ableitungsfaktor zu. Residual-Verbindungen, passende Initialisierung und geeignete Normalisierung können den Gradientenfluss zusätzlich verbessern.",
+    "In RNNs tritt ein ähnliches Problem über viele Zeitschritte auf. Die Ableitung eines späten Zustands nach einem frühen Zustand enthält wieder ein langes Produkt. LSTM schafft einen additiven Speicherpfad, dessen Forget-Gates Information besser erhalten können. Das erleichtert lange Abhängigkeiten, garantiert aber keine unbegrenzte Erinnerung.",
+    "Prüfungstransfer: Vergleiche drei verschiedene Dinge: Loss-Höhe, Aktivierungswert und Gradient. Eine fast bei 1 liegende Sigmoid-Ausgabe kann trotz falschem Label eine winzige Aktivierungsableitung haben. ReLU ist nach oben offen, hat für negative z aber null Output und null lokale Ableitung."
+  ],
+  "sources": [
+    {
+      "file": "DeepLearning_Tag1_Einfuhrung_2026_ShaoJuWoo.pdf",
+      "pages": [
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 6,
+  "steps": [
+    "Den rückwärts laufenden Berechnungspfad betrachten.",
+    "Lokale Ableitungen und Sättigung prüfen.",
+    "Die Wirkung vieler kleiner Faktoren auf das Produkt erkennen.",
+    "Geeignete Aktivierungen oder Architekturbausteine wählen."
+  ],
+  "example": "Beispiel: Ein vereinfachter Pfad hat an zehn Stellen den Ableitungsfaktor 0.5. Das Produkt beträgt 0.5¹⁰≈0.000977. Bei zwanzig Stellen beträgt es nur noch 0.5²⁰≈0.000000954.\nFür eine Sigmoid bei z=10 gilt σ(z)≈0.999955 und σ′(z)≈0.0000454. Ein grosser positiver Input kann also eine fast konstante Aktivierung erzeugen.\nBei einer ReLU mit z=10 ist die Ableitung 1; bei z=−10 ist sie 0. ReLU hilft somit im positiven Bereich, löst aber nicht jedes Gradientenproblem.",
+  "confusions": [
+    {
+      "term": "Loss und Gradient",
+      "note": "Eine grosse Loss kann gleichzeitig mit einem sehr kleinen Gradienten auftreten."
+    },
+    {
+      "term": "Vanishing und Exploding",
+      "note": "Viele kleine Faktoren schwächen den Gradient; ungünstige grosse Faktoren können ihn wachsen lassen."
+    }
+  ],
+  "illustrations": [
+    {
+      "kind": "plot",
+      "title": "Sigmoid nähert sich ihren Grenzen",
+      "labels": [
+        "z",
+        "σ(z)"
+      ],
+      "values": [
+        [
+          -6,
+          0.0025
+        ],
+        [
+          -4,
+          0.018
+        ],
+        [
+          -2,
+          0.119
+        ],
+        [
+          0,
+          0.5
+        ],
+        [
+          2,
+          0.881
+        ],
+        [
+          4,
+          0.982
+        ],
+        [
+          6,
+          0.9975
+        ]
+      ],
+      "caption": "Die Kurve wird an den Rändern flach. Dort ist die Ableitung kleiner als in der Nähe von z = 0."
+    },
+    {
+      "kind": "bars",
+      "title": "Ein Produkt wird schnell klein",
+      "labels": [
+        "0.5²",
+        "0.5⁵",
+        "0.5¹⁰"
+      ],
+      "values": [
+        [
+          0.25,
+          0.03125,
+          0.000977
+        ]
+      ],
+      "caption": "Dies isoliert den Effekt kleiner Ableitungsfaktoren; vollständige Netze enthalten zusätzlich Gewichte und weitere Pfade."
+    }
+  ],
+  "formula": {
+    "expression": "σ′(z)=σ(z)(1−σ(z))",
+    "meaning": "Die Sigmoid-Ableitung ist höchstens 0.25 und in Sättigungsbereichen nahe null.",
+    "variables": [
+      {
+        "symbol": "σ(z)",
+        "meaning": "Sigmoid-Ausgabe"
+      },
+      {
+        "symbol": "σ′(z)",
+        "meaning": "Ableitung nach dem Input z"
+      },
+      {
+        "symbol": "z",
+        "meaning": "gewichteter Input vor der Aktivierung"
+      }
+    ],
+    "latex": [
+      "\\sigma'(z)=\\sigma(z)(1-\\sigma(z))"
+    ],
+    "worked_example": {
+      "title": "Lokale Ableitung und lange Produkte",
+      "given": [
+        "Sigmoid am Input z=0.",
+        "Separater vereinfachter Pfad mit zehn lokalen Ableitungsfaktoren 0.5."
+      ],
+      "steps": [
+        {
+          "text": "Sigmoid zuerst auswerten.",
+          "latex": "\\sigma(0)=\\frac1{1+e^0}=\\frac12"
+        },
+        {
+          "text": "Die lokale Ableitung aus der Aktivierung berechnen.",
+          "latex": "\\sigma'(0)=\\frac12\\left(1-\\frac12\\right)=\\frac14=0.25"
+        },
+        {
+          "text": "Das separate Pfadbeispiel als Produkt, nicht als Summe rechnen.",
+          "latex": "0.5^{10}=\\frac1{1024}\\approx0.000977"
+        }
+      ],
+      "result": "Die Sigmoid-Ableitung ist selbst am günstigsten Punkt nur 0.25. Lange Ketten kleiner Faktoren schwächen einen Gradient stark; das zweite Beispiel verwendet zur Veranschaulichung den anderen Faktor 0.5.",
+      "result_latex": "\\sigma'(0)=0.25,\\quad0.5^{10}\\approx0.000977"
+    }
+  }
+}

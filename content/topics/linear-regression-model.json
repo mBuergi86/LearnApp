@@ -1,0 +1,147 @@
+{
+  "id": "linear-regression-model",
+  "exam_id": "machine-learning",
+  "module_id": "ml-regression",
+  "title": "Lineare Regression",
+  "priority": "core",
+  "summary": "Lineare Regression modelliert eine numerische Response als lineare Kombination der Eingangsmerkmale.",
+  "explanation": [
+    "Lineare Regression sagt einen numerischen Zielwert voraus. Für ein Feature lautet die Regel ŷ=wx+b. w bestimmt die Änderung der Vorhersage pro zusätzlicher Einheit x; b ist die Vorhersage bei x=0.",
+    "Bei mehreren Features wird ŷ=Σwⱼxⱼ+b. Linear bedeutet hier linear in den Parametern. Auch ein vorher erzeugtes Feature x² kann mit einem linearen Koeffizienten verwendet werden; die Kurve im ursprünglichen x ist dann nicht gerade.",
+    "Training schätzt die Gewichte, indem es beispielsweise den mittleren quadratischen Fehler zwischen Vorhersagen und bekannten Zielen minimiert. Es sucht nicht für jeden neuen Fall manuell eine andere Gerade.",
+    "Die Datenmatrix enthält eine Zeile je Beispiel. Eine Eins-Spalte kann den Bias in den Parametervektor aufnehmen. Mit N Fällen und d Features enthält das affine Modell d Gewichte und einen Bias.",
+    "Ein Regressionsoutput ist nicht automatisch eine Wahrscheinlichkeit und kann grundsätzlich ausserhalb [0,1] liegen. Sehr weit ausserhalb des Trainingsbereichs zu extrapolieren ist riskant; eine mathematisch mögliche Zahl kann fachlich unplausibel sein."
+  ],
+  "steps": [
+    "Numerisches Ziel und Features festlegen.",
+    "Gewichtete Summe einschliesslich Bias berechnen.",
+    "Fehler mit bekannten Labels bestimmen.",
+    "Parameter auf Training anpassen und unabhängig bewerten."
+  ],
+  "sources": [
+    {
+      "file": "MachineLearning_Tag2_Lineare_Regression_2026_ShaoJuWoo.pdf",
+      "pages": [
+        3,
+        4,
+        6,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        16,
+        17
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 1,
+  "example": "Eigener Rechenfall: ŷ=2x+1. Für x=3 ist ŷ=2·3+1=7. Ist y=8, gilt Residuum ŷ−y=−1 und quadrierter Fehler 1. Für x=4 ist ŷ=9. Das Gewicht 2 bedeutet zwei Zieleinheiten pro Featureeinheit, nicht zwei Klassen oder zwei Epochen.",
+  "formula": {
+    "expression": "ŷ=wᵀx+b; MSE=(1/N)Σ(ŷᵢ−yᵢ)²",
+    "meaning": "Vorhersageregel und Trainingsziel sind unterschiedliche Bestandteile.",
+    "variables": [
+      {
+        "symbol": "w",
+        "meaning": "Vektor gelernter Gewichte"
+      },
+      {
+        "symbol": "x",
+        "meaning": "Featurevektor"
+      },
+      {
+        "symbol": "b",
+        "meaning": "gelernter Offset"
+      },
+      {
+        "symbol": "yᵢ,ŷᵢ",
+        "meaning": "Ziel und Vorhersage eines Falls"
+      },
+      {
+        "symbol": "N",
+        "meaning": "Anzahl Fälle"
+      }
+    ],
+    "latex": [
+      "\\hat y=w^\\top x+b",
+      "\\mathrm{MSE}=\\frac1N\\sum_{i=1}^N(\\hat y_i-y_i)^2"
+    ],
+    "worked_example": {
+      "title": "Vorhersage und Einzelverlust",
+      "given": [
+        "Ein Feature x=3, Gewicht w=2, Bias b=1.",
+        "Bekanntes Ziel y=8; hier N=1."
+      ],
+      "steps": [
+        {
+          "text": "Feature mit Gewicht multiplizieren und Bias addieren.",
+          "latex": "\\hat y=2\\cdot3+1=7"
+        },
+        {
+          "text": "Das vorzeichenbehaftete Residuum berechnen.",
+          "latex": "\\hat y-y=7-8=-1"
+        },
+        {
+          "text": "Quadrieren und für dieses eine Beispiel mitteln.",
+          "latex": "\\mathrm{MSE}=\\frac{(-1)^2}{1}=1"
+        }
+      ],
+      "result": "Das Modell sagt 7 vorher und liegt um 1 unter dem Ziel. Der MSE ist 1 und nicht −1, denn er verwendet das Quadrat.",
+      "result_latex": "\\hat y=7,\\quad \\mathrm{MSE}=1"
+    }
+  },
+  "confusions": [
+    {
+      "term": "Linear und logistisch",
+      "note": "Regression liefert eine Zahl; logistische Regression modelliert Klassenwahrscheinlichkeiten."
+    },
+    {
+      "term": "Gewicht und Feature",
+      "note": "Das Gewicht wird gelernt; der Featurewert stammt aus dem jeweiligen Beispiel."
+    }
+  ],
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "Von x zum Regressionsfehler",
+      "caption": "Die Loss entsteht erst nach Vergleich mit y.",
+      "labels": [
+        "Feature x",
+        "w·x+b",
+        "Vorhersage ŷ",
+        "Vergleich mit y",
+        "Quadratischer Fehler"
+      ]
+    },
+    {
+      "kind": "plot",
+      "title": "Die Gerade ŷ=2x+1",
+      "caption": "Bei x=0 ist der Output 1; bei x=3 ist er 7.",
+      "labels": [
+        "x",
+        "ŷ"
+      ],
+      "values": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          3,
+          7
+        ]
+      ]
+    }
+  ]
+}

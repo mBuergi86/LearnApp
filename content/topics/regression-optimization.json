@@ -1,0 +1,149 @@
+{
+  "id": "regression-optimization",
+  "exam_id": "machine-learning",
+  "module_id": "ml-regression",
+  "title": "Least-Squares-Optimierung",
+  "priority": "core",
+  "summary": "Bei der linearen Regression werden Parameter so bestimmt, dass der quadratische Fehler minimal wird.",
+  "explanation": [
+    "Least Squares wählt Parameter, die die Summe quadrierter Vorhersagefehler minimieren. Ein Fehler −2 trägt genauso 4 bei wie +2. Grosse Fehler erhalten durch das Quadrieren viel Gewicht.",
+    "Für eine Datenmatrix X und Parameter θ ist die Vorhersage Xθ. Der Vektor Xθ−y enthält die Residuen. Der quadratische Fehler lässt sich als (Xθ−y)ᵀ(Xθ−y) schreiben.",
+    "Der Gradient beschreibt, wie sich die Loss bei kleinen Parameteränderungen verändert. Für J=(1/N)‖Xθ−y‖² gilt ∇J=(2/N)Xᵀ(Xθ−y). Bei einer zusätzlichen Halbierung der Loss entfällt der Faktor 2.",
+    "Setzt man den Gradienten gleich null, erhält man XᵀXθ=Xᵀy. Nur wenn XᵀX invertierbar ist, darf θ=(XᵀX)⁻¹Xᵀy geschrieben werden. Bei abhängigen Spalten ist diese gewöhnliche Inverse nicht vorhanden.",
+    "Für praktische Berechnung werden häufig stabile Verfahren wie QR oder SVD verwendet, statt ausdrücklich eine Inverse auszurechnen. Gradient Descent ist ein iterativer anderer Weg zum selben Least-Squares-Ziel; in der Prüfung zählt die angegebene Loss-Konvention."
+  ],
+  "sources": [
+    {
+      "file": "MachineLearning_Tag2_Lineare_Regression_2026_ShaoJuWoo.pdf",
+      "pages": [
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 2,
+  "steps": [
+    "Vorhersage Xθ und Residuen bilden.",
+    "Loss-Konvention inklusive Mittelung festlegen.",
+    "Gradient bestimmen oder Normalengleichung verwenden.",
+    "Rangbedingungen beachten und Ergebnis kontrollieren."
+  ],
+  "example": "Eigener Rechenfall ohne Intercept: x=(1,2), y=(2,4), Modell ŷ=wx. J(w)=[(w−2)²+(2w−4)²]/2=2.5(w−2)². Ableitung J′(w)=5(w−2). Bei w=0 ist der Gradient −10; bei w=2 ist er 0 und beide Vorhersagen sind exakt. Die Normalengleichung ergibt w=(1·2+2·4)/(1²+2²)=10/5=2.",
+  "formula": {
+    "expression": "J=(1/N)‖Xθ−y‖²\n∇J=(2/N)Xᵀ(Xθ−y)\nXᵀXθ=Xᵀy",
+    "meaning": "Die inverse Lösung setzt vollen Spaltenrang von X voraus.",
+    "variables": [
+      {
+        "symbol": "X",
+        "meaning": "Datenmatrix, ggf. mit Eins-Spalte"
+      },
+      {
+        "symbol": "θ",
+        "meaning": "Parametervektor"
+      },
+      {
+        "symbol": "y",
+        "meaning": "Zielvektor"
+      },
+      {
+        "symbol": "N",
+        "meaning": "Anzahl Beispiele"
+      },
+      {
+        "symbol": "ᵀ",
+        "meaning": "Transponieren: Zeilen und Spalten tauschen"
+      }
+    ],
+    "latex": [
+      "J=\\frac1N\\lVert X\\theta-y\\rVert^2",
+      "\\nabla J=\\frac2N X^\\top(X\\theta-y)",
+      "X^\\top X\\theta=X^\\top y"
+    ],
+    "worked_example": {
+      "title": "Least Squares ohne Intercept",
+      "given": [
+        "x=(1,2), y=(2,4); Modell ŷ=wx.",
+        "Ein einzelnes Gewicht, kein Bias."
+      ],
+      "steps": [
+        {
+          "text": "Produkte und Quadrate für die Normalengleichung berechnen.",
+          "latex": "\\sum_i x_i y_i=1\\cdot2+2\\cdot4=10"
+        },
+        {
+          "text": "Den Nenner berechnen; er ist hier von null verschieden.",
+          "latex": "\\sum_i x_i^2=1^2+2^2=5"
+        },
+        {
+          "text": "Den optimalen Koeffizienten als Quote bestimmen.",
+          "latex": "w=\\frac{\\sum_i x_i y_i}{\\sum_i x_i^2}=\\frac{10}{5}=2"
+        },
+        {
+          "text": "Die Vorhersagen und Loss zur Kontrolle einsetzen.",
+          "latex": "Xw=(2,4)^\\top,\\qquad J=0"
+        }
+      ],
+      "result": "w=2 trifft beide Ziele exakt. Die gewöhnliche inverse Matrixlösung verlangt allgemein vollen Spaltenrang; dieser eindimensionale Nenner ist hier positiv.",
+      "result_latex": "w=2,\\quad J=0"
+    }
+  },
+  "confusions": [
+    {
+      "term": "Inverse und Pseudoinverse",
+      "note": "Eine gewöhnliche Inverse erfordert Nichtsingularität; die Pseudoinverse behandelt auch andere Rangfälle."
+    },
+    {
+      "term": "Loss und Gradient",
+      "note": "Der Loss-Wert ist eine Fehlerzahl, der Gradient enthält Änderungsrichtungen."
+    }
+  ],
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "Vom Fehler zum Optimum",
+      "caption": "Beim quadratischen linearen Problem führt Gradient null zur Normalengleichung.",
+      "labels": [
+        "Xθ berechnen",
+        "Residuen Xθ−y",
+        "Quadratische Loss",
+        "Gradient gleich null",
+        "Parameterlösung prüfen"
+      ]
+    },
+    {
+      "kind": "plot",
+      "title": "Least Squares als Schüssel",
+      "caption": "Für das Beispiel gilt J=2.5(w−2)². Das Minimum liegt bei w=2.",
+      "labels": [
+        "w",
+        "J"
+      ],
+      "values": [
+        [
+          0,
+          10
+        ],
+        [
+          1,
+          2.5
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          2.5
+        ],
+        [
+          4,
+          10
+        ]
+      ]
+    }
+  ]
+}

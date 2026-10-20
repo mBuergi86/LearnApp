@@ -1,0 +1,134 @@
+{
+  "id": "loss-functions-ml",
+  "exam_id": "machine-learning",
+  "module_id": "ml-model-selection",
+  "title": "Loss-Funktionen",
+  "priority": "core",
+  "summary": "Eine Loss-Funktion misst den Abstand zwischen Modellvorhersage und Ziel und liefert damit das Optimierungsziel.",
+  "explanation": [
+    "Eine Loss ist eine berechenbare Strafe für Vorhersagefehler. Sie bildet das Trainingsziel. Ein kleinerer Loss bedeutet nach dieser Definition eine bessere Anpassung, aber nicht zwangsläufig jede fachlich gewünschte Eigenschaft.",
+    "Für Regression misst MSE den Mittelwert quadrierter Fehler. Fehlerzeichen heben sich dadurch nicht auf. Ein Fehler in CHF wird zu CHF²; RMSE nimmt die Wurzel und hat wieder die ursprüngliche Einheit.",
+    "Binary Cross-Entropy bewertet binäre Wahrscheinlichkeiten gegen Labels 0/1. Für y=1 zählt −ln(p), für y=0 zählt −ln(1−p). Eine selbstsicher falsche Wahrscheinlichkeit wird stark bestraft.",
+    "Loss und Metrik können verschieden sein: Cross-Entropy nutzt die Wahrscheinlichkeiten, Accuracy zählt erst richtige Klassenentscheidungen. Zwei Modelle mit gleicher Accuracy können unterschiedlich sichere und deshalb verschieden teure Fehler haben.",
+    "Vor dem Rechnen muss klar sein, ob Summe, Mittelwert oder halber Mittelwert verwendet wird und ob ln den natürlichen Logarithmus bezeichnet. Diese Konvention verändert Zahlen und Gradienten, nicht das Grundprinzip."
+  ],
+  "sources": [
+    {
+      "file": "MachineLearning_Tag2_ModelTraining_Selection_2026_ShaoJuWoo.pdf",
+      "pages": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 1,
+  "steps": [
+    "Zieltyp und passende Loss auswählen.",
+    "Vorhersagen und Labels paarweise vergleichen.",
+    "Einzelverluste berechnen.",
+    "Nach der angegebenen Konvention mitteln oder summieren."
+  ],
+  "example": "Eigener Rechenfall: y=(2,5), ŷ=(3,3). Fehler (1,−2), Quadrate (1,4), MSE=(1+4)/2=2.5; RMSE=√2.5≈1.581. Für einen positiven Fall y=1 mit p=0.8 ist BCE=−ln(0.8)≈0.223; bei p=0.2 etwa 1.609. Derselbe harte Fehler kann also abhängig von der Sicherheit unterschiedlich bestraft werden.",
+  "formula": {
+    "expression": "MSE=(1/N)Σ(ŷᵢ−yᵢ)²\nBCE=−(1/N)Σ[yᵢln(pᵢ)+(1−yᵢ)ln(1−pᵢ)]",
+    "meaning": "BCE verwendet Wahrscheinlichkeiten, nicht schon gerundete Klassenlabels.",
+    "variables": [
+      {
+        "symbol": "N",
+        "meaning": "Anzahl Beispiele"
+      },
+      {
+        "symbol": "yᵢ",
+        "meaning": "Zielwert bzw. binäres Label"
+      },
+      {
+        "symbol": "ŷᵢ",
+        "meaning": "numerische Vorhersage"
+      },
+      {
+        "symbol": "pᵢ",
+        "meaning": "positive Klassenwahrscheinlichkeit"
+      },
+      {
+        "symbol": "ln",
+        "meaning": "natürlicher Logarithmus"
+      }
+    ],
+    "latex": [
+      "\\mathrm{MSE}=\\frac1N\\sum_i(\\hat y_i-y_i)^2",
+      "\\mathrm{BCE}=-\\frac1N\\sum_i\\left[y_i\\ln p_i+(1-y_i)\\ln(1-p_i)\\right]"
+    ],
+    "worked_example": {
+      "title": "Regression und binäre Wahrscheinlichkeit bewerten",
+      "given": [
+        "Regression: y=(2,5), ŷ=(3,3), N=2.",
+        "Separater binärer Fall: y=1 und p=0.8; natürlicher Logarithmus.",
+        "Benötigter Logarithmus als Tabellen-/Taschenrechnerwert: ln(0.8)≈−0.223144."
+      ],
+      "steps": [
+        {
+          "text": "Regressionsfehler bilden und quadrieren.",
+          "latex": "\\hat y-y=(1,-2),\\qquad (\\hat y-y)^2=(1,4)"
+        },
+        {
+          "text": "Quadrierte Fehler mitteln.",
+          "latex": "\\mathrm{MSE}=\\frac{1+4}{2}=2.5"
+        },
+        {
+          "text": "Bei BCE das tatsächliche Label einsetzen; y=1 lässt nur −ln(p) übrig.",
+          "latex": "L=-[1\\ln0.8+0\\ln0.2]=-\\ln0.8"
+        },
+        {
+          "text": "Den natürlichen Logarithmus numerisch auswerten.",
+          "latex": "L\\approx0.223"
+        }
+      ],
+      "result": "MSE=2.5 gehört zur Regression, BCE≈0.223 zum separaten Klassifikationsfall. Beide sind Loss-Zahlen, keine Accuracy-Prozente.",
+      "result_latex": "\\mathrm{MSE}=2.5,\\quad L_{\\mathrm{BCE}}\\approx0.223"
+    }
+  },
+  "confusions": [
+    {
+      "term": "MSE und RMSE",
+      "note": "Erst mitteln, dann die Wurzel ziehen; RMSE ist nicht der Mittelwert absoluter Fehler."
+    },
+    {
+      "term": "Loss und Accuracy",
+      "note": "Loss kann Trainingssignal liefern; Accuracy ist eine harte Erfolgsquote."
+    }
+  ],
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "MSE ohne Vorzeichenfehler",
+      "caption": "Quadrieren verhindert, dass sich positive und negative Residuen aufheben.",
+      "labels": [
+        "Fehler berechnen",
+        "Jeden Fehler quadrieren",
+        "Quadrate summieren",
+        "Durch N teilen"
+      ]
+    },
+    {
+      "kind": "bars",
+      "title": "Unsicherheit und BCE",
+      "caption": "Für y=1 ergibt p=0.8 Verlust 0.223; p=0.2 Verlust 1.609.",
+      "labels": [
+        "p=0.8",
+        "p=0.2"
+      ],
+      "values": [
+        [
+          0.223,
+          1.609
+        ]
+      ]
+    }
+  ]
+}

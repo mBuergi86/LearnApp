@@ -1,0 +1,17 @@
+.git/
+.agents/
+.codex/
+data/
+*.exe
+*.db
+*.db-shm
+*.db-wal
+*.log
+*.tmp
+*.tar
+.idea/
+.vscode/
+Machine Learning/
+Tag 1_18 August 2026/
+Tag 2_20 August 2026/
+Tag 3_29 August 2026/

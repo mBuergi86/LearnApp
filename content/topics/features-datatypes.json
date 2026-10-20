@@ -1,0 +1,136 @@
+{
+  "id": "features-datatypes",
+  "exam_id": "machine-learning",
+  "module_id": "ml-foundations",
+  "title": "Features und Datentypen",
+  "priority": "core",
+  "summary": "Features sind die Merkmale eines Datensatzes; ihre Datentypen bestimmen, wie sie analysiert und für Modelle dargestellt werden.",
+  "explanation": [
+    "Eine Beobachtung ist ein einzelner Fall, zum Beispiel eine Person. Ein Feature ist eine Eingabeeigenschaft dieses Falls, etwa Alter oder Wohnort. Das Label ist die gewünschte Ausgabe und wird gewöhnlich getrennt von den Inputs gespeichert.",
+    "Bei N Fällen und d Features hat die Datenmatrix X die Form N×d: Zeilen sind Fälle, Spalten Merkmale. Ein Zielvektor y besitzt bei einem Zielwert pro Fall N Einträge. Eine Zahl für eine Kategorie ist nicht automatisch eine messbare Grösse.",
+    "Numerische Merkmale erlauben sinnvolle Grössenvergleiche, etwa Alter. Ordinale Kategorien besitzen eine Reihenfolge, etwa niedrig/mittel/hoch, aber nicht zwingend gleiche Abstände. Nominale Kategorien wie Farben besitzen keine natürliche Reihenfolge.",
+    "Der Datentyp bestimmt die Verarbeitung. Nominale Kategorien können mit One-Hot-Encoding dargestellt werden; numerische Werte gegebenenfalls mit Skalierung. Eine Postleitzahl ist trotz Ziffern meist keine metrische Entfernung.",
+    "Feature Engineering erzeugt nützliche Inputs aus vorhandenen Daten, etwa Fläche pro Zimmer. Dabei darf weder das spätere Label noch erst in der Zukunft verfügbare Information hineinfliessen."
+  ],
+  "example": "Eigener Rechenfall: Drei Wohnungen besitzen je zwei Features: X=[[50,2],[80,3],[100,4]], mit Fläche und Zimmerzahl. X hat 3×2=6 Einträge; y=[150000,240000,310000] enthält drei Preise. Für Wohnung 1 ist das abgeleitete Feature Fläche/Zimmer=50/2=25 m². Der Preis wird dabei nicht als Input eingesetzt.",
+  "sources": [
+    {
+      "file": "MachineLearning_Tag1_Einfuhrung_2026_ShaoJuWoo.pdf",
+      "pages": [
+        55,
+        56,
+        58,
+        61,
+        65,
+        66,
+        67
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 4,
+  "steps": [
+    "Einzelnen Fall und Ziel bestimmen.",
+    "Spalten als Features oder Label unterscheiden.",
+    "Fachlichen Datentyp prüfen, nicht nur Dateiformat.",
+    "Geeignete Darstellung und erlaubte abgeleitete Features wählen."
+  ],
+  "formula": {
+    "expression": "X∈ℝ^(N×d); y∈ℝ^N",
+    "meaning": "Die Form beschreibt Anzahl Fälle und Features, nicht die Anzahl Klassen.",
+    "variables": [
+      {
+        "symbol": "N",
+        "meaning": "Anzahl Beobachtungen"
+      },
+      {
+        "symbol": "d",
+        "meaning": "Anzahl Features"
+      },
+      {
+        "symbol": "X",
+        "meaning": "numerisch dargestellte Eingabematrix"
+      },
+      {
+        "symbol": "y",
+        "meaning": "Zielwerte, hier numerische Preise"
+      },
+      {
+        "symbol": "ℝ",
+        "meaning": "Menge der reellen Zahlen"
+      }
+    ],
+    "latex": [
+      "X\\in\\mathbb R^{N\\times d}",
+      "y\\in\\mathbb R^N"
+    ],
+    "worked_example": {
+      "title": "Zeilen, Features und Labels zählen",
+      "given": [
+        "Drei Wohnungen (N=3), zwei Features je Wohnung (d=2).",
+        "Features: Fläche und Zimmer; Preise liegen separat in y."
+      ],
+      "steps": [
+        {
+          "text": "Eine Zeile für jeden Fall und eine Spalte je Feature bilden.",
+          "latex": "X=\\begin{pmatrix}50&2\\\\80&3\\\\100&4\\end{pmatrix}"
+        },
+        {
+          "text": "Form der Eingaben und des separaten Zielvektors ablesen.",
+          "latex": "X:3\\times2,\\qquad y:3\\times1"
+        },
+        {
+          "text": "Die Anzahl Eingabewerte als Produkt der Dimensionen berechnen.",
+          "latex": "N\\cdot d=3\\cdot2=6"
+        }
+      ],
+      "result": "X enthält sechs Featurewerte, nicht sechs Wohnungen. Die drei Preise werden als Labels getrennt gespeichert.",
+      "result_latex": "N=3,\\quad d=2,\\quad \\#\\mathrm{Featurewerte}=6"
+    }
+  },
+  "confusions": [
+    {
+      "term": "Feature und Label",
+      "note": "Fläche ist bekannte Eingabe; Preis ist in diesem Beispiel die gesuchte Ausgabe."
+    },
+    {
+      "term": "Zahl und numerischer Datentyp",
+      "note": "Eine Kategorie-ID 3 bedeutet nicht dreimal so viel wie Kategorie-ID 1."
+    }
+  ],
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "Ein Fall, mehrere Eigenschaften",
+      "caption": "Features gehen ins Modell; das Label wird beim Training zum Vergleich benutzt.",
+      "labels": [
+        "Wohnung|eine Beobachtung",
+        "Fläche und Zimmer|Features",
+        "Modellvorhersage|geschätzter Preis",
+        "Bekannter Preis|Label zum Vergleich"
+      ]
+    },
+    {
+      "kind": "matrix",
+      "title": "Drei Fälle mit zwei Features",
+      "caption": "Zeilen: Wohnungen; Spalten: Fläche in m² und Zimmerzahl. Preise gehören in den getrennten Zielvektor.",
+      "labels": [
+        "Fläche | Zimmer"
+      ],
+      "values": [
+        [
+          50,
+          2
+        ],
+        [
+          80,
+          3
+        ],
+        [
+          100,
+          4
+        ]
+      ]
+    }
+  ]
+}

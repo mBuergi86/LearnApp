@@ -1,0 +1,138 @@
+{
+  "id": "hyperparameters-bias-variance",
+  "exam_id": "machine-learning",
+  "module_id": "ml-model-selection",
+  "title": "Hyperparameter und Bias-Variance",
+  "priority": "core",
+  "summary": "Hyperparameter werden vor dem Training festgelegt; Bias und Varianz beschreiben unterschiedliche Generalisierungsfehler.",
+  "explanation": [
+    "Modellparameter entstehen beim Training, etwa Regressionsgewichte. Hyperparameter legen das Verfahren fest, etwa maximale Baumtiefe, Lernrate, Regularisierungsstärke oder Clusterzahl k.",
+    "Model Selection vergleicht solche Konfigurationen anhand von Validation oder Cross-Validation. Das Testset darf diese Auswahl nicht steuern. Hyperparameter werden also ebenfalls ausgewählt, aber nicht wie Gewichte im gewöhnlichen Trainingsupdate angepasst.",
+    "Statistischer Bias ist systematische Abweichung der erwarteten Vorhersage vom wahren Zusammenhang. Ein zu einfaches Verfahren kann hohen Bias haben. Das ist nicht der additive Bias-Term b eines Neurons.",
+    "Varianz beschreibt, wie stark das gelernte Modell bei wechselnden Trainingsstichproben schwankt. Sehr flexible Modelle können Trainingsdetails empfindlich folgen. Varianz ist hier nicht bloss die Streuung einer einzelnen Feature-Spalte.",
+    "Für quadratischen Fehler lautet eine idealisierte Zerlegung Bias²+Varianz+unvermeidbares Rauschen. Höhere Komplexität senkt häufig Bias und erhöht Varianz; das ist ein typischer Zusammenhang, keine Garantie für jedes Verfahren und jede Datenlage."
+  ],
+  "sources": [
+    {
+      "file": "MachineLearning_Tag2_ModelTraining_Selection_2026_ShaoJuWoo.pdf",
+      "pages": [
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 4,
+  "steps": [
+    "Gelernte Parameter von Konfiguration unterscheiden.",
+    "Mehrere Konfigurationen auf Training lernen.",
+    "Validation oder Cross-Validation vergleichen.",
+    "Bias, Varianz und Rauschen im Fehlerbild unterscheiden."
+  ],
+  "example": "Eigener Rechenfall: Der wahre Zielwert bei einem festen Input ist 5. Zwei auf unterschiedlichen Stichproben trainierte Modelle sagen 4 und 8 voraus. Erwartete Vorhersage hier=(4+8)/2=6; Bias=6−5=1, Bias²=1. Varianz=[(4−6)²+(8−6)²]/2=4. Ohne zusätzliches Zielrauschen ist mittlerer quadratischer Fehler [(4−5)²+(8−5)²]/2=5=1+4.",
+  "formula": {
+    "expression": "E[(ŷ−y)²]=Bias²+Varianz+Rauschvarianz",
+    "meaning": "Die Zerlegung gilt für quadratischen Fehler unter den üblichen Erwartungsannahmen.",
+    "variables": [
+      {
+        "symbol": "E",
+        "meaning": "Mittel/Erwartung über wiederholte Stichproben und ggf. Rauschen"
+      },
+      {
+        "symbol": "ŷ",
+        "meaning": "Vorhersage des trainierten Modells"
+      },
+      {
+        "symbol": "Bias",
+        "meaning": "systematische Abweichung"
+      },
+      {
+        "symbol": "Varianz",
+        "meaning": "Streuung der Vorhersage über Trainingsstichproben"
+      },
+      {
+        "symbol": "σ_ε²",
+        "meaning": "Varianz des unvermeidbaren Zielrauschens"
+      }
+    ],
+    "latex": [
+      "\\mathbb E[(\\hat y-y)^2]=\\mathrm{Bias}^2+\\mathrm{Var}(\\hat y)+\\sigma_\\varepsilon^2"
+    ],
+    "worked_example": {
+      "title": "Modellschwankung von systematischem Fehler trennen",
+      "given": [
+        "Wahrer Wert bei einem festen Input: 5, ohne Zielrauschen.",
+        "Zwei gleichgewichtete Trainingsstichproben liefern Vorhersagen 4 und 8."
+      ],
+      "steps": [
+        {
+          "text": "Erwartete Vorhersage über diese zwei Modelle bestimmen.",
+          "latex": "\\bar{\\hat y}=\\frac{4+8}{2}=6"
+        },
+        {
+          "text": "Systematische Abweichung berechnen und quadrieren.",
+          "latex": "\\mathrm{Bias}=6-5=1,\\qquad \\mathrm{Bias}^2=1"
+        },
+        {
+          "text": "Streuung der Vorhersagen um deren Mittelwert berechnen.",
+          "latex": "\\mathrm{Var}(\\hat y)=\\frac{(4-6)^2+(8-6)^2}{2}=4"
+        },
+        {
+          "text": "Die Fehlerzerlegung direkt mit den beiden Zielabweichungen kontrollieren.",
+          "latex": "\\frac{(4-5)^2+(8-5)^2}{2}=5=1+4+0"
+        }
+      ],
+      "result": "Mittlerer quadratischer Fehler 5 besteht hier aus Bias²=1 und Varianz=4. Der additive Neuronen-Bias b ist eine andere Bedeutung des Wortes Bias.",
+      "result_latex": "\\mathrm{MSE}=5"
+    }
+  },
+  "confusions": [
+    {
+      "term": "Bias-Term und Bias²",
+      "note": "b ist ein Modellparameter; Bias² gehört zur statistischen Fehlerzerlegung."
+    },
+    {
+      "term": "Featurevarianz und Modellvarianz",
+      "note": "Streuung der Eingabewerte und Empfindlichkeit gegenüber Trainingsstichproben sind verschieden."
+    }
+  ],
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "Auswahl einer Konfiguration",
+      "caption": "Jeder Kandidat lernt eigene Parameter; Validation vergleicht die Ergebnisse.",
+      "labels": [
+        "Hyperparameter vorgeben",
+        "Parameter trainieren",
+        "Validation bewerten",
+        "Konfiguration auswählen"
+      ]
+    },
+    {
+      "kind": "bars",
+      "title": "Quadratischer Fehler zerlegt",
+      "caption": "Im Beispiel 4 und 8 bei wahrem Wert 5 gilt 5=1+4 ohne Rauschen.",
+      "labels": [
+        "Bias²",
+        "Varianz",
+        "Gesamtfehler"
+      ],
+      "values": [
+        [
+          1,
+          4,
+          5
+        ]
+      ]
+    }
+  ]
+}

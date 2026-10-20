@@ -1,0 +1,119 @@
+{
+  "id": "multi-head-attention",
+  "exam_id": "deep-learning-data-science",
+  "module_id": "dl-transformer",
+  "title": "Multi-Head Attention",
+  "priority": "core",
+  "summary": "Multi-Head Attention führt mehrere Attention-Berechnungen parallel aus und kombiniert ihre Ergebnisse.",
+  "explanation": [
+    "Vorwissen: Ein Head ist ein paralleler Attention-Rechenweg mit eigenen Projektionen. Mehr Heads bedeutet nicht mehr Tokens oder automatisch mehr Transformer-Layers. Sie bearbeiten dieselben Positionen in verschiedenen Merkmalsräumen.",
+    "Multi-Head Attention berechnet mehrere Attention-Mechanismen parallel. Jeder Head verwendet eigene Projektionen für Query, Key und Value. So entstehen mehrere gelernte Vergleichs- und Inhaltsräume auf denselben Tokenpositionen.",
+    "Die Heads können unterschiedliche Beziehungen betonen. Ein Head könnte lokale Nachbarn und ein anderer weit entfernte Abhängigkeiten gewichten. Solche Interpretationen sind mögliche Beispiele, keine im Modell fest eingebaute garantierte Aufgabenverteilung.",
+    "Jeder Head liefert eine Matrix mit T Positionen und d_v Features. Die Outputs werden entlang der Feature-Achse verkettet. Aus h Outputs der Form T × d_v entsteht T × (h·d_v). Es wird nicht über die Tokenachse verkettet.",
+    "Eine zusätzliche lernbare Projektion W_O kombiniert die verketteten Features und liefert wieder die gewünschte Modelldimension d_model. Verketten plus Projektion unterscheidet sich vom blossen Mitteln der Head-Outputs. Die Projektion kann Anteile verschiedener Heads miteinander mischen.",
+    "Im ursprünglichen Transformer sind d_model=512, h=8 und d_k=d_v=64. Acht mal 64 ergibt wieder 512 vor der Ausgangsprojektion. Diese Werte sind ein Beispiel einer bestimmten Architektur, keine allgemeine Definition von Multi-Head Attention.",
+    "Mathematik lesen: Concat hängt Featurevektoren aneinander. Drei Heads mit je vier Komponenten liefern zwölf Komponenten pro Token. Erst W_O projiziert diese auf die gewünschte Outputdimension; bei einer Matrixmultiplikation muss die Eingangsbreite zur Matrix passen."
+  ],
+  "confusions": [
+    {
+      "term": "Verketten und Mitteln",
+      "note": "Multi-Head Attention verkettet Features und projiziert sie; sie mittelt nicht zwingend die Outputs."
+    },
+    {
+      "term": "Head-Anzahl und Token-Anzahl",
+      "note": "Mehr Heads erweitern Repräsentationsräume; sie erzeugen nicht automatisch mehr Tokenpositionen."
+    }
+  ],
+  "sources": [
+    {
+      "file": "DeepLearning_Tag3_Transformer_2026.pdf",
+      "pages": [
+        30,
+        31
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 2,
+  "steps": [
+    "Eigene Q/K/V-Projektionen je Head anwenden.",
+    "Attention pro Head parallel berechnen.",
+    "Outputs entlang der Feature-Dimension verketten.",
+    "Mit W_O auf die Modelldimension projizieren."
+  ],
+  "example": "Beispiel mit zwei Heads und einem Token: Head 1 liefert z¹=(1,2), Head 2 liefert z²=(3,4).\nVerketten ergibt (1,2,3,4), nicht den Mittelwert (2,3).\nEine beispielhafte Ausgangsprojektion summiert die ersten und dritten sowie die zweiten und vierten Komponenten. Ihr Output lautet (4,6).\nFür T=5 Tokens und drei Heads mit d_v=4 entstehen drei 5 × 4 Matrizen. Ihre Verkettung ist 5 × 12. Eine Projektion auf d_model=8 ergibt anschliessend 5 × 8.",
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "Mehrere Heads werden kombiniert",
+      "labels": [
+        "Head 1, …, Head h|je eigene Q/K/V-Matrizen",
+        "Concat|Feature-Achse: h · d_v",
+        "Ausgangsprojektion W_O|zurück auf d_model"
+      ],
+      "caption": "Heads arbeiten parallel. Das Ergebnis behält die Zahl T der Tokenpositionen."
+    },
+    {
+      "kind": "flow",
+      "title": "Zwei Head-Outputs",
+      "labels": [
+        "z¹ = (1,2); z² = (3,4)|zwei Repräsentationen",
+        "Concat|(1,2,3,4)",
+        "Beispielprojektion|(4,6)"
+      ],
+      "caption": "Die Beispielprojektion addiert Komponenten 1+3 und 2+4; reale W_O-Werte werden gelernt."
+    }
+  ],
+  "formula": {
+    "expression": "MultiHead=Concat(head₁,…,head_h)W_O",
+    "meaning": "Je Head gilt head_i=Attention(XW_Qⁱ,XW_Kⁱ,XW_Vⁱ).",
+    "variables": [
+      {
+        "symbol": "head_i",
+        "meaning": "Attention-Output des i-ten Heads"
+      },
+      {
+        "symbol": "h",
+        "meaning": "Anzahl Heads"
+      },
+      {
+        "symbol": "Concat",
+        "meaning": "Verketten entlang der Featureachse"
+      },
+      {
+        "symbol": "W_O",
+        "meaning": "lernbare Ausgangsprojektion"
+      },
+      {
+        "symbol": "W_Qⁱ,W_Kⁱ,W_Vⁱ",
+        "meaning": "eigene Projektionsmatrizen je Head"
+      }
+    ],
+    "latex": [
+      "\\mathrm{MultiHead}=\\operatorname{Concat}(\\mathrm{head}_1,\\ldots,\\mathrm{head}_h)W_O"
+    ],
+    "worked_example": {
+      "title": "Heads verketten, nicht mitteln",
+      "given": [
+        "Ein Token: Head 1 liefert (1,2), Head 2 (3,4).",
+        "Beispielhafte Projektion addiert Komponente 1+3 sowie 2+4."
+      ],
+      "steps": [
+        {
+          "text": "Die beiden Head-Vektoren entlang der Featureachse aneinanderhängen.",
+          "latex": "\\operatorname{Concat}((1,2),(3,4))=(1,2,3,4)"
+        },
+        {
+          "text": "Die hier gewählte Projektionsmatrix notieren.",
+          "latex": "W_O=\\begin{pmatrix}1&0\\\\0&1\\\\1&0\\\\0&1\\end{pmatrix}"
+        },
+        {
+          "text": "Verketteten Zeilenvektor mit der Projektion multiplizieren.",
+          "latex": "(1,2,3,4)W_O=(1+3,2+4)=(4,6)"
+        }
+      ],
+      "result": "Concat ergibt vier Features, die Projektion zwei. Der Mittelwert (2,3) wäre ein anderer Rechenweg und ist nicht die Verkettung.",
+      "result_latex": "\\mathrm{Output}=(4,6)"
+    }
+  }
+}

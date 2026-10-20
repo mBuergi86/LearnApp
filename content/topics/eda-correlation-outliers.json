@@ -1,0 +1,141 @@
+{
+  "id": "eda-correlation-outliers",
+  "exam_id": "machine-learning",
+  "module_id": "ml-eda",
+  "title": "Korrelation und Ausreisser",
+  "priority": "core",
+  "summary": "Korrelation und Ausreisser helfen, Beziehungen und Datenprobleme vor der Modellierung zu erkennen.",
+  "explanation": [
+    "Ein Scatterplot stellt pro Fall zwei numerische Werte als Punkt dar. Eine steigende Punktwolke spricht für positive, eine fallende für negative Beziehung. Ein einzelner auffälliger Punkt kann das Gesamtbild stark verändern.",
+    "Pearsons Korrelationskoeffizient r liegt zwischen −1 und 1 und misst linearen Zusammenhang. r=1 bedeutet perfekte steigende lineare Beziehung, r=−1 perfekte fallende. r nahe 0 schliesst einen nichtlinearen Zusammenhang nicht aus.",
+    "Die Berechnung verwendet Abweichungen beider Merkmale von ihren Mittelwerten. Gleiche Vorzeichen der Abweichungen erzeugen einen positiven Beitrag, unterschiedliche einen negativen. Standardisierung macht das Ergebnis unabhängig von den ursprünglichen Einheiten.",
+    "Korrelation beweist keine Kausalität. Eisverkauf und Badeunfälle können beide mit warmer Witterung steigen, ohne dass Eis die Unfälle verursacht. Gemeinsame Ursachen und Stichprobenauswahl müssen mitbedacht werden.",
+    "Ausreisser werden fachlich untersucht: Messfehler, seltenes echtes Ereignis oder anderes Teilkollektiv? Löschen nur zur Verbesserung einer Kennzahl kann die Bewertung verfälschen. Bei konstantem Merkmal ist Pearson-r wegen Varianz 0 nicht definiert."
+  ],
+  "sources": [
+    {
+      "file": "MachineLearning_Tag1_EDA_2026_ShaoJuWoo.pdf",
+      "pages": [
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 3,
+  "steps": [
+    "Scatterplot und plausible Ausreisser ansehen.",
+    "Mittelwerte und Abweichungen berechnen.",
+    "Linearen Zusammenhang zusammenfassen.",
+    "Nichtlinearität, Ursachen und Messfehler getrennt prüfen."
+  ],
+  "example": "Eigener Rechenfall: x=(1,2,3), y=(2,4,6). Mittelwerte 2 und 4; Abweichungen x=(−1,0,1), y=(−2,0,2). Produktsumme=4, Quadratsummen=2 und 8. r=4/√(2·8)=1. Für x=(−1,0,1) und y=(1,0,1) ist r=0, obwohl y=x² gilt. Null Korrelation bedeutet hier nicht «keine Beziehung».",
+  "formula": {
+    "expression": "r=Σ(xᵢ−x̄)(yᵢ−ȳ)/√[Σ(xᵢ−x̄)²·Σ(yᵢ−ȳ)²]",
+    "meaning": "Pearson-r beschreibt linearen Zusammenhang; beide Merkmale müssen streuen.",
+    "variables": [
+      {
+        "symbol": "xᵢ,yᵢ",
+        "meaning": "gepaarte Messwerte"
+      },
+      {
+        "symbol": "x̄,ȳ",
+        "meaning": "Mittelwerte"
+      },
+      {
+        "symbol": "r",
+        "meaning": "Korrelationskoeffizient"
+      }
+    ],
+    "latex": [
+      "r=\\frac{\\sum_i(x_i-\\bar x)(y_i-\\bar y)}{\\sqrt{\\sum_i(x_i-\\bar x)^2\\sum_i(y_i-\\bar y)^2}}"
+    ],
+    "worked_example": {
+      "title": "Pearson-r ohne Verwechslung mit der Steigung",
+      "given": [
+        "x=(1,2,3), y=(2,4,6).",
+        "Beide Merkmale streuen; Pearson-r ist definiert."
+      ],
+      "steps": [
+        {
+          "text": "Mittelwerte und Abweichungen bestimmen.",
+          "latex": "\\bar x=2,\\quad\\bar y=4,\\quad \\Delta x=(-1,0,1),\\quad\\Delta y=(-2,0,2)"
+        },
+        {
+          "text": "Gepaarte Abweichungen multiplizieren und summieren.",
+          "latex": "\\sum_i\\Delta x_i\\Delta y_i=2+0+2=4"
+        },
+        {
+          "text": "Quadratsummen in den Nenner einsetzen.",
+          "latex": "\\sum_i\\Delta x_i^2=2,\\quad\\sum_i\\Delta y_i^2=8"
+        },
+        {
+          "text": "Normierte Quote berechnen.",
+          "latex": "r=\\frac4{\\sqrt{2\\cdot8}}=\\frac44=1"
+        }
+      ],
+      "result": "r=1 zeigt eine perfekte steigende lineare Beziehung. Die Steigung 2 ist eine andere Grösse; Korrelation allein beweist keine Ursache.",
+      "result_latex": "r=1"
+    }
+  },
+  "confusions": [
+    {
+      "term": "Korrelation und Ursache",
+      "note": "Ein gemeinsamer Trend ist kein Beweis für direkte Verursachung."
+    },
+    {
+      "term": "r=0 und Unabhängigkeit",
+      "note": "Ein nichtlinearer Zusammenhang kann bei Pearson-r=0 bestehen."
+    }
+  ],
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "Vom Punkt zur Interpretation",
+      "caption": "Zuerst ansehen, dann rechnen, anschliessend die Aussagegrenzen beachten.",
+      "labels": [
+        "Gepaarte Werte",
+        "Scatterplot",
+        "Pearson-r",
+        "Fachliche Interpretation"
+      ]
+    },
+    {
+      "kind": "plot",
+      "title": "Perfekt linearer Zusammenhang",
+      "caption": "Für y=2x liegen die drei Punkte auf einer steigenden Geraden; r=1.",
+      "labels": [
+        "x",
+        "y"
+      ],
+      "values": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          6
+        ]
+      ]
+    }
+  ]
+}

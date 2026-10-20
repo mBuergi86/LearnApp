@@ -1,0 +1,77 @@
+{
+  "id": "sequence-modeling",
+  "exam_id": "deep-learning-data-science",
+  "module_id": "dl-sequence-models",
+  "title": "Sequenzmodellierung",
+  "priority": "core",
+  "summary": "Sequenzmodellierung verarbeitet geordnete Elemente, deren Reihenfolge für die Aufgabe relevant ist.",
+  "explanation": [
+    "Zusammenhang: Ein Satz oder eine Zeitreihe enthält geordnete Inputs. Das Label kann eine Klasse für die ganze Sequenz, eine Folge von Klassen oder ein nächstes Token sein. Die Aufgabenform entscheidet über Input- und Outputrollen.",
+    "Eine Sequenz enthält Elemente in einer bestimmten Reihenfolge. Das können Wörter, Zeichen, Messwerte oder Audioabschnitte sein. Ein Modell muss oft nicht nur die Elemente selbst, sondern auch ihren Kontext und ihre Reihenfolge berücksichtigen.",
+    "Eine Sequenzaufgabe kann eine Ausgabe für die gesamte Eingabe verlangen, etwa das Sentiment eines Satzes. Andere Aufgaben benötigen eine Ausgabe pro Position oder erzeugen eine neue Sequenz, etwa eine Übersetzung. Eingabe- und Ausgabelänge müssen deshalb nicht identisch sein.",
+    "Bei der Vorhersage des nächsten Elements wird aus dem bisherigen Präfix eine Verteilung über mögliche Fortsetzungen berechnet. Zum Trainingszeitpunkt ist die richtige Fortsetzung bekannt und dient als Ziel. Bei späterer Generierung wird eine ausgewählte Ausgabe wieder Teil des Kontexts.",
+    "Ein festes Kontextfenster begrenzt, wie weit das Modell zurückblickt. Informationen ausserhalb des Fensters sind dann nicht zugänglich. RNN-Zustände können vergangene Informationen komprimieren; Attention kann direkte Beziehungen zu verfügbaren Positionen berechnen. Beide Verfahren haben Grenzen und unterschiedliche Rechenkosten.",
+    "Bei Zeitreihen oder autoregressiver Vorhersage darf die Zukunft nicht als Eingabefeature für eine vergangene Vorhersage verwendet werden. Auch die Aufteilung der Daten muss zur Aufgabe passen. Ein zufälliger Split über stark zusammenhängende Zeitpunkte kann eine unrealistisch leichte Bewertung erzeugen.",
+    "Prüfungstransfer: Prüfe bei jedem Fall, welche Information zum Vorhersagezeitpunkt bekannt ist. Wer den nächsten Messwert vorhersagt, darf diesen noch nicht als Feature nutzen. Eine zeitliche Indexzahl t bezeichnet die Position, nicht den Wert des Messsignals."
+  ],
+  "sources": [
+    {
+      "file": "DeepLearning_Tag3_2026_Sequence-to-Sequence Modelle.pdf",
+      "pages": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 1,
+  "steps": [
+    "Elemente, Reihenfolge und benötigten Kontext bestimmen.",
+    "Ausgabeform festlegen: ein Label, eine Sequenz oder ein nächstes Element.",
+    "Inputs und zeitlich zulässige Ziele erstellen.",
+    "Eine passende Sequenzarchitektur wählen."
+  ],
+  "example": "Beispiel: «Der Hund jagt die Katze» und «Die Katze jagt den Hund» enthalten ähnliche Wörter, beschreiben aber unterschiedliche Handelnde. Ein Modell, das nur Wortanzahlen verwendet, kann diese Rollen schwer unterscheiden.\nNächste-Zeichen-Training für «hello»: Inputs h,e,l,l und Ziele e,l,l,o. Für das letzte o könnte zusätzlich ein End-Token als Ziel verwendet werden.\nBei Übersetzung kann die Eingabe «Guten Morgen» aus zwei Wörtern bestehen und eine andere Zahl von Tokens erzeugen. Sequenzmodellierung bedeutet daher nicht, dass jede Eingabeposition genau eine Ausgabeposition haben muss.",
+  "confusions": [
+    {
+      "term": "Sequenz und Menge",
+      "note": "Die Reihenfolge ist Teil einer Sequenz. Gleiche Elemente können in anderer Reihenfolge eine andere Bedeutung haben."
+    },
+    {
+      "term": "Training und Generierung",
+      "note": "Training nutzt bekannte Ziele; Generierung verwendet bisher erzeugte Ausgaben als Kontext."
+    }
+  ],
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "Sequenzvorhersage",
+      "labels": [
+        "Bekanntes Präfix|bisherige Elemente",
+        "Sequenzmodell|Kontext verarbeiten",
+        "Nächstes Element|Verteilung über Fortsetzungen"
+      ],
+      "caption": "Nur zeitlich verfügbare Informationen gehören in eine autoregressive Vorhersage."
+    },
+    {
+      "kind": "flow",
+      "title": "Zeichenbeispiel «hello»",
+      "labels": [
+        "h → e|erstes Trainingspaar",
+        "he → l|Kontext wächst",
+        "hel → l|gleiches Ziel, anderer Kontext",
+        "hell → o|Abhängigkeit vom Präfix"
+      ],
+      "caption": "Die Ziele sind jeweils das nächste Zeichen; wiederholte Zeichen führen nicht automatisch zu identischen Zuständen."
+    }
+  ]
+}

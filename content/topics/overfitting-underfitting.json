@@ -1,0 +1,133 @@
+{
+  "id": "overfitting-underfitting",
+  "exam_id": "machine-learning",
+  "module_id": "ml-model-selection",
+  "title": "Overfitting und Underfitting",
+  "priority": "core",
+  "summary": "Underfitting beschreibt ein zu einfaches Modell; Overfitting ein Modell, das Trainingsdaten inklusive Rauschen zu stark anpasst.",
+  "explanation": [
+    "Underfitting bedeutet, dass das Modell die relevante Beziehung nicht ausreichend erfasst. Das kann an zu geringer Modellkapazität, unbrauchbaren Features oder unzureichender Optimierung liegen; Training und Validation sind dann häufig beide schlecht.",
+    "Overfitting bedeutet, dass die Anpassung stark auf Besonderheiten und Rauschen der Trainingsdaten reagiert. Training wird gut, neue Daten deutlich schlechter. Generalisierung beschreibt genau diese Leistung ausserhalb des Trainings.",
+    "Eine Trainings-Validation-Lücke ist ein Hinweis, kein alleiniger Beweis. Unterschiedliche Datenverteilungen oder Leakage können die Interpretation beeinflussen. Die Metrik und die Schwierigkeit der Datensplits müssen vergleichbar sein.",
+    "Gegen Overfitting können mehr geeignete Trainingsdaten, geringere Kapazität, Regularisierung und Early Stopping helfen. Gegen Underfitting kann eine reichere Modellfamilie oder besseres Training helfen. Mehr Komplexität ist nicht automatisch immer besser.",
+    "Bei Lernkurven betrachtet man den Verlauf über Training oder Datenmenge. Early Stopping wählt einen Stand anhand der Validation, nicht anhand des unabhängigen Tests. Der letzte Trainingsstand muss nicht der beste sein."
+  ],
+  "confusions": [
+    {
+      "term": "Kleiner Trainingsfehler und gutes Modell",
+      "note": "Auswendiglernen kann Training gut und neue Fälle schlecht machen."
+    },
+    {
+      "term": "Mehr Epochen und mehr Kapazität",
+      "note": "Längeres Optimieren ist nicht dasselbe wie eine grössere Modellfamilie."
+    }
+  ],
+  "sources": [
+    {
+      "file": "MachineLearning_Tag2_ModelTraining_Selection_2026_ShaoJuWoo.pdf",
+      "pages": [
+        18,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 2,
+  "steps": [
+    "Training und Validation mit derselben Definition vergleichen.",
+    "Fehlerhöhe und Lücke interpretieren.",
+    "Modellkapazität, Datenqualität und Training prüfen.",
+    "Geeignete Massnahme mit Validation bewerten."
+  ],
+  "example": "Eigener Rechenfall: Kandidat A hat Trainings-MSE 1 und Validierungs-MSE 25: starke Lücke, Overfitting-Verdacht. Kandidat B hat 16 und 18: beide hoch, Underfitting-Verdacht. Kandidat C hat 3 und 4 und generalisiert hier besser. Ohne gemeinsame Skala darf man diese Zahlen nicht mit Accuracy-Prozenten vergleichen.",
+  "formula": {
+    "expression": "Generalisierungslücke=Fehler_validation−Fehler_training",
+    "meaning": "Eine grosse positive Lücke kann Overfitting anzeigen, ist aber kontextabhängig.",
+    "variables": [
+      {
+        "symbol": "Fehler",
+        "meaning": "gleiche Loss/Metrik auf vergleichbaren Daten"
+      },
+      {
+        "symbol": "Δ",
+        "meaning": "Differenz zwischen Validierungs- und Trainingsfehler"
+      }
+    ],
+    "latex": [
+      "\\Delta=E_{\\mathrm{validation}}-E_{\\mathrm{training}}"
+    ],
+    "worked_example": {
+      "title": "Trainings- und Validierungsfehler vergleichen",
+      "given": [
+        "Gleiche MSE-Definition auf vergleichbaren Daten.",
+        "Kandidat A: Training 1, Validation 25. Kandidat B: Training 16, Validation 18."
+      ],
+      "steps": [
+        {
+          "text": "Die Lücke des ersten Kandidaten berechnen.",
+          "latex": "\\Delta_A=25-1=24"
+        },
+        {
+          "text": "Die Lücke des zweiten Kandidaten berechnen.",
+          "latex": "\\Delta_B=18-16=2"
+        },
+        {
+          "text": "Lücke und absolute Fehlerhöhe gemeinsam interpretieren.",
+          "latex": "E_{\\mathrm{train},B}=16,\\quad E_{\\mathrm{val},B}=18"
+        }
+      ],
+      "result": "A hat eine grosse Lücke und einen Overfitting-Verdacht. B hat eine kleine Lücke, aber beide Fehler sind hoch: Underfitting oder mangelnde Optimierung prüfen. Die Zahlen allein beweisen keine Ursache.",
+      "result_latex": "\\Delta_A=24,\\quad\\Delta_B=2"
+    }
+  },
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "Das Fehlerbild bestimmt die Massnahme",
+      "caption": "Hohe Fehler und grosse Lücke benötigen nicht dieselbe Behandlung.",
+      "labels": [
+        "Training und Validation",
+        "Beide schlecht?|Underfitting prüfen",
+        "Training gut, Validation schlecht?|Overfitting prüfen",
+        "Massnahme validieren"
+      ]
+    },
+    {
+      "kind": "bars",
+      "title": "Drei Kandidaten",
+      "caption": "A hat eine grosse Lücke, B hohe Fehler, C kleinere vergleichbare Fehler.",
+      "labels": [
+        "A Train",
+        "A Val",
+        "B Train",
+        "B Val",
+        "C Train",
+        "C Val"
+      ],
+      "values": [
+        [
+          1,
+          25,
+          16,
+          18,
+          3,
+          4
+        ]
+      ]
+    }
+  ]
+}

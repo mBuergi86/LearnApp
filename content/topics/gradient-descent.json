@@ -1,0 +1,154 @@
+{
+  "id": "gradient-descent",
+  "exam_id": "deep-learning-data-science",
+  "module_id": "dl-training",
+  "title": "Gradient Descent",
+  "priority": "core",
+  "summary": "Gradient Descent aktualisiert Modellparameter iterativ entgegen dem Gradienten, um die Kostenfunktion zu minimieren.",
+  "explanation": [
+    "Vorwissen: Training sucht Parameter θ, nicht neue Labels. Der Gradient enthält eine Änderungsrate pro Parameter. Bei nur einem Gewicht ist er eine einzelne Ableitung; bei tausend Parametern ein Vektor mit tausend Komponenten.",
+    "Gradient Descent sucht Parameterwerte mit kleinerer Loss. Der Gradient ∇L enthält für jeden Parameter eine partielle Ableitung. Er zeigt lokal in Richtung der stärksten Zunahme. Für den Abstieg verwendet der Algorithmus deshalb die entgegengesetzte Richtung.",
+    "Die Update-Regel lautet θ_neu = θ_alt − η∇L(θ_alt). Die positive Lernrate η skaliert die Schrittgrösse. Ein positiver Gradient lässt den betreffenden Parameter sinken; ein negativer Gradient lässt ihn steigen. Das Minuszeichen bedeutet nicht, dass alle Parameter negativ werden.",
+    "Bei einer kleinen Lernrate sind die einzelnen Änderungen klein. Das kann den Fortschritt verlangsamen. Bei einer zu grossen Lernrate kann ein Schritt über ein günstiges Gebiet hinausspringen; die Loss kann oszillieren oder wachsen. Eine kleine Lernrate allein garantiert bei beliebigen Netzen keine Konvergenz.",
+    "Full-Batch Gradient Descent verwendet alle Trainingsbeispiele, um den Gradienten der gemittelten Trainingsloss zu berechnen. Mini-Batch-Verfahren verwenden eine Teilmenge und liefern eine verrauschte Schätzung. Reine SGD im engen Sinn verwendet ein Beispiel pro Update; die Folien nennen auch Mini-Batch-SGD.",
+    "Die Loss eines tiefen Netzes ist im Allgemeinen nicht konvex. Es können verschiedene lokale Minima, flache Bereiche und Sattelpunkte auftreten. Gradient Descent ist daher keine Garantie für ein globales Minimum. Seine Updates hängen von Startwerten, Daten und Lernrate ab.",
+    "Mathematik lesen: Für L(w)=w² lautet die Ableitung 2w. Setze zuerst den aktuellen w-Wert ein, multipliziere dann mit η und ziehe diesen gesamten Schritt ab. η ist ein Hyperparameter; die Ableitung enthält η noch nicht. Eine Ableitung von null ist bei einer allgemeinen nichtkonvexen Funktion kein sicherer Beweis eines Minimums."
+  ],
+  "steps": [
+    "Aktuelle Parameter und einen Trainingsbatch verwenden.",
+    "Vorhersagen und Loss berechnen.",
+    "Gradienten am aktuellen Parameterpunkt bestimmen.",
+    "Den skalierten Gradienten subtrahieren.",
+    "Nach dem Update erneut auswerten."
+  ],
+  "example": "Beispiel: L(w)=w². Bei w=4 ist der Gradient 2w=8 und die Loss 16.\nMit η=0.1 folgt w_neu=4−0.1·8=3.2; die Loss sinkt auf 10.24.\nMit η=1.1 folgt dagegen w_neu=4−1.1·8=−4.8; die Loss steigt auf 23.04. Ein zu grosser Schritt ist hier schädlich.\nBeim zweiten kleinen Schritt ist der Gradient am neuen Punkt 6.4; es folgt w=3.2−0.64=2.56. Der Gradient wird jedes Mal am aktuellen Wert berechnet.",
+  "formula": {
+    "expression": "θₖ₊₁ = θₖ − η∇L(θₖ)",
+    "meaning": "Der Gradient wird am aktuellen Parameterwert ausgewertet.",
+    "variables": [
+      {
+        "symbol": "θ",
+        "meaning": "Gewichte und Biases"
+      },
+      {
+        "symbol": "η",
+        "meaning": "positive Lernrate"
+      },
+      {
+        "symbol": "∇L",
+        "meaning": "Gradient der Loss"
+      }
+    ],
+    "latex": [
+      "\\theta_{k+1}=\\theta_k-\\eta\\nabla L(\\theta_k)"
+    ],
+    "worked_example": {
+      "title": "Ein einfacher Schritt mit gegebenem Gradienten",
+      "given": [
+        "Parameter w=4, Gradient g=8 bereits berechnet, Lernrate η=0.1.",
+        "Für die Kontrolle: L(w)=w²."
+      ],
+      "steps": [
+        {
+          "text": "Die Schrittgrösse berechnen.",
+          "latex": "\\eta g=0.1\\cdot8=0.8"
+        },
+        {
+          "text": "Den Schritt vom alten Parameter abziehen.",
+          "latex": "w_{\\mathrm{neu}}=4-0.8=3.2"
+        },
+        {
+          "text": "Die Loss vor und nach dem Schritt vergleichen.",
+          "latex": "L(4)=4^2=16,\\quad L(3.2)=3.2^2=10.24"
+        }
+      ],
+      "result": "Ein Update führt zu w=3.2 und verringert hier die Loss. Für spätere Updates braucht man den Gradienten des dann aktuellen Zustands; ein grosser Schritt ist nicht automatisch besser.",
+      "result_latex": "w_{\\mathrm{neu}}=3.2"
+    }
+  },
+  "confusions": [
+    {
+      "term": "Gradient und Update",
+      "note": "Der Gradient zeigt bergauf. Das Update ist die negative Lernrate mal Gradient."
+    },
+    {
+      "term": "Lokales und globales Minimum",
+      "note": "Bei einer nichtkonvexen Loss ist das globale Minimum nicht garantiert."
+    }
+  ],
+  "sources": [
+    {
+      "file": "DeepLearning_Tag1_Einfuhrung_2026_ShaoJuWoo.pdf",
+      "pages": [
+        44,
+        45,
+        46,
+        47,
+        55,
+        56,
+        57
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 1,
+  "illustrations": [
+    {
+      "kind": "plot",
+      "title": "Eine einfache Loss-Landschaft",
+      "labels": [
+        "Gewicht w",
+        "Loss w²"
+      ],
+      "values": [
+        [
+          -4,
+          16
+        ],
+        [
+          -3,
+          9
+        ],
+        [
+          -2,
+          4
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          9
+        ],
+        [
+          4,
+          16
+        ]
+      ],
+      "caption": "Diese konvexe Parabel ist ein Rechenbeispiel. Reale tiefe Netze besitzen wesentlich komplexere Loss-Landschaften."
+    },
+    {
+      "kind": "flow",
+      "title": "Zwei kleine Schritte",
+      "labels": [
+        "w = 4|Gradient 8; Loss 16",
+        "w = 3.2|Gradient 6.4; Loss 10.24",
+        "w = 2.56|Loss 6.5536"
+      ],
+      "caption": "Mit η = 0.1 wird bei jedem Schritt der aktuelle Gradient verwendet."
+    }
+  ]
+}

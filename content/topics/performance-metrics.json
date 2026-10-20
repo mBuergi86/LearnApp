@@ -1,0 +1,130 @@
+{
+  "id": "performance-metrics",
+  "exam_id": "machine-learning",
+  "module_id": "ml-model-selection",
+  "title": "Performance-Metriken",
+  "priority": "core",
+  "summary": "Metriken bewerten Klassifikations- oder Regressionsvorhersagen aus einer fachlich passenden Perspektive.",
+  "explanation": [
+    "Eine Metrik bewertet einen bestimmten Aspekt der Vorhersage. Accuracy misst den Anteil richtiger Klassen, Precision die Zuverlässigkeit positiver Meldungen und Recall den Anteil gefundener tatsächlicher Positiver.",
+    "F1 ist das harmonische Mittel von Precision und Recall. Es bestraft stark unausgewogene Werte und lässt True Negatives nicht direkt eingehen. Es ist nicht einfach der arithmetische Durchschnitt und nicht in jeder Aufgabe die beste Metrik.",
+    "Bei seltenen Positivfällen kann Accuracy täuschen. Werden 95 von 100 Fällen negativ gelabelt, erreicht immer-negativ 95 % Accuracy, aber Recall 0 für die positive Klasse.",
+    "Für Regression messen MSE und RMSE numerische Fehler. RMSE hat wieder die Zieleinheit. Ein normalisierter RMSE braucht eine definierte Bezugsgrösse, etwa Spannweite oder Mittelwert; ohne diese Konvention ist die Zahl nicht eindeutig.",
+    "Die Metrik wird anhand der fachlichen Fehlerkosten gewählt und auf Validation zur Auswahl verwendet. Grenzfälle mit Nullnenner sind ausdrücklich zu behandeln. Ein hoher Testscore beweist weder Kausalität noch unveränderte Leistung bei späterem Verteilungswechsel."
+  ],
+  "sources": [
+    {
+      "file": "MachineLearning_Tag2_ModelTraining_Selection_2026_ShaoJuWoo.pdf",
+      "pages": [
+        36,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 3,
+  "steps": [
+    "Aufgabe und Fehlerkosten bestimmen.",
+    "Klassenzählungen oder numerische Fehler berechnen.",
+    "Formel und Nenner passend auswählen.",
+    "Skala, Klassenverteilung und Grenzfälle interpretieren."
+  ],
+  "example": "Eigener Rechenfall: TP=35,FP=10,FN=5,TN=50. Precision=35/45≈0.778, Recall=35/40=0.875, F1=2·35/(70+10+5)=70/85≈0.824 und Accuracy=85/100=0.85. Für Regressionsfehler (1,−2) ist RMSE=√[(1+4)/2]≈1.581, nicht (1+2)/2=1.5; letzteres wäre MAE.",
+  "formula": {
+    "expression": "Accuracy=(TP+TN)/N\nF1=2TP/(2TP+FP+FN)\nRMSE=√[(1/N)Σ(ŷᵢ−yᵢ)²]",
+    "meaning": "Welche Formel sinnvoll ist, hängt von Klassifikation oder Regression und dem fachlichen Ziel ab.",
+    "variables": [
+      {
+        "symbol": "TP,TN,FP,FN",
+        "meaning": "Zählungen der Confusion Matrix"
+      },
+      {
+        "symbol": "N",
+        "meaning": "Fallzahl"
+      },
+      {
+        "symbol": "ŷᵢ,yᵢ",
+        "meaning": "Vorhersage und tatsächlicher numerischer Zielwert"
+      }
+    ],
+    "latex": [
+      "\\mathrm{Accuracy}=\\frac{\\mathrm{TP}+\\mathrm{TN}}{N}",
+      "F_1=\\frac{2\\mathrm{TP}}{2\\mathrm{TP}+\\mathrm{FP}+\\mathrm{FN}}",
+      "\\mathrm{RMSE}=\\sqrt{\\frac1N\\sum_i(\\hat y_i-y_i)^2}"
+    ],
+    "worked_example": {
+      "title": "Klassenmetriken und Regressionsfehler getrennt rechnen",
+      "given": [
+        "Klassifikation: TP=35,FP=10,FN=5,TN=50, N=100.",
+        "Separates Regressionsbeispiel: Fehler (1,−2)."
+      ],
+      "steps": [
+        {
+          "text": "Alle richtigen Klassenentscheidungen für Accuracy zählen.",
+          "latex": "\\mathrm{Accuracy}=\\frac{35+50}{100}=0.85"
+        },
+        {
+          "text": "F1 mit seinem eigenen Nenner berechnen.",
+          "latex": "F_1=\\frac{70}{70+10+5}=\\frac{70}{85}\\approx0.824"
+        },
+        {
+          "text": "Für die separate Regression zuerst den MSE bestimmen.",
+          "latex": "\\mathrm{MSE}=\\frac{1^2+(-2)^2}{2}=2.5"
+        },
+        {
+          "text": "Erst nach der Mittelung die Wurzel ziehen.",
+          "latex": "\\mathrm{RMSE}=\\sqrt{2.5}\\approx1.581"
+        }
+      ],
+      "result": "Accuracy=0.85 und F1≈0.824 bewerten Klassen; RMSE≈1.581 bewertet numerische Fehler. Metriken haben verschiedene Aufgaben und Skalen.",
+      "result_latex": "A=0.85,\\quad F_1\\approx0.824,\\quad\\mathrm{RMSE}\\approx1.581"
+    }
+  },
+  "confusions": [
+    {
+      "term": "F1 und Accuracy",
+      "note": "F1 betrachtet positive Erkennung, Accuracy alle richtigen Entscheidungen."
+    },
+    {
+      "term": "RMSE und MAE",
+      "note": "Wurzel des mittleren Quadrats gegenüber Mittel der absoluten Fehler."
+    }
+  ],
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "Metrik folgt der Aufgabe",
+      "caption": "Nicht jede Kennzahl misst dieselbe Art von Erfolg.",
+      "labels": [
+        "Aufgabe und Kosten",
+        "Klassifikation?|TP,TN,FP,FN",
+        "Regression?|numerische Fehler",
+        "Passende Metrik wählen"
+      ]
+    },
+    {
+      "kind": "bars",
+      "title": "Eine gute Accuracy kann täuschen",
+      "caption": "Immer-negativ bei 95 negativen und 5 positiven Fällen: Accuracy 95 %, positiver Recall 0 %.",
+      "labels": [
+        "Accuracy %",
+        "Positiver Recall %"
+      ],
+      "values": [
+        [
+          95,
+          0
+        ]
+      ]
+    }
+  ]
+}

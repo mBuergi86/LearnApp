@@ -1,0 +1,127 @@
+{
+  "id": "classic-attention",
+  "exam_id": "deep-learning-data-science",
+  "module_id": "dl-attention",
+  "title": "Attention in Seq2Seq-Modellen",
+  "priority": "core",
+  "summary": "Attention gewichtet unterschiedliche Teile einer Eingabesequenz, statt nur auf eine fixe Zusammenfassung zu vertrauen.",
+  "explanation": [
+    "Vorwissen: Ein Kontextvektor enthält Zahlen, die für die nächste Decoderentscheidung nützlich sein sollen. Attention erzeugt ihn aus mehreren gespeicherten Quellzuständen statt ausschliesslich aus dem letzten.",
+    "Im einfachen Encoder-Decoder muss ein fixer Kontextvektor die gesamte Quelle tragen. Klassische Attention ermöglicht dem Decoder, bei jedem Ausgabeschritt erneut auf alle Encoder-Zustände zuzugreifen. Die Encoder-Zustände bleiben verfügbar, statt ausschliesslich in einer einzigen letzten Zusammenfassung zu verschwinden.",
+    "Für den aktuellen Decoderschritt wird ein Kompatibilitäts-Score mit jedem Encoder-Zustand berechnet. Er kann zum Beispiel aus einem lernbaren additiven Scoring-Netz stammen. Die konkrete Score-Funktion ist eine Designentscheidung; Attention ist nicht auf ein einziges Skalarproduktverfahren beschränkt.",
+    "Softmax normalisiert die Scores über die Quellpositionen. Die Gewichte α_tj summieren sich für diesen Decoderschritt zu 1. Ein hoher Wert bedeutet, dass der zugehörige Encoder-Zustand in diesem gewichteten Kontext stark einfliesst.",
+    "Der Kontextvektor c_t ist die gewichtete Summe der Encoder-Zustände. Für das nächste Ausgabewort wird normalerweise ein neuer Kontext berechnet. Es entsteht somit eine dynamische Auswahl, die unterschiedliche Quellpositionen je nach Decoderbedarf betonen kann.",
+    "Das Verfahren ist Soft Attention: Mehrere Quellpositionen können gleichzeitig einen Beitrag liefern. Ein Gewicht ist nicht automatisch eine kausale Erklärung des Modellentscheids. Klassische Encoder-Decoder-Attention verknüpft zwei Sequenzen; Self-Attention bezieht Query und Key/Value auf dieselbe Sequenz.",
+    "Mathematik lesen: Eine gewichtete Summe multipliziert jeden ganzen Zustandsvektor mit seinem Gewicht und addiert komponentenweise. Erst die Gewichte mit Softmax normalisieren, dann die Zustände mischen. α_tj ist das Gewicht der Quellposition j für den Decoderschritt t."
+  ],
+  "confusions": [
+    {
+      "term": "Fixer und dynamischer Kontext",
+      "note": "Ohne Attention wird oft ein fixer Vektor verwendet. Mit Attention verändert sich der Kontext pro Decoderschritt."
+    },
+    {
+      "term": "Gewicht und harte Auswahl",
+      "note": "Soft Attention bildet eine gewichtete Mischung; sie wählt nicht zwingend genau ein Wort aus."
+    }
+  ],
+  "sources": [
+    {
+      "file": "DeepLearning_Tag3_Transformer_2026.pdf",
+      "pages": [
+        15,
+        16,
+        17,
+        18
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 1,
+  "steps": [
+    "Aktuellen Decoderbedarf bestimmen.",
+    "Scores zu allen Encoder-Zuständen berechnen.",
+    "Scores über Quellpositionen mit Softmax normalisieren.",
+    "Gewichtete Encoder-Zustände zum Kontext addieren.",
+    "Kontext für die nächste Ausgabe verwenden."
+  ],
+  "example": "Beispiel: Drei Encoder-Zustände sind h₁=(1,0), h₂=(0,2), h₃=(1,1). Im aktuellen Decoderschritt seien die Gewichte (0.2,0.5,0.3).\nDer Kontext ist c=0.2·(1,0)+0.5·(0,2)+0.3·(1,1)=(0.5,1.3).\nDie zweite Quellposition erhält mit 0.5 das grösste Gewicht, trotzdem tragen alle drei Positionen bei.\nBeim nächsten Zieltoken könnten die Gewichte (0.6,0.1,0.3) sein; dann ist der Kontext (0.9,0.5). Derselbe Quellsatz liefert also verschiedene Kontexte für verschiedene Ausgabeentscheidungen.",
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "Dynamischer Kontext im Decoder",
+      "labels": [
+        "Decoderbedarf|aktueller Ausgabeschritt",
+        "Scores zur Quelle|alle Encoder-Zustände",
+        "Softmax-Gewichte|α_tj pro Quellposition",
+        "Kontext c_t|gewichtete Summe"
+      ],
+      "caption": "Die Gewichte werden für jeden Decoderschritt neu berechnet."
+    },
+    {
+      "kind": "bars",
+      "title": "Fokus auf drei Quellpositionen",
+      "labels": [
+        "Quelle 1",
+        "Quelle 2",
+        "Quelle 3"
+      ],
+      "values": [
+        [
+          0.2,
+          0.5,
+          0.3
+        ]
+      ],
+      "caption": "Die Gewichte summieren sich zu 1 und erzeugen im Beispiel den Kontext (0.5,1.3)."
+    }
+  ],
+  "formula": {
+    "expression": "c_t=Σ_jα_tj h_j; Σ_jα_tj=1",
+    "meaning": "c_t ändert sich mit dem Decoderbedarf, obwohl die Quellzustände gleich bleiben.",
+    "variables": [
+      {
+        "symbol": "c_t",
+        "meaning": "Kontext für Decoderschritt t"
+      },
+      {
+        "symbol": "h_j",
+        "meaning": "Encoderzustand an Quellposition j"
+      },
+      {
+        "symbol": "α_tj",
+        "meaning": "normalisiertes Gewicht von j für Schritt t"
+      },
+      {
+        "symbol": "Σ_j",
+        "meaning": "über Quellpositionen summieren"
+      }
+    ],
+    "latex": [
+      "c_t=\\sum_j\\alpha_{tj}h_j",
+      "\\sum_j\\alpha_{tj}=1"
+    ],
+    "worked_example": {
+      "title": "Eine gewichtete Kontextmischung berechnen",
+      "given": [
+        "h₁=(1,0),h₂=(0,2),h₃=(1,1).",
+        "Gewichte α=(0.2,0.5,0.3)."
+      ],
+      "steps": [
+        {
+          "text": "Gewichte auf Normalisierung prüfen.",
+          "latex": "0.2+0.5+0.3=1"
+        },
+        {
+          "text": "Jeden ganzen Zustandsvektor gewichten.",
+          "latex": "0.2h_1=(0.2,0),\\quad0.5h_2=(0,1),\\quad0.3h_3=(0.3,0.3)"
+        },
+        {
+          "text": "Komponentenweise summieren.",
+          "latex": "c=(0.2+0+0.3,\\ 0+1+0.3)=(0.5,1.3)"
+        }
+      ],
+      "result": "Der Kontext ist (0.5,1.3), keine Auswahl eines einzelnen Wortindexes. Seine Komponenten müssen nicht zu 1 summieren; diese Bedingung betrifft die Gewichte.",
+      "result_latex": "c=(0.5,1.3)"
+    }
+  }
+}

@@ -1,0 +1,138 @@
+{
+  "id": "dl-loss-functions",
+  "exam_id": "deep-learning-data-science",
+  "module_id": "dl-training",
+  "title": "Loss-Funktionen für Regression und Klassifikation",
+  "priority": "core",
+  "summary": "Die Loss-Funktion misst die Abweichung der Modellvorhersage; die Folien unterscheiden quadratische Kosten für Regression und Cross-Entropy für Klassifikation.",
+  "explanation": [
+    "Vorwissen: y ist das bekannte Ziel, ŷ die numerische Vorhersage und p eine Klassenwahrscheinlichkeit. Das Dachzeichen bedeutet «geschätzt». Bei einem One-Hot-Ziel ist nur der Eintrag der wahren Klasse 1; die anderen sind 0. Deshalb bleibt in der Cross-Entropy genau −ln(p_richtig).",
+    "Eine Loss misst, wie schlecht eine konkrete Vorhersage zum Ziel passt. Beim Training werden die Verluste über Beispiele meist gemittelt. Ein Regressionsziel ist eine Zahl, etwa ein Preis. MSE mittelt die quadrierten Fehler und bestraft grosse Abweichungen besonders stark; MAE mittelt die absoluten Abweichungen und reagiert weniger stark auf Ausreisser.",
+    "Bei einer Klassifikation soll das Modell der richtigen Klasse eine hohe Wahrscheinlichkeit geben. Für ein einzelnes Beispiel mit One-Hot-Ziel reduziert sich die kategorische Cross-Entropy auf −ln(p_richtig). Hat das Modell der richtigen Klasse wenig Wahrscheinlichkeit gegeben, wird dieser Wert gross. Er kann auch grösser als 1 sein.",
+    "Für zwei Klassen und p = P(y=1|x) lautet die Binary Cross-Entropy −[y ln(p) + (1−y) ln(1−p)]. Bei y=1 bleibt −ln(p), bei y=0 bleibt −ln(1−p). Es wird also in beiden Fällen die Wahrscheinlichkeit der tatsächlich richtigen Klasse bewertet.",
+    "Die Entropie H beschreibt die Unsicherheit einer Verteilung selbst: H(p) = −Σpᵢln(pᵢ). Die Cross-Entropy vergleicht dagegen eine Zielverteilung mit der Vorhersage. Eine annähernd gleichverteilte Verteilung ist unsicherer als eine stark auf eine Klasse konzentrierte Verteilung.",
+    "Softmax stellt für Multiklassen-Aufgaben geeignete Wahrscheinlichkeiten bereit, ist aber selbst keine Loss. Accuracy zählt nur richtige Entscheidungen und unterscheidet zum Beispiel nicht zwischen 0.51 und 0.99 Wahrscheinlichkeit für dieselbe richtige Klasse. Cross-Entropy bewertet diese Unterschiede und liefert einen differenzierbaren Trainingsanreiz.",
+    "Mathematik lesen: |−2|=2 ist ein Betrag, (−2)²=4 ein Quadrat, ln ist der natürliche Logarithmus. Das Minus vor ln ist wichtig, weil ln(p)<0 für 0<p<1. Beim Mitteln wird durch die Zahl bewerteter Beispiele geteilt. Eine Loss von 0.2 ist weder automatisch 20 % Fehlerquote noch 80 % Accuracy."
+  ],
+  "sources": [
+    {
+      "file": "DeepLearning_Tag1_Einfuhrung_2026_ShaoJuWoo.pdf",
+      "pages": [
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 3,
+  "steps": [
+    "Zielart bestimmen: Regression, binär oder Multiklassen.",
+    "Passende Loss wählen.",
+    "Verlust pro Beispiel berechnen.",
+    "Einzelverluste mitteln und Gradienten für das Training bestimmen."
+  ],
+  "example": "Beispiel Regression: Zielwerte (2,5), Vorhersagen (3,3). Die Fehler sind 1 und −2. MSE = (1² + (−2)²)/2 = 2.5; MAE = (|1| + |−2|)/2 = 1.5.\nBeispiel Klassifikation: Das Ziel ist Klasse Hund. Bei p(Hund)=0.8 beträgt L=−ln(0.8)≈0.223; bei p(Hund)=0.1 beträgt L≈2.303.\nBeide Modelle könnten denselben falschen oder richtigen Argmax liefern, aber die Loss unterscheidet ihre Sicherheit. Gerechnet wird hier mit natürlichem Logarithmus; gerundete Dezimalwerte sind nur Näherungen.",
+  "confusions": [
+    {
+      "term": "Loss und Wahrscheinlichkeit",
+      "note": "Die Wahrscheinlichkeit liegt in [0,1]. Der Cross-Entropy-Loss ist nicht auf 1 begrenzt."
+    },
+    {
+      "term": "Entropie und Cross-Entropy",
+      "note": "Entropie misst Verteilungsunsicherheit; Cross-Entropy bewertet eine Vorhersage gegenüber einem Ziel."
+    }
+  ],
+  "illustrations": [
+    {
+      "kind": "comparison",
+      "title": "Welche Loss passt zur Aufgabe?",
+      "labels": [
+        "Regression|z. B. MSE oder MAE",
+        "Binäre Klassifikation|Binary Cross-Entropy",
+        "Eine von mehreren Klassen|Kategorische Cross-Entropy"
+      ],
+      "caption": "Die Kästen vergleichen alternative Aufgabentypen; ein Trainingsproblem durchläuft nicht alle drei Loss-Funktionen."
+    },
+    {
+      "kind": "bars",
+      "title": "Unsicher richtig versus sicher falsch",
+      "labels": [
+        "p_richtig = 0.8",
+        "p_richtig = 0.1"
+      ],
+      "values": [
+        [
+          0.223,
+          2.303
+        ]
+      ],
+      "caption": "L = −ln(p_richtig). Die schlechte Vorhersage wird deutlich stärker bestraft."
+    }
+  ],
+  "formula": {
+    "expression": "MSE = (1/N)Σ(ŷᵢ−yᵢ)²\nMAE = (1/N)Σ|ŷᵢ−yᵢ|\nL_CE = −Σₖyₖln(pₖ)",
+    "meaning": "Der Faktor und der verwendete Logarithmus müssen beim Rechnen klar angegeben sein.",
+    "variables": [
+      {
+        "symbol": "N",
+        "meaning": "Anzahl Beispiele"
+      },
+      {
+        "symbol": "yᵢ,ŷᵢ",
+        "meaning": "numerisches Ziel und Vorhersage"
+      },
+      {
+        "symbol": "yₖ",
+        "meaning": "Zielanteil der Klasse k, hier One-Hot"
+      },
+      {
+        "symbol": "pₖ",
+        "meaning": "vorhergesagte Wahrscheinlichkeit für Klasse k"
+      },
+      {
+        "symbol": "ln",
+        "meaning": "natürlicher Logarithmus"
+      },
+      {
+        "symbol": "Σ,| · |",
+        "meaning": "Summieren bzw. Betrag"
+      }
+    ],
+    "latex": [
+      "\\mathrm{MSE}=\\frac1N\\sum_i(\\hat y_i-y_i)^2",
+      "\\mathrm{MAE}=\\frac1N\\sum_i|\\hat y_i-y_i|",
+      "L_{\\mathrm{CE}}=-\\sum_k y_k\\ln p_k"
+    ],
+    "worked_example": {
+      "title": "Betrag, Quadrat und Klassen-Loss unterscheiden",
+      "given": [
+        "Regression: Fehler (1,−2).",
+        "Separates One-Hot-Klassifikationsziel: Hund; p(Hund)=0.8.",
+        "Benötigter Logarithmus als Tabellen-/Taschenrechnerwert: ln(0.8)≈−0.223144."
+      ],
+      "steps": [
+        {
+          "text": "Fehler quadrieren und mitteln.",
+          "latex": "\\mathrm{MSE}=\\frac{1^2+(-2)^2}{2}=2.5"
+        },
+        {
+          "text": "Für MAE stattdessen Beträge mitteln.",
+          "latex": "\\mathrm{MAE}=\\frac{|1|+|-2|}{2}=1.5"
+        },
+        {
+          "text": "Bei One-Hot-Cross-Entropy nur die wahre Klasse behalten.",
+          "latex": "L_{\\mathrm{CE}}=-\\ln(0.8)\\approx0.223"
+        }
+      ],
+      "result": "Die drei Werte gehören zu unterschiedlichen Bewertungen. Das Minus vor ln macht den Verlust für eine Wahrscheinlichkeit unter 1 positiv.",
+      "result_latex": "\\mathrm{MSE}=2.5,\\quad\\mathrm{MAE}=1.5,\\quad L_{\\mathrm{CE}}\\approx0.223"
+    }
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "id": "text-representations",
+  "exam_id": "deep-learning-data-science",
+  "module_id": "dl-seq2seq",
+  "title": "Textrepräsentation und Word Embeddings",
+  "priority": "support",
+  "summary": "NLP-Modelle benötigen eine numerische Repräsentation von Text; Word Embeddings repräsentieren Wörter als Vektoren.",
+  "explanation": [
+    "Vorwissen: Wörter sind keine direkt multiplizierbaren Zahlen. Tokenisierung erstellt Einheiten, IDs geben ihnen Tabellenindizes und Embeddings liefern gelernte Zahlenvektoren. Die Vektorlänge ist nicht die Zahl Wörter im Satz.",
+    "Text muss in Zahlen umgewandelt werden, bevor ein neuronales Netz ihn verarbeiten kann. Die Tokenisierung zerlegt Text in Einheiten, etwa Wörter, Teilwörter oder Zeichen. Tokens sind deshalb nicht zwangsläufig vollständige Wörter.",
+    "Eine Token-ID ist zunächst nur ein Index im Vokabular. Die Zahl 100 ist nicht semantisch doppelt so gross wie 50. Ein One-Hot-Vektor markiert eine ID durch eine einzige 1; alle anderen Komponenten sind 0. Verschiedene One-Hot-Vektoren besitzen noch keine gelernte semantische Nähe.",
+    "Eine Embedding-Tabelle ordnet jeder Token-ID einen d-dimensionalen dichten Vektor zu. Bei V Tokens enthält sie V·d Einträge. Der Zugriff ist eine Zeilenauswahl, rechnerisch gleichwertig zur Multiplikation eines One-Hot-Vektors mit der Embedding-Matrix.",
+    "Die Embedding-Werte werden gelernt oder aus einem vortrainierten Modell übernommen. Ähnliche Kontexte können ähnliche Repräsentationen begünstigen. Einzelne Dimensionen müssen aber nicht klar benannte Eigenschaften wie «männlich» oder «Plural» sein; solche Folienbilder sind didaktische Vereinfachungen.",
+    "Statische Embeddings liefern für dieselbe ID denselben Anfangsvektor. Ein kontextualisierendes Modell verändert die Repräsentation abhängig vom Satz. «Bank» in «auf der Bank sitzen» kann deshalb nach der Kontextverarbeitung anders repräsentiert sein als «Geld zur Bank bringen», obwohl der ursprüngliche Tabellenvektor gleich war.",
+    "Mathematik lesen: Vokabulargrösse V mal Embeddingdimension d zählt Tabellenparameter. Ein Satz mit T Tokens erhält nach Lookup eine T×d-Matrix. Ein Token kann mehrfach vorkommen und dann denselben Tabellenvektor wählen; daraus entstehen nicht neue Tabellenparameter."
+  ],
+  "sources": [
+    {
+      "file": "DeepLearning_Tag3_Transformer_2026.pdf",
+      "pages": [
+        3,
+        4,
+        5,
+        6,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 1,
+  "steps": [
+    "Text tokenisieren.",
+    "Tokens mit Vokabular-IDs versehen.",
+    "Embedding-Vektoren aus der Tabelle auswählen.",
+    "Kontext und Positionsinformation im Sequenzmodell verarbeiten."
+  ],
+  "example": "Beispiel: Das vereinfachte Vokabular lautet [Katze,Hund,Bank]. Für d=2 sei die Tabelle [[1,0],[0.9,0.1],[−0.5,0.7]]. Token-ID 2 meint bei Zählung ab 0 «Bank» und wählt den Vektor (−0.5,0.7).\nDie Tabelle hat 3·2=6 Parameter. «Katze» und «Hund» liegen in diesem erfundenen Beispiel nahe beieinander.\nDer Token «Bank» beginnt in zwei Sätzen mit demselben statischen Vektor. Erst die nachfolgende Kontextverarbeitung kann Sitzbank und Geldinstitut unterscheiden. Die Beispielzahlen sind zur Veranschaulichung gewählt und keine empirisch trainierten Embeddings.",
+  "confusions": [
+    {
+      "term": "Token-ID und Embedding",
+      "note": "Eine ID ist ein Index, kein semantischer Zahlenwert. Ein Embedding ist ein gelernter Vektor."
+    },
+    {
+      "term": "Statisch und kontextabhängig",
+      "note": "Der Tabellenvektor kann konstant sein; spätere Repräsentationen hängen vom Satz ab."
+    }
+  ],
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "Text wird numerisch",
+      "labels": [
+        "Text|Wörter oder Teilwörter",
+        "Token-IDs|Indizes im Vokabular",
+        "Embedding-Tabelle|d Zahlen je Token",
+        "Kontextmodell|satzabhängige Repräsentation"
+      ],
+      "caption": "Eine numerische ID bekommt erst durch ihre Embedding-Zeile und nachfolgende Berechnungen eine nutzbare Repräsentation."
+    },
+    {
+      "kind": "matrix",
+      "title": "Eine kleine Embedding-Tabelle",
+      "labels": [
+        "Katze / Hund / Bank"
+      ],
+      "values": [
+        [
+          1,
+          0
+        ],
+        [
+          0.9,
+          0.1
+        ],
+        [
+          -0.5,
+          0.7
+        ]
+      ],
+      "caption": "Jede Zeile gehört zu einem Token, jede Spalte zu einer Embedding-Dimension. Die Zahlen sind ein selbst gewähltes Lernbeispiel."
+    }
+  ]
+}

@@ -1,0 +1,142 @@
+{
+  "id": "eda-statistics",
+  "exam_id": "machine-learning",
+  "module_id": "ml-eda",
+  "title": "Kennzahlen und Verteilungen",
+  "priority": "support",
+  "summary": "Kennzahlen und Verteilungsdarstellungen verdichten die Eigenschaften einzelner Merkmale.",
+  "explanation": [
+    "Der Mittelwert ist Summe durch Anzahl. Der Median ist der mittlere sortierte Wert; bei gerader Anzahl der Mittelwert der beiden mittleren Werte. Beide beschreiben eine Lage, reagieren aber unterschiedlich auf Extremwerte.",
+    "Varianz misst mittlere quadrierte Abweichung vom Mittelwert. Die Standardabweichung ist ihre Quadratwurzel und hat wieder die Einheit der Daten. Für eine vollständige betrachtete Menge wird durch N geteilt; eine übliche Stichprobenschätzung teilt durch N−1.",
+    "Quartile zerlegen sortierte Daten in Bereiche. Der Interquartilsabstand IQR=Q3−Q1 beschreibt die Breite der mittleren Hälfte. Konventionen zur Quartilsberechnung können variieren; in Zahlenfragen muss die Regel oder die Quartile gegeben sein.",
+    "Ein Histogramm zeigt, in welchen Wertebereichen viele Fälle liegen. Schiefe bedeutet, dass eine Seite einen längeren Schwanz hat. Ein Mittelwert allein sagt nicht, ob alle Werte ähnlich sind oder einzelne grosse Werte dominieren.",
+    "Kennzahlen müssen zum Datentyp passen. Ein Durchschnitt aus nominalen Kategorie-IDs besitzt keine sinnvolle Grössenbedeutung. Bei Ausreissern hilft der Vergleich von Median und Mittelwert, ersetzt aber keine fachliche Prüfung."
+  ],
+  "sources": [
+    {
+      "file": "MachineLearning_Tag1_EDA_2026_ShaoJuWoo.pdf",
+      "pages": [
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 2,
+  "steps": [
+    "Werte und Einheit notieren.",
+    "Für Median sortieren; für Mittelwert summieren.",
+    "Varianzkonvention festlegen und Abweichungen quadrieren.",
+    "Kennzahl mit Verteilung und Datentyp interpretieren."
+  ],
+  "example": "Eigener Rechenfall: Werte (2,4,6). Mittelwert=(2+4+6)/3=4; Median=4. Quadratische Abweichungen sind 4,0,4. Populationsvarianz=8/3≈2.667, Standardabweichung≈1.633. Bei Stichprobenvarianz wäre es 8/(3−1)=4. Für (2,4,60) bleibt der Median 4, der Mittelwert steigt aber auf 22: ein Extremwert zieht den Mittelwert stark nach oben.",
+  "formula": {
+    "expression": "μ=Σxᵢ/N; σ²=Σ(xᵢ−μ)²/N; σ=√σ²",
+    "meaning": "Hier wird die Populationsvarianz der betrachteten Werte verwendet; Stichprobenvarianz hat Nenner N−1.",
+    "variables": [
+      {
+        "symbol": "xᵢ",
+        "meaning": "ein Messwert"
+      },
+      {
+        "symbol": "N",
+        "meaning": "Anzahl Werte"
+      },
+      {
+        "symbol": "μ",
+        "meaning": "Mittelwert"
+      },
+      {
+        "symbol": "σ²",
+        "meaning": "Varianz"
+      },
+      {
+        "symbol": "σ",
+        "meaning": "Standardabweichung"
+      }
+    ],
+    "latex": [
+      "\\mu=\\frac1N\\sum_{i=1}^N x_i",
+      "\\sigma^2=\\frac1N\\sum_{i=1}^N(x_i-\\mu)^2",
+      "\\sigma=\\sqrt{\\sigma^2}"
+    ],
+    "worked_example": {
+      "title": "Mittelwert und Populationsvarianz",
+      "given": [
+        "Werte x=(2,4,6), N=3.",
+        "Hier wird durch N geteilt, nicht durch N−1."
+      ],
+      "steps": [
+        {
+          "text": "Mittelwert bilden.",
+          "latex": "\\mu=\\frac{2+4+6}{3}=4"
+        },
+        {
+          "text": "Abweichungen vom Mittelwert bestimmen und quadrieren.",
+          "latex": "(x_i-\\mu)^2=(4,0,4)"
+        },
+        {
+          "text": "Quadrate mitteln: Das ist die Populationsvarianz.",
+          "latex": "\\sigma^2=\\frac{4+0+4}{3}=\\frac83\\approx2.667"
+        },
+        {
+          "text": "Die Wurzel liefert die Standardabweichung.",
+          "latex": "\\sigma=\\sqrt{\\frac83}\\approx1.633"
+        }
+      ],
+      "result": "Varianz hat quadrierte Einheiten; die Standardabweichung hat wieder die Einheit der Messwerte. Für Stichprobenvarianz wäre der Nenner hier 2.",
+      "result_latex": "\\mu=4,\\quad \\sigma^2\\approx2.667,\\quad \\sigma\\approx1.633"
+    }
+  },
+  "confusions": [
+    {
+      "term": "Varianz und Standardabweichung",
+      "note": "Varianz besitzt quadrierte Einheiten, Standardabweichung die ursprüngliche Einheit."
+    },
+    {
+      "term": "Median und Mittelwert",
+      "note": "Der Median richtet sich nach der sortierten Position, nicht nach der Summe."
+    }
+  ],
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "Varianz Schritt für Schritt",
+      "caption": "Der Nenner muss zur verlangten Konvention passen.",
+      "labels": [
+        "Mittelwert bestimmen",
+        "Abweichungen berechnen",
+        "Abweichungen quadrieren",
+        "Summe durch N teilen",
+        "Wurzel für Standardabweichung"
+      ]
+    },
+    {
+      "kind": "bars",
+      "title": "Ein Extremwert verschiebt den Mittelwert",
+      "caption": "Für 2,4,60 ist der Mittelwert 22, aber der Median weiterhin 4.",
+      "labels": [
+        "Median",
+        "Mittelwert"
+      ],
+      "values": [
+        [
+          4,
+          22
+        ]
+      ]
+    }
+  ]
+}

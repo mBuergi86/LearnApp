@@ -1,0 +1,131 @@
+{
+  "id": "missing-values",
+  "exam_id": "machine-learning",
+  "module_id": "ml-preprocessing",
+  "title": "Fehlende Werte behandeln",
+  "priority": "core",
+  "summary": "Fehlende Einträge müssen erkannt und entweder entfernt oder mit einer begründeten Imputation ersetzt werden.",
+  "explanation": [
+    "Ein fehlender Wert ist keine gemessene Null. Null kann eine echte Bedeutung haben; fehlend bedeutet, dass die Information unbekannt ist. Zuerst werden Häufigkeit, Muster und mögliche Gründe geprüft.",
+    "Löschen entfernt Fälle oder Spalten und kann Datenmenge und Zusammensetzung stark verändern. Imputation ersetzt fehlende Einträge nach einer festgelegten Regel. Keine dieser Optionen ist pauschal immer richtig.",
+    "Für numerische Features sind Mittelwert und Median einfache Imputationen; für nominale Kategorien ist beispielsweise die häufigste Kategorie sinnvoller als ein Mittelwert ihrer IDs. Der Median ist weniger empfindlich gegenüber grossen Extremwerten.",
+    "Der Imputationswert wird nur aus dem Trainingsanteil geschätzt. Validation, Test und neue Inputs erhalten denselben trainierten Ersatzwert. Ein eigener Test-Mittelwert würde eine andere Verarbeitung erzeugen und Testinformation verwenden.",
+    "Imputation rekonstruiert nicht garantiert den echten Wert. Ein zusätzliches Merkmal «war fehlend» kann die fehlende Information kennzeichnen, falls sinnvoll. Die gesamte Behandlung muss innerhalb jedes Cross-Validation-Trainingsfolds gelernt werden."
+  ],
+  "confusions": [
+    {
+      "term": "Fehlend und null",
+      "note": "Ein unbekannter Wert darf nicht ohne Begründung als gemessene null gelten."
+    },
+    {
+      "term": "Imputation und Wahrheit",
+      "note": "Ein Ersatzwert ist eine Annahme, keine Wiederherstellung des unbekannten Originals."
+    }
+  ],
+  "sources": [
+    {
+      "file": "MachineLearning_Tag1_Preprocessing_2026_ShaoJuWoo.pdf",
+      "pages": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 1,
+  "steps": [
+    "Fehlende Einträge erkennen, nicht mit null gleichsetzen.",
+    "Ursachen und Ausmass prüfen.",
+    "Ersatzregel auf Trainingsdaten bestimmen.",
+    "Dieselbe Regel für Validation, Test und Inferenz anwenden."
+  ],
+  "example": "Eigener Rechenfall: Training (10,20,30,fehlend). Mittelwert der bekannten Werte=(10+20+30)/3=20, nicht 60/4=15. Der fehlende Trainingswert wird 20. Auch ein fehlender Testwert bekommt 20, selbst wenn die übrigen Testwerte bei 100 liegen. Für (10,20,300) ist der Median 20, der Mittelwert 110: Die Wahl verändert das Ergebnis.",
+  "formula": {
+    "expression": "Ersatzmittel=Σ bekannte Trainingswerte/Anzahl bekannte Trainingswerte",
+    "meaning": "Fehlende Werte werden nicht als gemessene null mitgezählt.",
+    "variables": [
+      {
+        "symbol": "Ersatzmittel",
+        "meaning": "auf Training gelernter Imputationswert"
+      },
+      {
+        "symbol": "K",
+        "meaning": "Indexmenge der bekannten Trainingswerte"
+      },
+      {
+        "symbol": "|K|",
+        "meaning": "Anzahl bekannter Trainingswerte"
+      },
+      {
+        "symbol": "μ_bekannt",
+        "meaning": "deren Mittelwert"
+      }
+    ],
+    "latex": [
+      "\\mu_{\\mathrm{bekannt}}=\\frac{\\sum_{i\\in K}x_i}{|K|}"
+    ],
+    "worked_example": {
+      "title": "Imputation nur aus bekannten Trainingswerten",
+      "given": [
+        "Training: 10,20,30 und ein fehlender Wert.",
+        "K bezeichnet die Indizes der bekannten Trainingswerte."
+      ],
+      "steps": [
+        {
+          "text": "Fehlend nicht als gemessene null mitzählen.",
+          "latex": "|K|=3"
+        },
+        {
+          "text": "Bekannte Trainingswerte summieren und durch ihre Anzahl teilen.",
+          "latex": "\\mu_{\\mathrm{bekannt}}=\\frac{10+20+30}{3}=20"
+        },
+        {
+          "text": "Den fehlenden Eintrag durch den gelernten Wert ersetzen.",
+          "latex": "(10,20,30,\\text{fehlend})\\mapsto(10,20,30,20)"
+        },
+        {
+          "text": "Für neue fehlende Werte denselben Ersatz verwenden, nicht auf Test neu fitten.",
+          "latex": "x_{\\mathrm{Test,fehlend}}\\mapsto20"
+        }
+      ],
+      "result": "Der Ersatzwert ist 20. Er ist eine Annahme aus Training und keine Garantie für den unbekannten Originalwert.",
+      "result_latex": "\\mathrm{Ersatzwert}=20"
+    }
+  },
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "Imputation ohne Test-Leakage",
+      "caption": "Nur Training bestimmt den Ersatzwert.",
+      "labels": [
+        "Training: bekannte Werte",
+        "Ersatzwert schätzen",
+        "Fehlende Trainingswerte ersetzen",
+        "Dieselbe Regel auf Test"
+      ]
+    },
+    {
+      "kind": "bars",
+      "title": "Der Ersatzwert ist 20",
+      "caption": "Die drei bekannten Werte ergeben Mittelwert 20; fehlend gehört nicht in den Nenner.",
+      "labels": [
+        "Wert 1",
+        "Wert 2",
+        "Wert 3",
+        "Ersatz"
+      ],
+      "values": [
+        [
+          10,
+          20,
+          30,
+          20
+        ]
+      ]
+    }
+  ]
+}

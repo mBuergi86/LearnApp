@@ -1,0 +1,145 @@
+{
+  "id": "model-training-gradient",
+  "exam_id": "machine-learning",
+  "module_id": "ml-model-selection",
+  "title": "Gradient Descent im Modelltraining",
+  "priority": "core",
+  "summary": "Gradient Descent aktualisiert Parameter schrittweise in Richtung kleinerer Loss.",
+  "explanation": [
+    "Gradient Descent verändert Modellparameter, damit die Loss lokal kleiner wird. Die Loss ist eine Zahl; der Gradient ist ein Vektor mit einer Ableitung pro Parameter.",
+    "Eine Ableitung gibt die lokale Änderungsrate an. Ist ∂J/∂w positiv, würde ein kleiner Anstieg von w den Loss erhöhen. Daher wird w reduziert. Bei negativem Gradienten wird w durch das Subtrahieren einer negativen Zahl erhöht.",
+    "Die Update-Regel lautet θ_neu=θ_alt−η∇J. η ist die Lernrate und bestimmt die Schrittweite. Sie wird vorgegeben, während θ aus Trainingsdaten gelernt wird.",
+    "Zu grosse Schritte können über das Minimum hinausspringen oder divergieren. Zu kleine Schritte benötigen viele Updates. Die negative Gradientenrichtung allein garantiert bei beliebig grosser Schrittweite keine kleinere Loss.",
+    "Full-Batch verwendet alle Trainingsbeispiele, Mini-Batch einen Teil, SGD im engen Sinn eines. Die Gradienten müssen zur Loss-Mittelung passen. Ein Nullgradient kann Minimum, Maximum oder Sattelpunkt bedeuten; beim konvexen Least-Squares-Problem ist ein stationärer Punkt ein globales Minimum."
+  ],
+  "steps": [
+    "Loss und aktuelle Parameter festlegen.",
+    "Gradient nach Parametern berechnen.",
+    "η mal Gradient von alten Parametern abziehen.",
+    "Loss und Abbruchkriterium kontrollieren."
+  ],
+  "confusions": [
+    {
+      "term": "Negativer Gradient und kleinerer Parameter",
+      "note": "Ein negativer Gradient führt beim Abziehen zu einem grösseren Parameter."
+    },
+    {
+      "term": "Backpropagation und Optimierer",
+      "note": "Ableitungen berechnen und Parameter aktualisieren sind getrennte Aufgaben."
+    }
+  ],
+  "sources": [
+    {
+      "file": "MachineLearning_Tag2_ModelTraining_Selection_2026_ShaoJuWoo.pdf",
+      "pages": [
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 6,
+  "example": "Eigener Rechenfall: J(w)=(w−3)², daher J′(w)=2(w−3). Bei w=1 ist Gradient −4. Mit η=0.1 folgt w_neu=1−0.1·(−4)=1.4; Loss sinkt von 4 auf 2.56. Mit η=2 wäre w_neu=9 und Loss=36: Das Vorzeichen stimmt, der Schritt ist trotzdem zu gross.",
+  "formula": {
+    "expression": "θ_neu=θ_alt−η∇J(θ_alt)",
+    "meaning": "Alle Gradienten werden für den aktuellen Parameterstand berechnet.",
+    "variables": [
+      {
+        "symbol": "θ",
+        "meaning": "Parametervektor"
+      },
+      {
+        "symbol": "η",
+        "meaning": "positive Lernrate"
+      },
+      {
+        "symbol": "∇J",
+        "meaning": "Gradient der Loss"
+      },
+      {
+        "symbol": "J",
+        "meaning": "Trainingsverlust"
+      }
+    ],
+    "latex": [
+      "\\theta_{\\mathrm{neu}}=\\theta_{\\mathrm{alt}}-\\eta\\nabla J(\\theta_{\\mathrm{alt}})"
+    ],
+    "worked_example": {
+      "title": "Einen gegebenen negativen Gradienten richtig abziehen",
+      "given": [
+        "Aktueller Parameter w=1, gegebener Gradient g=−4, Lernrate η=0.1.",
+        "Zur Kontrolle ist die Loss J(w)=(w−3)² bekannt."
+      ],
+      "steps": [
+        {
+          "text": "Die Lernrate mit dem gegebenen Gradienten multiplizieren.",
+          "latex": "\\eta g=0.1(-4)=-0.4"
+        },
+        {
+          "text": "Den ganzen Schritt vom alten Parameter abziehen.",
+          "latex": "w_{\\mathrm{neu}}=1-(-0.4)=1.4"
+        },
+        {
+          "text": "Die einfache quadratische Loss nach dem Schritt kontrollieren.",
+          "latex": "J(1)=4,\\quad J(1.4)=(1.4-3)^2=2.56"
+        }
+      ],
+      "result": "Der Parameter steigt auf 1.4, die Loss sinkt. Minus einer negativen Zahl wird plus; der Gradient musste hier nicht selbst hergeleitet werden.",
+      "result_latex": "w_{\\mathrm{neu}}=1.4"
+    }
+  },
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "Gradient wird zum Update",
+      "caption": "Die Lernrate skaliert die Änderung, nicht den ursprünglichen Loss.",
+      "labels": [
+        "Aktuelle Parameter",
+        "Vorhersage und Loss",
+        "Gradient",
+        "θ−η∇J",
+        "Neuer Parameterstand"
+      ]
+    },
+    {
+      "kind": "plot",
+      "title": "Minimum bei w=3",
+      "caption": "J=(w−3)². Von w=1 bewegt ein kleiner Schritt gegen den negativen Gradienten nach rechts.",
+      "labels": [
+        "w",
+        "J"
+      ],
+      "values": [
+        [
+          0,
+          9
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          5,
+          4
+        ]
+      ]
+    }
+  ]
+}

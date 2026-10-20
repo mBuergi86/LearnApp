@@ -1,0 +1,131 @@
+{
+  "id": "batch-normalization",
+  "exam_id": "deep-learning-data-science",
+  "module_id": "dl-training",
+  "title": "Batch Normalization",
+  "priority": "support",
+  "summary": "Batch Normalization standardisiert Aktivierungen mit Batch-Statistiken und ergänzt lernbare Skalierung und Verschiebung; Training und Inferenz unterscheiden sich.",
+  "explanation": [
+    "Vorwissen: Ein Batch enthält mehrere Beispiele. Mittelwert und Varianz beschreiben die Aktivierungen eines Features über diese Beispiele. Das ist nicht dieselbe Operation wie externe Feature-Skalierung auf dem ganzen Trainingsdatensatz.",
+    "Batch Normalization verarbeitet Aktivierungen anhand ihrer Verteilung im aktuellen Mini-Batch. Für jede betrachtete Feature-Dimension werden Mittelwert und Varianz über die Beispiele berechnet. Bei CNNs werden für einen Kanal typischerweise zusätzlich räumliche Positionen in diese Statistik einbezogen.",
+    "Die standardisierte Aktivierung lautet x̂=(x−μ_B)/√(σ²_B+ε). Der kleine positive Wert ε verhindert eine Division durch null. Anschliessend erlaubt y=γx̂+β eine lernbare Skalierung und Verschiebung. γ und β sind Parameter; Batch-Mittelwert und Batch-Varianz sind berechnete Statistiken.",
+    "Die ursprüngliche Motivation in den Folien ist die Veränderung der Aktivierungsverteilungen während des Trainings. Praktisch kann Batch Normalization die Optimierung erleichtern und den Gradientenfluss verbessern. Ihre Wirkung sollte aber nicht als Garantie für eine feste Verteilung oder als vollständige Erklärung aller Trainingsvorteile verstanden werden.",
+    "Im Standardfall unterscheiden sich Training und Inferenz: Beim Training werden aktuelle Batch-Statistiken verwendet und gleitende Statistiken aktualisiert. Bei Inferenz verwendet die Schicht die gespeicherten Statistiken. Der Auswertungsmodus ist deshalb wichtig; ein einzelnes Testbeispiel soll nicht mit einem zufällig anderen Testbatch das Modellverhalten bestimmen.",
+    "Layer Normalization arbeitet entlang einer anderen Achse: Sie normalisiert die Features eines einzelnen Beispiels beziehungsweise Tokens. Batch Normalization normalisiert dagegen ein Feature über mehrere Beispiele. Kleine Batches können Batch-Statistiken unzuverlässig machen. Die Platzierung vor oder nach einer Aktivierung hängt von der Architektur ab.",
+    "Mathematik lesen: Die Quadratwurzel der Varianz ist die Standardabweichung; ε steht innerhalb der Wurzel. Erst normalisieren, dann mit γ multiplizieren und β addieren. γ und β können gelernt werden; der Batch-Mittelwert ist eine berechnete Statistik und kein frei optimiertes Gewicht."
+  ],
+  "sources": [
+    {
+      "file": "DeepLearning_Tag1_Einfuhrung_2026_ShaoJuWoo.pdf",
+      "pages": [
+        86,
+        87,
+        88,
+        89
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 8,
+  "steps": [
+    "Für jedes Feature Batch-Mittelwert und Batch-Varianz bestimmen.",
+    "Mit ε standardisieren.",
+    "Lernbare Skalierung γ und Verschiebung β anwenden.",
+    "Statistiken während des Trainings aktualisieren.",
+    "Bei Standard-Inferenz die gespeicherten Statistiken verwenden."
+  ],
+  "example": "Beispiel für ein Feature mit Batchwerten (1,3): μ_B=(1+3)/2=2. Die hier verwendete Populationsvarianz ist [(1−2)²+(3−2)²]/2=1.\nOhne den winzigen ε-Effekt ergibt die Standardisierung (−1,1). Mit γ=2 und β=0.5 folgt y=(−1.5,2.5).\nDer Output hat also nach der lernbaren Transformation nicht zwingend Mittelwert 0 und Varianz 1. Diese zwei Zahlen betreffen denselben Feature-Kanal bei zwei Beispielen; sie sind keine Normalisierung von zwei Features eines einzigen Tokens.",
+  "confusions": [
+    {
+      "term": "BatchNorm und LayerNorm",
+      "note": "BatchNorm nutzt eine Batch-Achse; LayerNorm nutzt die Feature-Achse innerhalb eines Beispiels."
+    },
+    {
+      "term": "Normalisierte und transformierte Werte",
+      "note": "Nach γ und β muss der Output nicht mehr Mittelwert 0 und Varianz 1 besitzen."
+    }
+  ],
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "BatchNorm in drei Schritten",
+      "labels": [
+        "Batch-Statistik|μ_B und σ²_B",
+        "Standardisieren|x̂ = (x−μ_B)/√(σ²_B+ε)",
+        "Lernbar transformieren|y = γx̂ + β"
+      ],
+      "caption": "Die Statistik hängt im Training vom Batch ab; γ und β werden gelernt."
+    },
+    {
+      "kind": "flow",
+      "title": "Zwei Beispiele, ein Feature",
+      "labels": [
+        "Werte (1,3)|μ = 2; Varianz = 1",
+        "Standardisiert|ungefähr (−1,1)",
+        "γ = 2; β = 0.5|ungefähr (−1.5,2.5)"
+      ],
+      "caption": "ε wird hier nur für die anschauliche Rechnung vernachlässigt; die Implementation benötigt es."
+    }
+  ],
+  "formula": {
+    "expression": "x̂=(x−μ_B)/√(σ²_B+ε)\ny=γx̂+β",
+    "meaning": "γ und β sind lernbar; μ_B und σ²_B werden aus dem Batch berechnet.",
+    "variables": [
+      {
+        "symbol": "x",
+        "meaning": "Aktivierung eines Features"
+      },
+      {
+        "symbol": "μ_B,σ²_B",
+        "meaning": "Batch-Mittelwert und Batch-Varianz"
+      },
+      {
+        "symbol": "ε",
+        "meaning": "kleine positive Konstante"
+      },
+      {
+        "symbol": "x̂",
+        "meaning": "normalisierte Aktivierung"
+      },
+      {
+        "symbol": "γ,β",
+        "meaning": "lernbare Skalierung und Verschiebung"
+      },
+      {
+        "symbol": "y",
+        "meaning": "Output der BatchNorm, hier kein Label"
+      }
+    ],
+    "latex": [
+      "\\hat x=\\frac{x-\\mu_B}{\\sqrt{\\sigma_B^2+\\varepsilon}}",
+      "y=\\gamma\\hat x+\\beta"
+    ],
+    "worked_example": {
+      "title": "Batchstatistik und lernbare Transformation",
+      "given": [
+        "Ein Feature im Batch hat Werte (1,3); Populationsvarianz.",
+        "γ=2, β=0.5. ε wird nur für die Handrechnung vernachlässigt."
+      ],
+      "steps": [
+        {
+          "text": "Mittelwert des Features über den Batch berechnen.",
+          "latex": "\\mu_B=\\frac{1+3}{2}=2"
+        },
+        {
+          "text": "Populationsvarianz berechnen.",
+          "latex": "\\sigma_B^2=\\frac{(1-2)^2+(3-2)^2}{2}=1"
+        },
+        {
+          "text": "Zentrieren und durch die Standardabweichung teilen.",
+          "latex": "\\hat x=\\left(\\frac{1-2}{1},\\frac{3-2}{1}\\right)=(-1,1)"
+        },
+        {
+          "text": "Die lernbare Skalierung und Verschiebung anwenden.",
+          "latex": "y=2(-1,1)+(0.5,0.5)=(-1.5,2.5)"
+        }
+      ],
+      "result": "Nach γ und β hat der Output nicht zwingend Mittelwert 0 und Varianz 1. Im echten Betrieb bleibt ε zur Stabilisierung erhalten.",
+      "result_latex": "y=(-1.5,2.5)"
+    }
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "id": "ensemble-basics",
+  "exam_id": "machine-learning",
+  "module_id": "ml-ensemble",
+  "title": "Ensemble Learning: Bagging und Boosting",
+  "priority": "support",
+  "summary": "Ensemble-Verfahren kombinieren mehrere Modelle, um robustere Vorhersagen zu erhalten.",
+  "explanation": [
+    "Ein Ensemble kombiniert mehrere Modelle. Der Nutzen entsteht nicht allein durch Anzahl, sondern auch durch unterschiedlich gelagerte Fehler. Identische Modelle mit identischen Fehlern liefern durch Voting kaum neue Information.",
+    "Bagging trainiert Modelle auf Bootstrap-Stichproben: Ziehen mit Zurücklegen aus Training. Modelle können unabhängig angepasst und danach durch Mehrheitsvotum oder Mittelung kombiniert werden. Das kann Varianz reduzieren.",
+    "Hard Voting zählt Klassenstimmen, Soft Voting mittelt Klassenwahrscheinlichkeiten. Für Regression ist der Mittelwert numerischer Vorhersagen üblich. Bei Gleichstand braucht die Entscheidungsregel eine definierte Behandlung.",
+    "Boosting trainiert Modelle schrittweise abhängig von bisherigen Fehlern. AdaBoost verändert beispielsweise Beispielgewichte; Gradient Boosting passt neue Modelle an ein Verlustsignal an. Boosting ist daher nicht einfach paralleles Bagging.",
+    "Ensemble-Hyperparameter wie Modellanzahl und Tiefe werden mit Validation gewählt. Ensembles garantieren keine bessere Leistung und ersetzen weder saubere Datentrennung noch eine passende Metrik."
+  ],
+  "sources": [
+    {
+      "file": "Machine_Learning_Tag3_Ensemble_Learning_2026_ShaoJuWoo.pdf",
+      "pages": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        18,
+        19,
+        20,
+        21
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 1,
+  "steps": [
+    "Geeignete Basismodelle und Variation festlegen.",
+    "Unabhängig baggen oder abhängig boosten.",
+    "Vorhersagen nach definierter Regel kombinieren.",
+    "Leistung gegenüber Basismodellen unabhängig prüfen."
+  ],
+  "example": "Eigener Rechenfall: Drei Klassifikatoren stimmen (1,0,1); Hard Voting ergibt Klasse 1 mit zwei Stimmen. Drei Regressoren liefern (10,14,12); Mittelwert=(10+14+12)/3=12. Soft Voting mit positiven Wahrscheinlichkeiten (0.6,0.4,0.8) ergibt p=0.6; erst eine Schwelle macht daraus ein Klassenlabel.",
+  "formula": {
+    "expression": "ŷ_Reg=(1/M)Σ_m ŷ_m; p_soft=(1/M)Σ_m p_m",
+    "meaning": "Gleichgewichtete Mittelung ist eine konkrete Aggregationsregel, nicht die einzige.",
+    "variables": [
+      {
+        "symbol": "M",
+        "meaning": "Anzahl Modelle"
+      },
+      {
+        "symbol": "ŷ_m",
+        "meaning": "numerische Modellvorhersage"
+      },
+      {
+        "symbol": "p_m",
+        "meaning": "positive Wahrscheinlichkeit eines Modells"
+      }
+    ],
+    "latex": [
+      "\\hat y_{\\mathrm{Reg}}=\\frac1M\\sum_{m=1}^M\\hat y_m",
+      "p_{\\mathrm{soft}}=\\frac1M\\sum_{m=1}^Mp_m"
+    ],
+    "worked_example": {
+      "title": "Drei Modelle gemeinsam auswerten",
+      "given": [
+        "Regressionsvorhersagen (10,14,12).",
+        "Separate positive Klassenwahrscheinlichkeiten (0.6,0.4,0.8)."
+      ],
+      "steps": [
+        {
+          "text": "Numerische Vorhersagen addieren und durch Modellanzahl teilen.",
+          "latex": "\\hat y_{\\mathrm{Reg}}=\\frac{10+14+12}{3}=12"
+        },
+        {
+          "text": "Soft Voting separat auf den Wahrscheinlichkeiten anwenden.",
+          "latex": "p_{\\mathrm{soft}}=\\frac{0.6+0.4+0.8}{3}=0.6"
+        },
+        {
+          "text": "Erst eine anschliessende Schwelle erzeugt eine Klasse.",
+          "latex": "0.6\\ge0.5\\ \\Longrightarrow\\ \\hat y_{\\mathrm{Klasse}}=1"
+        }
+      ],
+      "result": "Das Regressionsensemble sagt 12 voraus; das Soft-Voting-Ensemble liefert p=0.6. Zahlenwerte, Wahrscheinlichkeiten und Klassenlabels sind nicht austauschbar.",
+      "result_latex": "\\hat y_{\\mathrm{Reg}}=12,\\quad p_{\\mathrm{soft}}=0.6"
+    }
+  },
+  "confusions": [
+    {
+      "term": "Bagging und Boosting",
+      "note": "Unabhängige Bootstrap-Modelle gegenüber schrittweise abhängigen Modellen."
+    },
+    {
+      "term": "Hard und Soft Voting",
+      "note": "Klassenstimmen zählen gegenüber Wahrscheinlichkeiten mitteln."
+    }
+  ],
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "Bagging als gemeinsame Entscheidung",
+      "caption": "Bootstrap variiert die Daten; die Vorhersagen werden anschliessend kombiniert.",
+      "labels": [
+        "Trainingsdaten",
+        "Bootstrap-Stichproben",
+        "Mehrere Modelle",
+        "Vorhersagen aggregieren"
+      ]
+    },
+    {
+      "kind": "bars",
+      "title": "Drei Regressoren, ein Mittelwert",
+      "caption": "10,14,12 ergeben gemeinsam 12.",
+      "labels": [
+        "Modell 1",
+        "Modell 2",
+        "Modell 3",
+        "Mittelwert"
+      ],
+      "values": [
+        [
+          10,
+          14,
+          12,
+          12
+        ]
+      ]
+    }
+  ]
+}

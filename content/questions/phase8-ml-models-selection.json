@@ -1,0 +1,884 @@
+{
+  "questions": [
+    {
+      "id": "ml-linear-goal",
+      "topic_id": "linear-regression-model",
+      "type": "single-choice",
+      "prompt": "Welche Art Response modelliert lineare Regression?",
+      "explanation": "Lineare Regression sagt numerische Ziele voraus, etwa einen Preis. Klassifikation sagt ein kategoriales Label voraus. Der Regressionsoutput kann grösser als 1 oder negativ sein und ist daher nicht automatisch eine Klassenwahrscheinlichkeit.",
+      "difficulty": 1,
+      "enabled": true,
+      "options": [
+        {
+          "id": "a",
+          "text": "Eine numerische Response"
+        },
+        {
+          "id": "b",
+          "text": "Nur Cluster-IDs"
+        },
+        {
+          "id": "c",
+          "text": "Keine Zielvariable"
+        },
+        {
+          "id": "d",
+          "text": "Ausschliesslich nominale Klassen"
+        }
+      ],
+      "correct_answer": "a"
+    },
+    {
+      "id": "ml-linear-loss",
+      "topic_id": "linear-regression-model",
+      "type": "single-choice",
+      "prompt": "Welches Ziel verfolgt die Parameterschätzung der linearen Regression?",
+      "explanation": "Least Squares minimiert quadratische Residuen. Fehler +2 und −2 tragen beide 4 bei, heben sich also nicht auf. MSE unterscheidet sich von absolutem Fehler und von Accuracy; die passende Loss muss zur Aufgabe passen.",
+      "difficulty": 2,
+      "enabled": true,
+      "options": [
+        {
+          "id": "a",
+          "text": "Quadratischen Fehler minimieren"
+        },
+        {
+          "id": "b",
+          "text": "Anzahl Features maximieren"
+        },
+        {
+          "id": "c",
+          "text": "Labels entfernen"
+        },
+        {
+          "id": "d",
+          "text": "Clusteranzahl zufällig wählen"
+        }
+      ],
+      "correct_answer": "a"
+    },
+    {
+      "id": "ml-linear-predict",
+      "topic_id": "linear-regression-model",
+      "type": "true-false",
+      "prompt": "Mit geschätzten Parametern kann die lineare Regression neue numerische Werte prognostizieren.",
+      "explanation": "Richtig: Nach dem Training wird dieselbe gelernte Regel auf neue Inputs angewendet. Bei ŷ=3x+2 wird x=4 zu 14. Die Gewichte werden dafür nicht pro Testfall neu gelernt und das unbekannte Ziel wird nicht benötigt.",
+      "difficulty": 1,
+      "enabled": true,
+      "options": [
+        {
+          "id": "f",
+          "text": "Falsch"
+        },
+        {
+          "id": "t",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "t"
+    },
+    {
+      "id": "ml-linear-matrix",
+      "topic_id": "linear-regression-model",
+      "type": "single-choice",
+      "prompt": "Wozu dient die Matrixschreibweise bei linearer Regression?",
+      "explanation": "X fasst Fälle als Zeilen und Features als Spalten zusammen. Xθ berechnet viele Vorhersagen zugleich. Eine Eins-Spalte kann den Bias aufnehmen. Matrixschreibweise macht das Modell nicht zu einem Deep-Learning-Netz und ersetzt keine Parameterschätzung.",
+      "difficulty": 2,
+      "enabled": true,
+      "options": [
+        {
+          "id": "a",
+          "text": "Beobachtungen und Features kompakt darstellen"
+        },
+        {
+          "id": "b",
+          "text": "Klassenlabels erzeugen"
+        },
+        {
+          "id": "c",
+          "text": "Bäume abstimmen"
+        },
+        {
+          "id": "d",
+          "text": "K-Means initialisieren"
+        }
+      ],
+      "correct_answer": "a"
+    },
+    {
+      "id": "ml-least-squares-gradient",
+      "topic_id": "regression-optimization",
+      "type": "single-choice",
+      "prompt": "Welche Information liefert die Differentialrechnung im Least-Squares-Abschnitt?",
+      "explanation": "Der Gradient enthält die lokale Loss-Änderung pro Parameter. Er ist nicht der Loss selbst. Für J=(w−2)² gilt J′=2(w−2); bei w=0 ist J=4, der Gradient aber −4. Erst der Optimierer nutzt ihn für ein Update.",
+      "difficulty": 2,
+      "enabled": true,
+      "options": [
+        {
+          "id": "a",
+          "text": "Den Gradienten des quadratischen Fehlers"
+        },
+        {
+          "id": "b",
+          "text": "Die Clusterlabels"
+        },
+        {
+          "id": "c",
+          "text": "Die Testsplitgrösse"
+        },
+        {
+          "id": "d",
+          "text": "Die Anzahl Klassen"
+        }
+      ],
+      "correct_answer": "a"
+    },
+    {
+      "id": "ml-least-squares-normal",
+      "topic_id": "regression-optimization",
+      "type": "true-false",
+      "prompt": "Bei linearer Regression beschreibt die Normalengleichung eine Least-Squares-Schätzung der Parameter.",
+      "explanation": "Richtig mit den notwendigen Rangbedingungen: Aus Gradient null entsteht XᵀXθ=Xᵀy. Die Schreibweise mit gewöhnlicher Inverse verlangt invertierbares XᵀX. Bei exakt abhängigen Features darf man diese Inverse nicht einfach voraussetzen.",
+      "difficulty": 2,
+      "enabled": true,
+      "options": [
+        {
+          "id": "f",
+          "text": "Falsch"
+        },
+        {
+          "id": "t",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "t"
+    },
+    {
+      "id": "ml-bias-offset",
+      "topic_id": "regression-bias-term",
+      "type": "single-choice",
+      "prompt": "Welchen Zweck hat der Bias-Term in der linearen Regression?",
+      "explanation": "Der additive Bias verschiebt die Gerade. Für ŷ=2x+3 ist die Vorhersage bei x=0 gleich 3. Das Gewicht 2 bestimmt dagegen die Steigung. Der Bias-Term ist ein gelernter Parameter und nicht gleich statistischem Bias.",
+      "difficulty": 1,
+      "enabled": true,
+      "options": [
+        {
+          "id": "a",
+          "text": "Offset der Geraden oder Ebene ermöglichen"
+        },
+        {
+          "id": "b",
+          "text": "Klassenlabels codieren"
+        },
+        {
+          "id": "c",
+          "text": "Testdaten auswählen"
+        },
+        {
+          "id": "d",
+          "text": "Feature Maps erzeugen"
+        }
+      ],
+      "correct_answer": "a"
+    },
+    {
+      "id": "ml-bias-origin",
+      "topic_id": "regression-bias-term",
+      "type": "true-false",
+      "prompt": "Ohne Offset-Term muss eine Regressionsgerade durch den Ursprung verlaufen.",
+      "explanation": "Richtig für ŷ=wx ohne konstanten Term: x=0 liefert immer 0. Ein frei gelernter Bias b erlaubt ŷ=b bei x=0. Nichtlineare Featuretransformationen ändern die Interpretation im ursprünglichen Raum; hier geht es um die gewöhnliche Gerade.",
+      "difficulty": 2,
+      "enabled": true,
+      "options": [
+        {
+          "id": "f",
+          "text": "Falsch"
+        },
+        {
+          "id": "t",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "t"
+    },
+    {
+      "id": "ml-logistic-task",
+      "topic_id": "logistic-regression-model",
+      "type": "single-choice",
+      "prompt": "Wofür wird logistische Regression in den Lernseiten verwendet?",
+      "explanation": "Logistische Regression modelliert Klassenwahrscheinlichkeiten aus einem linearen Score und Sigmoid. Sie wird trotz des Namens für Klassifikation verwendet. Eine anschliessende Schwelle erzeugt die harte Entscheidung; Sigmoid allein ist noch nicht das Klassenlabel.",
+      "difficulty": 1,
+      "enabled": true,
+      "options": [
+        {
+          "id": "a",
+          "text": "Klassifikationswahrscheinlichkeiten modellieren"
+        },
+        {
+          "id": "b",
+          "text": "Cluster ohne Labels bilden"
+        },
+        {
+          "id": "c",
+          "text": "Pixel filtern"
+        },
+        {
+          "id": "d",
+          "text": "Fehlende Werte imputieren"
+        }
+      ],
+      "correct_answer": "a"
+    },
+    {
+      "id": "ml-logistic-vs-linear",
+      "topic_id": "logistic-regression-model",
+      "type": "single-choice",
+      "prompt": "Was unterscheidet lineare von logistischer Regression grundlegend?",
+      "explanation": "Lineare Regression liefert einen numerischen Wert; logistische Regression einen Score, der in eine Klassenwahrscheinlichkeit transformiert wird. Beide können Gewichte und Bias besitzen. Das Vorhandensein eines Bias oder numerischer Inputs unterscheidet sie daher nicht.",
+      "difficulty": 2,
+      "enabled": true,
+      "options": [
+        {
+          "id": "a",
+          "text": "Numerische Vorhersage gegenüber Klassifikationswahrscheinlichkeit"
+        },
+        {
+          "id": "b",
+          "text": "Training gegenüber Testen"
+        },
+        {
+          "id": "c",
+          "text": "Feature gegenüber Beobachtung"
+        },
+        {
+          "id": "d",
+          "text": "Mittelwert gegenüber Median"
+        }
+      ],
+      "correct_answer": "a"
+    },
+    {
+      "id": "ml-logistic-threshold",
+      "topic_id": "logistic-regression-model",
+      "type": "true-false",
+      "prompt": "Eine Schwelle übersetzt die modellierte Wahrscheinlichkeit in eine Klassenentscheidung.",
+      "explanation": "Richtig: Bei p=0.6 und Regel p≥0.5 ist die Klasse positiv, bei p≥0.7 negativ. Die Wahrscheinlichkeit bleibt 0.6. Schwellenwahl verändert also die Entscheidungsregel, nicht zwingend die Modellgewichte.",
+      "difficulty": 1,
+      "enabled": true,
+      "options": [
+        {
+          "id": "f",
+          "text": "Falsch"
+        },
+        {
+          "id": "t",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "t"
+    },
+    {
+      "id": "ml-logistic-label",
+      "topic_id": "logistic-regression-model",
+      "type": "true-false",
+      "prompt": "Das Ziel der logistischen Regression ist ein kategoriales Label.",
+      "explanation": "Richtig: Das überwachte Ziel ist eine Klasse, gewöhnlich als 0/1 codiert. Das Modell liefert davor eine Wahrscheinlichkeit. Dass die Klasse als Zahl gespeichert wird, macht sie nicht zu einem unbeschränkten numerischen Regressionsziel.",
+      "difficulty": 1,
+      "enabled": true,
+      "options": [
+        {
+          "id": "f",
+          "text": "Falsch"
+        },
+        {
+          "id": "t",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "t"
+    },
+    {
+      "id": "ml-threshold-role",
+      "topic_id": "classification-threshold",
+      "type": "numeric-choice",
+      "prompt": "Wie viele Fälle werden positiv vorhergesagt?",
+      "explanation": "0.8 und 0.5 erfüllen ≥0.5; 0.3 nicht. Also zwei positive Entscheidungen. Nur einen zu zählen würde die ausdrücklich eingeschlossene Gleichheit übersehen. Drei würde die Schwelle ignorieren; null alle Vergleiche umkehren. Ohne wahre Labels wissen wir noch nicht, ob die Entscheidungen richtig sind.",
+      "difficulty": 2,
+      "enabled": true,
+      "options": [
+        {
+          "id": "answer-1",
+          "text": "0"
+        },
+        {
+          "id": "answer-2",
+          "text": "1"
+        },
+        {
+          "id": "answer-3",
+          "text": "2"
+        },
+        {
+          "id": "answer-4",
+          "text": "3"
+        }
+      ],
+      "correct_answer": "answer-3",
+      "context": "Wahrscheinlichkeiten p=(0.8,0.5,0.3). Die Regel lautet positiv genau dann, wenn p≥0.5."
+    },
+    {
+      "id": "ml-threshold-score",
+      "topic_id": "classification-threshold",
+      "type": "true-false",
+      "prompt": "Die logistische Funktion liefert vor der Schwellenentscheidung einen Score beziehungsweise eine Wahrscheinlichkeit.",
+      "explanation": "Richtig im Sinne der probabilistischen Vorhersage: Der lineare Score z wird durch Sigmoid zu p. Erst der Vergleich von p mit einer Schwelle erzeugt eine Klasse. Score, Wahrscheinlichkeit und Klassenentscheidung dürfen nicht gleichgesetzt werden.",
+      "difficulty": 1,
+      "enabled": true,
+      "options": [
+        {
+          "id": "f",
+          "text": "Falsch"
+        },
+        {
+          "id": "t",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "t"
+    },
+    {
+      "id": "ml-loss-role",
+      "topic_id": "loss-functions-ml",
+      "type": "single-choice",
+      "prompt": "Was misst eine Loss-Funktion?",
+      "explanation": "Loss bewertet Vorhersage gegen Ziel und definiert die Strafe für Training. Für Fehler 2 ist der quadratische Einzelverlust 4. Sie ist kein Modellparameter, keine Datenmenge und nicht automatisch die spätere Accuracy.",
+      "difficulty": 1,
+      "enabled": true,
+      "options": [
+        {
+          "id": "a",
+          "text": "Abstand zwischen Vorhersage und Ziel"
+        },
+        {
+          "id": "b",
+          "text": "Anzahl der Trainingsbeispiele"
+        },
+        {
+          "id": "c",
+          "text": "Tiefe eines Baums"
+        },
+        {
+          "id": "d",
+          "text": "Zahl der Cluster"
+        }
+      ],
+      "correct_answer": "a"
+    },
+    {
+      "id": "ml-loss-match",
+      "topic_id": "loss-functions-ml",
+      "type": "matching",
+      "prompt": "Ordne der Aufgabe eine passende Standard-Loss-Funktion zu.",
+      "explanation": "MSE passt zu numerischen Regressionsfehlern; Binary Cross-Entropy zu binären Wahrscheinlichkeiten und Labels 0/1. BCE verwendet p oder 1−p je wahrem Label. Ein bereits hart gerundetes Label verliert das hilfreiche Wahrscheinlichkeitssignal.",
+      "difficulty": 2,
+      "enabled": true,
+      "match_items": [
+        {
+          "id": "reg",
+          "text": "Regression",
+          "correct_option_id": "mse"
+        },
+        {
+          "id": "bin",
+          "text": "Binäre Klassifikation",
+          "correct_option_id": "bce"
+        }
+      ],
+      "match_options": [
+        {
+          "id": "mse",
+          "text": "Mean Squared Error"
+        },
+        {
+          "id": "bce",
+          "text": "Binary Cross-Entropy"
+        }
+      ]
+    },
+    {
+      "id": "ml-loss-metric",
+      "topic_id": "loss-functions-ml",
+      "type": "true-false",
+      "prompt": "Eine Loss-Funktion ist automatisch identisch mit jeder späteren Performance-Metrik.",
+      "explanation": "Falsch: Loss kann ein differenzierbares Trainingsziel wie BCE sein, die Metrik Accuracy eine harte Erfolgsquote. p=0.51 und p=0.99 können dasselbe richtige Label liefern, aber sehr verschiedene Cross-Entropy-Werte.",
+      "difficulty": 2,
+      "enabled": true,
+      "options": [
+        {
+          "id": "f",
+          "text": "Falsch"
+        },
+        {
+          "id": "t",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "f"
+    },
+    {
+      "id": "ml-gradient-update-order",
+      "topic_id": "model-training-gradient",
+      "type": "ordering",
+      "prompt": "Bringe die Schritte von Gradient Descent in die richtige Reihenfolge.",
+      "explanation": "Vorhersage und Loss bestimmen, Gradient am aktuellen Parameterstand berechnen, dann θ−η∇J aktualisieren und erneut prüfen. Der Gradient muss nach dem Update neu ausgewertet werden. Er ist weder der neue Parameter noch die Loss-Zahl.",
+      "difficulty": 2,
+      "enabled": true,
+      "options": [
+        {
+          "id": "a",
+          "text": "Gradienten der Loss berechnen"
+        },
+        {
+          "id": "b",
+          "text": "Parameter entgegen dem Gradienten aktualisieren"
+        },
+        {
+          "id": "c",
+          "text": "Bis Konvergenz oder Abbruch wiederholen"
+        }
+      ],
+      "correct_order": [
+        "a",
+        "b",
+        "c"
+      ]
+    },
+    {
+      "id": "ml-gradient-rate",
+      "topic_id": "model-training-gradient",
+      "type": "single-choice",
+      "prompt": "Welche Rolle spielt die Lernrate bei Gradient Descent?",
+      "explanation": "η multipliziert den Gradienten und legt die Änderungsgrösse fest. Bei Gradient −4 und η=0.1 steigt der Parameter um 0.4. Grössere η ist nicht automatisch besser: Ein zu grosser Schritt kann die Loss erhöhen.",
+      "difficulty": 1,
+      "enabled": true,
+      "options": [
+        {
+          "id": "a",
+          "text": "Sie bestimmt die Schrittweite"
+        },
+        {
+          "id": "b",
+          "text": "Sie erzeugt Klassenlabels"
+        },
+        {
+          "id": "c",
+          "text": "Sie ersetzt den Gradienten"
+        },
+        {
+          "id": "d",
+          "text": "Sie zählt Cluster"
+        }
+      ],
+      "correct_answer": "a"
+    },
+    {
+      "id": "ml-overfit-generalize",
+      "topic_id": "overfitting-underfitting",
+      "type": "single-choice",
+      "prompt": "Welches Kennzeichen beschreibt Overfitting?",
+      "explanation": "Overfitting zeigt sich typischerweise durch gute Trainings- und schlechtere Validierungsleistung. Das Modell reagiert zu stark auf Trainingsdetails. Ein kleiner Trainingsfehler ist daher keine Garantie für neue Fälle; Datenverschiebungen sind als andere Ursache mitzuprüfen.",
+      "difficulty": 1,
+      "enabled": true,
+      "options": [
+        {
+          "id": "a",
+          "text": "Schlechte Generalisierung trotz starker Trainingsanpassung"
+        },
+        {
+          "id": "b",
+          "text": "Keine Modellparameter"
+        },
+        {
+          "id": "c",
+          "text": "Automatisch perfekte Testleistung"
+        },
+        {
+          "id": "d",
+          "text": "Keine Features"
+        }
+      ],
+      "correct_answer": "a"
+    },
+    {
+      "id": "ml-underfit-simple",
+      "topic_id": "overfitting-underfitting",
+      "type": "single-choice",
+      "prompt": "Was bedeutet Underfitting?",
+      "explanation": "Underfitting bedeutet, den relevanten Zusammenhang nicht ausreichend zu erfassen, häufig wegen zu einfacher Modellfamilie. Auch zu wenig Optimierung oder schlechte Features können ähnliche hohe Fehler erzeugen. Training und Validation sind oft beide schwach.",
+      "difficulty": 1,
+      "enabled": true,
+      "options": [
+        {
+          "id": "a",
+          "text": "Das Modell erfasst den relevanten Zusammenhang nicht ausreichend"
+        },
+        {
+          "id": "b",
+          "text": "Das Modell hat zwingend Trainingsfehler null"
+        },
+        {
+          "id": "c",
+          "text": "Die Testlabels werden beim Training verändert"
+        },
+        {
+          "id": "d",
+          "text": "Die Validierungsdaten müssen dieselben Zeilen wie Training sein"
+        }
+      ],
+      "correct_answer": "a"
+    },
+    {
+      "id": "ml-overfit-reduce",
+      "topic_id": "overfitting-underfitting",
+      "type": "multiple-select",
+      "prompt": "Mehrere Antworten sind richtig. Welche Massnahmen nennen die Lernseiten gegen Overfitting?",
+      "explanation": "Mehr geeignete Daten, geringere Kapazität, Regularisierung oder Early Stopping können helfen. Keines ist eine allgemeine Garantie. Early Stopping kontrolliert Validation, nicht Test. Eine übertriebene Regularisierung kann wiederum Underfitting auslösen.",
+      "difficulty": 2,
+      "enabled": true,
+      "options": [
+        {
+          "id": "a",
+          "text": "Mehr Trainingsdaten"
+        },
+        {
+          "id": "b",
+          "text": "Modellkomplexität reduzieren"
+        },
+        {
+          "id": "c",
+          "text": "Regularisierung oder Early Stopping"
+        },
+        {
+          "id": "d",
+          "text": "Testlabels als Trainingsdaten verwenden"
+        }
+      ],
+      "correct_answers": [
+        "a",
+        "b",
+        "c"
+      ]
+    },
+    {
+      "id": "ml-overfit-noise",
+      "topic_id": "overfitting-underfitting",
+      "type": "true-false",
+      "prompt": "Ein sehr kleiner Trainingsfehler garantiert gute Leistung auf neuen Daten.",
+      "explanation": "Falsch: Ein sehr flexibles Modell kann das Rauschen seiner Trainingsdaten auswendig lernen. Es erreicht dann kleinen Trainingsfehler, aber schlechte neue Vorhersagen. Generalisierung wird auf getrennten Daten beurteilt, nicht an perfekter Erinnerung.",
+      "difficulty": 2,
+      "enabled": true,
+      "options": [
+        {
+          "id": "f",
+          "text": "Falsch"
+        },
+        {
+          "id": "t",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "f"
+    },
+    {
+      "id": "ml-confusion-terms",
+      "topic_id": "confusion-matrix",
+      "type": "multiple-select",
+      "prompt": "Mehrere Antworten sind richtig. Welche Begriffe stehen für korrekte Entscheidungen in der Confusion Matrix?",
+      "explanation": "TP und TN sind richtige Entscheidungen. FP ist ein falscher positiver Alarm; FN ein übersehener positiver Fall. «Positive» meint die vorhergesagte Klasse, «True/False» die Richtigkeit. Die positive Klasse muss vorher definiert sein.",
+      "difficulty": 1,
+      "enabled": true,
+      "options": [
+        {
+          "id": "a",
+          "text": "True Positive"
+        },
+        {
+          "id": "b",
+          "text": "True Negative"
+        },
+        {
+          "id": "c",
+          "text": "False Positive"
+        },
+        {
+          "id": "d",
+          "text": "False Negative"
+        }
+      ],
+      "correct_answers": [
+        "a",
+        "b"
+      ]
+    },
+    {
+      "id": "ml-confusion-metrics",
+      "topic_id": "confusion-matrix",
+      "type": "numeric-choice",
+      "prompt": "Wie gross ist der Recall?",
+      "explanation": "Tatsächlich positive Fälle sind TP+FN=16; davon sind 12 erkannt. Recall=12/16=0.75. 0.8 ist Precision=12/(12+3); 0.825 Accuracy=33/40; 0.3 teilt TP durch alle Fälle. Der Nenner muss zur Frage passen.",
+      "difficulty": 2,
+      "enabled": true,
+      "options": [
+        {
+          "id": "answer-1",
+          "text": "0.8"
+        },
+        {
+          "id": "answer-2",
+          "text": "0.75"
+        },
+        {
+          "id": "answer-3",
+          "text": "0.825"
+        },
+        {
+          "id": "answer-4",
+          "text": "0.3"
+        }
+      ],
+      "correct_answer": "answer-2",
+      "context": "Positive Klasse ist «krank». TP=12,FP=3,FN=4,TN=21. Recall misst erkannte unter tatsächlich positiven Fällen."
+    },
+    {
+      "id": "ml-performance-regression",
+      "topic_id": "performance-metrics",
+      "type": "single-choice",
+      "prompt": "Welche Metriken eignen sich zur Bewertung numerischer Regressionsvorhersagen?",
+      "explanation": "MSE bewertet quadrierte Fehler, RMSE deren mittlere Quadratwurzel. NRMSE teilt RMSE durch eine vereinbarte Bezugsgrösse, etwa Zielspannweite. Ohne Normalisierungskonvention ist NRMSE nicht eindeutig. Precision und Recall sind dagegen Klassenmetriken.",
+      "difficulty": 1,
+      "enabled": true,
+      "options": [
+        {
+          "id": "a",
+          "text": "MSE und normalisierter RMSE"
+        },
+        {
+          "id": "b",
+          "text": "Precision und Recall"
+        },
+        {
+          "id": "c",
+          "text": "Gini und Entropie"
+        },
+        {
+          "id": "d",
+          "text": "Softmax und Sigmoid"
+        }
+      ],
+      "correct_answer": "a"
+    },
+    {
+      "id": "ml-performance-f1",
+      "topic_id": "performance-metrics",
+      "type": "numeric-choice",
+      "prompt": "Welcher F1-Score ergibt sich, auf drei Dezimalstellen gerundet?",
+      "explanation": "2TP=12, Nenner=12+2+4=18, F1=12/18≈0.667. 0.750 ist Precision; 0.600 ist Recall; 0.675 ihr arithmetischer Mittelwert. F1 verwendet das harmonische Mittel. TN ist für diese Formel nicht erforderlich.",
+      "difficulty": 2,
+      "enabled": true,
+      "options": [
+        {
+          "id": "answer-1",
+          "text": "0.750"
+        },
+        {
+          "id": "answer-2",
+          "text": "0.600"
+        },
+        {
+          "id": "answer-3",
+          "text": "0.675"
+        },
+        {
+          "id": "answer-4",
+          "text": "0.667"
+        }
+      ],
+      "correct_answer": "answer-4",
+      "context": "Ein Klassifikator hat TP=6,FP=2,FN=4. F1=2TP/(2TP+FP+FN)."
+    },
+    {
+      "id": "ml-hyperparameter-definition",
+      "topic_id": "hyperparameters-bias-variance",
+      "type": "single-choice",
+      "prompt": "Was sind Hyperparameter im Kontext der Model Selection?",
+      "explanation": "Hyperparameter sind Konfigurationen wie Lernrate, Baumtiefe oder k. Gewichte und Biases werden im Training gelernt. Testbeobachtungen und fehlende Werte sind Daten, keine Hyperparameter. Validation hilft, geeignete Konfigurationen auszuwählen.",
+      "difficulty": 1,
+      "enabled": true,
+      "options": [
+        {
+          "id": "a",
+          "text": "Externe Konfigurationsvariablen"
+        },
+        {
+          "id": "b",
+          "text": "Aus dem Training gelernte Gewichte"
+        },
+        {
+          "id": "c",
+          "text": "Testbeobachtungen"
+        },
+        {
+          "id": "d",
+          "text": "Fehlende Datenwerte"
+        }
+      ],
+      "correct_answer": "a"
+    },
+    {
+      "id": "ml-bias-variance-match",
+      "topic_id": "hyperparameters-bias-variance",
+      "type": "matching",
+      "prompt": "Ordne das Fehlerbild der typischen Bezeichnung zu.",
+      "explanation": "Hoher statistischer Bias passt häufig zu zu einfacher Modellierung; hohe Modellvarianz zu empfindlicher Anpassung an einzelne Trainingsstichproben. Das sind typische Fehlerbilder, keine aus einem einzigen Score sicher beweisbaren Diagnosen. Der Bias-Term b ist etwas anderes.",
+      "difficulty": 2,
+      "enabled": true,
+      "match_items": [
+        {
+          "id": "bias",
+          "text": "Hoher Bias",
+          "correct_option_id": "under"
+        },
+        {
+          "id": "variance",
+          "text": "Hohe Varianz",
+          "correct_option_id": "over"
+        }
+      ],
+      "match_options": [
+        {
+          "id": "under",
+          "text": "Underfitting"
+        },
+        {
+          "id": "over",
+          "text": "Overfitting"
+        }
+      ]
+    },
+    {
+      "id": "ml-bias-variance-tradeoff",
+      "topic_id": "hyperparameters-bias-variance",
+      "type": "true-false",
+      "prompt": "Der Bias-Variance-Tradeoff beschreibt einen Zielkonflikt zwischen zu einfacher und zu empfindlicher Anpassung.",
+      "explanation": "Richtig als typischer Zusammenhang: Mehr Flexibilität kann systematischen Fehler senken, aber Stichprobenempfindlichkeit erhöhen. Bei quadratischem Fehler unterscheidet man Bias², Varianz und unvermeidbares Rauschen. Der Zielkonflikt garantiert keinen festen Verlauf für jedes Modell.",
+      "difficulty": 2,
+      "enabled": true,
+      "options": [
+        {
+          "id": "f",
+          "text": "Falsch"
+        },
+        {
+          "id": "t",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "t"
+    },
+    {
+      "id": "ml-crossval-folds",
+      "topic_id": "cross-validation",
+      "type": "single-choice",
+      "prompt": "Was geschieht bei k-facher Cross-Validation mit den Trainingsdaten?",
+      "explanation": "k-Fold teilt Entwicklungsdaten in k getrennte Teile. Je Lauf ist ein Teil Validation, der Rest Training. Bei 5 Folds und 100 Fällen sind das gewöhnlich 80/20 je Lauf. Der unabhängige Test bleibt ausserhalb der Auswahl.",
+      "difficulty": 1,
+      "enabled": true,
+      "options": [
+        {
+          "id": "a",
+          "text": "In k disjunkte Folds teilen"
+        },
+        {
+          "id": "b",
+          "text": "In k Klassenlabels umbenennen"
+        },
+        {
+          "id": "c",
+          "text": "Vollständig löschen"
+        },
+        {
+          "id": "d",
+          "text": "Nur in Testdaten aufteilen"
+        }
+      ],
+      "correct_answer": "a"
+    },
+    {
+      "id": "ml-crossval-role",
+      "topic_id": "cross-validation",
+      "type": "true-false",
+      "prompt": "Bei Cross-Validation dient jeder Fold einmal als Validierung.",
+      "explanation": "Richtig bei gewöhnlichem k-Fold: Jeder Fold wird einmal zurückgehalten. Pro Lauf werden Modell und statistische Vorbereitung auf den anderen Folds neu angepasst. Einen Scaler vorab auf allen Folds zu lernen würde diese Trennung verletzen.",
+      "difficulty": 2,
+      "enabled": true,
+      "options": [
+        {
+          "id": "f",
+          "text": "Falsch"
+        },
+        {
+          "id": "t",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "t"
+    },
+    {
+      "id": "ml-crossval-grid",
+      "topic_id": "cross-validation",
+      "type": "single-choice",
+      "prompt": "Was durchsucht GridSearchCV?",
+      "explanation": "Grid Search durchsucht alle Kombinationen vorgegebener Hyperparameterwerte. Drei Tiefen und zwei Lernraten ergeben sechs Konfigurationen. Modellgewichte werden innerhalb jedes Trainingslaufs gelernt, nicht als Testlabels aus dem Grid ausgewählt.",
+      "difficulty": 1,
+      "enabled": true,
+      "options": [
+        {
+          "id": "a",
+          "text": "Einen vorgegebenen Parameterraum"
+        },
+        {
+          "id": "b",
+          "text": "Alle Testlabels"
+        },
+        {
+          "id": "c",
+          "text": "Bildpixel für Filter"
+        },
+        {
+          "id": "d",
+          "text": "Nur fehlende Werte"
+        }
+      ],
+      "correct_answer": "a"
+    },
+    {
+      "id": "ml-crossval-test",
+      "topic_id": "cross-validation",
+      "type": "true-false",
+      "prompt": "Die unabhängige Testphase findet vor der Auswahl der besten Konfiguration statt.",
+      "explanation": "Falsch: Erst erfolgt die Auswahl mit Cross-Validation oder Validation, dann die unabhängige Testbewertung. Wird Testleistung zur Auswahl benutzt, verliert das Testset seine abschliessende unabhängige Rolle.",
+      "difficulty": 2,
+      "enabled": true,
+      "options": [
+        {
+          "id": "f",
+          "text": "Falsch"
+        },
+        {
+          "id": "t",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "f"
+    }
+  ]
+}

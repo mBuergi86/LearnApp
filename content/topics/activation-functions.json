@@ -1,0 +1,182 @@
+{
+  "id": "activation-functions",
+  "exam_id": "deep-learning-data-science",
+  "module_id": "dl-neural-networks",
+  "title": "Aktivierungsfunktionen",
+  "priority": "core",
+  "summary": "Aktivierungsfunktionen bestimmen, wie ein gewichteter Input in eine Neuronenaktivierung überführt wird.",
+  "explanation": [
+    "Vorwissen: Ein Neuron berechnet zuerst z aus Eingaben, Gewichten und Bias. Die Aktivierung verarbeitet genau diese Zahl. In ReLU(z)=max(0,z) bedeutet max «wähle den grösseren der zwei Werte», nicht «Wertebereich von 0 bis z». Also ReLU(−1)=max(0,−1)=0; ebenso ReLU(−3)=0 und ReLU(−4)=0. Dagegen ReLU(4)=4.",
+    "Eine Aktivierungsfunktion bestimmt den Output eines Neurons aus seinem gewichteten Input z. Nichtlineare Aktivierungen erlauben einem Netz, nichtlineare Zusammenhänge zu modellieren. Werden nur lineare oder affine Schichten hintereinander geschaltet, lässt sich die Gesamtabbildung wieder als eine einzige affine Abbildung schreiben.",
+    "ReLU setzt negative Werte auf null und lässt positive Werte unverändert: max(0,z). Für z > 0 ist die Ableitung 1, für z < 0 ist sie 0. Das ist effizient und im positiven Bereich nicht gesättigt. Ein Neuron, das stets negative Inputs erhält, kann jedoch keinen Gradienten über diese ReLU weitergeben.",
+    "Sigmoid bildet reelle Zahlen auf (0,1) ab und eignet sich für die Wahrscheinlichkeit einer positiven Klasse. Tanh bildet sie auf (−1,1) ab und ist um null zentriert. Beide Funktionen sättigen für betragsmässig grosse Inputs: Die Ableitung wird klein und der rückwärts laufende Gradient kann stark abgeschwächt werden.",
+    "Softmax verarbeitet einen ganzen Vektor von Scores. Durch Exponentieren und Normalisieren erzeugt sie positive Wahrscheinlichkeiten mit Summe 1. Sie wird für gegenseitig ausschliessende Klassen verwendet. Mehrere unabhängige Ja/Nein-Labels benötigen dagegen keine gemeinsame Summe von 1.",
+    "Die Output-Aktivierung muss zur Aufgabe passen: Ein unbeschränkter Regressionswert kann einen linearen Output verwenden, eine binäre Klassifikation einen Sigmoid-Output und eine Multiklassen-Klassifikation Softmax. Hidden Layers und Output Layer erfüllen unterschiedliche Aufgaben. Die binäre Schwellenfunktion liefert harte 0/1-Entscheidungen, ist aber für gewöhnliches gradientenbasiertes Training ungeeignet.",
+    "Formeln lesen: (0,1) als Intervall bei Sigmoid bedeutet strikt zwischen den Grenzen; (0,−1) innerhalb max ist dagegen eine Liste zweier Vergleichswerte. Tanh liegt in (−1,1). Die Eulerzahl e≈2.718 ist eine feste mathematische Konstante. Σ bedeutet addieren; der Index i nennt die betrachtete Klasse. Am ReLU-Knick z=0 gibt es keine eindeutige gewöhnliche Ableitung; Bibliotheken verwenden dort eine festgelegte Konvention, häufig 0."
+  ],
+  "confusions": [
+    {
+      "term": "Softmax und Argmax",
+      "note": "Softmax liefert einen Wahrscheinlichkeitsvektor; Argmax liefert den Index des grössten Werts."
+    },
+    {
+      "term": "ReLU und Sigmoid",
+      "note": "ReLU ist nach oben unbeschränkt. Sigmoid liegt strikt zwischen 0 und 1."
+    },
+    {
+      "term": "Funktionsargumente und Intervall",
+      "note": "max(0,−1) vergleicht 0 mit −1 und ergibt 0. Das ist kein Output −1 und kein Wertebereich. ReLU(−4)=0; ReLU(4)=4."
+    }
+  ],
+  "sources": [
+    {
+      "file": "DeepLearning_Tag1_Einfuhrung_2026_ShaoJuWoo.pdf",
+      "pages": [
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        80,
+        81,
+        82
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 2,
+  "steps": [
+    "Bestimmen, ob die Schicht Zwischenmerkmale oder Vorhersagen liefert.",
+    "Benötigten Wertebereich festlegen.",
+    "Aktivierung wählen und auf z anwenden.",
+    "Für das Training auch die Ableitung und mögliche Sättigung beachten."
+  ],
+  "example": "Zuerst max verstehen: max(0,−1)=0, max(0,−3)=0, max(0,−4)=0 und max(0,4)=4. Es werden zwei Zahlen verglichen; negative Inputs verschwinden, positive bleiben.\nBeispiel: Für z = −2, 0 und 2 liefert ReLU die Werte 0, 0 und 2. Sigmoid liefert ungefähr 0.119, 0.5 und 0.881; Tanh liefert ungefähr −0.964, 0 und 0.964.\nBei einem Drei-Klassen-Output mit Scores (0, ln(2), ln(3)) sind die Exponentialwerte (1,2,3). Ihre Summe ist 6. Softmax ergibt daher (1/6, 2/6, 3/6) = (0.167, 0.333, 0.5).\nSoftmax wählt nicht selbst eine Klasse aus; erst die anschliessende Argmax-Entscheidung würde hier Klasse 3 auswählen.",
+  "illustrations": [
+    {
+      "kind": "plot",
+      "title": "ReLU: negatives z wird abgeschnitten",
+      "labels": [
+        "z",
+        "ReLU(z)"
+      ],
+      "values": [
+        [
+          -3,
+          0
+        ],
+        [
+          -2,
+          0
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          3
+        ]
+      ],
+      "caption": "Die Kurve ist für negatives z flach und für positives z linear. Am Knick z = 0 existiert keine gewöhnliche Ableitung."
+    },
+    {
+      "kind": "bars",
+      "title": "Softmax für drei Klassen",
+      "labels": [
+        "Klasse 1",
+        "Klasse 2",
+        "Klasse 3"
+      ],
+      "values": [
+        [
+          0.167,
+          0.333,
+          0.5
+        ]
+      ],
+      "caption": "Für Scores (0, ln 2, ln 3) entstehen Wahrscheinlichkeiten (1/6, 2/6, 3/6); ihre exakte Summe ist 1."
+    }
+  ],
+  "formula": {
+    "expression": "ReLU(z)=max(0,z)\nσ(z)=1/(1+e^(−z))\ntanh(z)=(e^z−e^(−z))/(e^z+e^(−z))\nsoftmax(z)ᵢ=e^(zᵢ)/Σⱼe^(zⱼ)",
+    "meaning": "max vergleicht zwei Werte; ReLU ist kein Intervall. Sigmoid und tanh haben offene Grenzbereiche. Softmax normalisiert Klassen-Scores.",
+    "variables": [
+      {
+        "symbol": "z",
+        "meaning": "gewichtete Summe plus Bias vor der Aktivierung"
+      },
+      {
+        "symbol": "max(0,z)",
+        "meaning": "grösseren der zwei Werte auswählen"
+      },
+      {
+        "symbol": "σ",
+        "meaning": "Sigmoid-Funktion"
+      },
+      {
+        "symbol": "e",
+        "meaning": "Eulerzahl, ungefähr 2.718"
+      },
+      {
+        "symbol": "Σ",
+        "meaning": "Summe: angegebene Terme addieren"
+      },
+      {
+        "symbol": "zᵢ",
+        "meaning": "Score der i-ten Klasse, kein Exponent i"
+      },
+      {
+        "symbol": "i,j",
+        "meaning": "Klassenindizes"
+      }
+    ],
+    "latex": [
+      "\\operatorname{ReLU}(z)=\\max(0,z)",
+      "\\sigma(z)=\\frac1{1+e^{-z}}",
+      "\\tanh(z)=\\frac{e^z-e^{-z}}{e^z+e^{-z}}",
+      "\\operatorname{softmax}(z)_i=\\frac{e^{z_i}}{\\sum_j e^{z_j}}"
+    ],
+    "worked_example": {
+      "title": "ReLU und Sigmoid mit konkreten Inputs",
+      "given": [
+        "Zuerst Input z=−3 für ReLU; dann z=4.",
+        "Zum Vergleich Sigmoid bei z=0."
+      ],
+      "steps": [
+        {
+          "text": "Bei negativem z die beiden Argumente von max vergleichen.",
+          "latex": "\\operatorname{ReLU}(-3)=\\max(0,-3)=0"
+        },
+        {
+          "text": "Bei positivem z ist der Input grösser als null und bleibt erhalten.",
+          "latex": "\\operatorname{ReLU}(4)=\\max(0,4)=4"
+        },
+        {
+          "text": "Sigmoid mit dem anderen Input z=0 einsetzen.",
+          "latex": "\\sigma(0)=\\frac1{1+e^0}=\\frac12=0.5"
+        },
+        {
+          "text": "Die Ausgabearten unterscheiden: ReLU ist nach oben offen, Sigmoid nicht.",
+          "latex": "\\operatorname{ReLU}(4)=4>1,\\qquad0<\\sigma(z)<1"
+        }
+      ],
+      "result": "ReLU(−3)=0, ReLU(4)=4, Sigmoid(0)=0.5. max(0,−3) vergleicht zwei Zahlen und bezeichnet keinen Wertebereich.",
+      "result_latex": "\\operatorname{ReLU}(-3)=0,\\quad\\operatorname{ReLU}(4)=4"
+    }
+  }
+}

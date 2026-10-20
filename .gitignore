@@ -1,0 +1,26 @@
+# Build-Artefakte
+*.exe
+*.exe~
+*.tar
+
+# Lokale Laufzeitdaten (SQLite-DB, Caches, Validierungs-Outputs)
+data/
+*.db
+*.db-shm
+*.db-wal
+*.log
+*.tmp
+
+# Original-Kursunterlagen (urheberrechtlich geschützt, nicht öffentlich teilen)
+content/pdfs/
+Machine Learning/
+Tag 1_18 August 2026/
+Tag 2_20 August 2026/
+Tag 3_29 August 2026/
+
+# Editor / Agenten
+.idea/
+.vscode/
+.agents/
+.codex/
+.claude/

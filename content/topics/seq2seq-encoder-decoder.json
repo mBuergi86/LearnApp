@@ -1,0 +1,74 @@
+{
+  "id": "seq2seq-encoder-decoder",
+  "exam_id": "deep-learning-data-science",
+  "module_id": "dl-seq2seq",
+  "title": "Seq2Seq mit Encoder und Decoder",
+  "priority": "core",
+  "summary": "Ein Seq2Seq-Modell kodiert eine Eingabesequenz und erzeugt daraus schrittweise eine Ausgabesequenz.",
+  "explanation": [
+    "Vorwissen: Der Encoder liest die Quelle, der Decoder erzeugt das Ziel. Ein Token ist eine Einheit der jeweiligen Darstellung, nicht zwingend ein ganzes Wort. Quelle und Ziel dürfen unterschiedliche Längen besitzen.",
+    "Sequence-to-Sequence bildet eine Eingabesequenz auf eine Ausgabesequenz ab. Ein Beispiel ist die Übersetzung eines Quellsatzes in einen Zielsatz. Reihenfolge und Länge beider Sequenzen können unterschiedlich sein; es handelt sich nicht um eine feste Zuordnung eines Outputworts zu jedem Inputwort.",
+    "Im klassischen RNN-Modell verarbeitet der Encoder die Quelltokens nacheinander. Sein abschliessender Zustand beziehungsweise eine daraus abgeleitete Repräsentation initialisiert den Decoder. Das einfachste Modell komprimiert die Quelle in einen Kontextvektor fester Grösse.",
+    "Der Decoder startet mit einem Start-Token und erzeugt eine Verteilung über das nächste Zieltoken. Bei der Generierung wird ein ausgewähltes Token als Input für den nächsten Schritt verwendet. Ein End-Token signalisiert das Ende der erzeugten Sequenz.",
+    "Beim Teacher Forcing im Training wird gewöhnlich das tatsächlich vorherige Zieltoken als Decoderinput verwendet. Zur nächsten Position passt dann ein bekanntes Label. Bei Inferenz fehlen diese Zielwörter; das Modell muss sich auf die eigenen bisherigen Ausgaben stützen. Frühe Fehler können deshalb spätere Entscheidungen beeinflussen.",
+    "Ein fixer Kontextvektor ist besonders bei langen Quellen ein Engpass. Attention erweitert den Zugriff auf alle Encoder-Zustände und berechnet pro Decoderschritt einen passenden Kontext. Ein Encoder-Decoder kann mit RNNs, LSTMs oder Transformern umgesetzt werden; Seq2Seq bezeichnet die Aufgabenstruktur, nicht nur eine einzelne Zellart.",
+    "Prüfungstransfer: Notiere für jeden Decoderschritt seinen erlaubten Input und das nächste Ziel. Im Teacher Forcing kommt das vorige wahre Zieltoken als Input; bei Generierung das eigene ausgewählte Token. Der aktuell zu erratende nächste Zielwert wird nicht einfach schon als Input verraten."
+  ],
+  "steps": [
+    "Quelltokens im Encoder verarbeiten.",
+    "Decoder mit Quellrepräsentation und Start-Token initialisieren.",
+    "Nächstes Zieltoken vorhersagen.",
+    "Bei Generierung eigenes Token zurückführen.",
+    "Bis zum End-Token oder einer Längengrenze fortfahren."
+  ],
+  "sources": [
+    {
+      "file": "DeepLearning_Tag3_2026_Sequence-to-Sequence Modelle.pdf",
+      "pages": [
+        12,
+        13,
+        14,
+        15,
+        22,
+        23,
+        27
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 2,
+  "example": "Beispiel: Quelle «Guten Morgen»; gewünschte Zielsequenz «Good morning <END>».\nDer Encoder liest zuerst «Guten», dann «Morgen» und stellt seine Repräsentation bereit.\nDecoderinput <START> → Ziel «Good»; Input «Good» → Ziel «morning»; Input «morning» → Ziel <END>.\nBeim Teacher Forcing erhält der zweite Schritt das wahre «Good», selbst wenn die erste Vorhersage falsch war. Bei Generierung erhält er die tatsächlich ausgewählte erste Ausgabe. Eine Quelle mit zwei Tokens kann also drei Zielentscheidungen einschliesslich <END> erzeugen.",
+  "confusions": [
+    {
+      "term": "Encoder und Decoder",
+      "note": "Der Encoder repräsentiert die Quelle; der Decoder erzeugt die Zielsequenz."
+    },
+    {
+      "term": "Teacher Forcing und Inferenz",
+      "note": "Im Training kann das vorige wahre Zieltoken verwendet werden. Inferenz benutzt eigene vorige Ausgaben."
+    }
+  ],
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "Klassisches Encoder-Decoder-Modell",
+      "labels": [
+        "Quellsequenz|im Encoder lesen",
+        "Fixer Kontext|Decoder initialisieren",
+        "Decoder|Zieltokens nacheinander erzeugen",
+        "End-Token|Generierung beenden"
+      ],
+      "caption": "Diese Grafik zeigt die Variante ohne Attention; ein fixer Kontext kann zum Engpass werden."
+    },
+    {
+      "kind": "flow",
+      "title": "Übersetzung Schritt für Schritt",
+      "labels": [
+        "<START>|Vorhersage: Good",
+        "Good|Vorhersage: morning",
+        "morning|Vorhersage: <END>"
+      ],
+      "caption": "Die vorherige Zielausgabe wird beim Generieren zum Input des nächsten Schritts."
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "id": "computer-vision-images",
+  "exam_id": "deep-learning-data-science",
+  "module_id": "dl-cnn",
+  "title": "Computer Vision und Bildrepräsentation",
+  "priority": "support",
+  "summary": "Computer Vision verarbeitet Bilder als hochdimensionale Pixelwerte; Farbkanäle repräsentieren die Farbinformation.",
+  "explanation": [
+    "Vorwissen: Ein Pixel ist eine Bildposition; ein Kanal ist eine Messkomponente an dieser Position. H×W×C zählt Zahlen, nicht Objekte. Ein Tensor ist ein Zahlenfeld mit mehreren Achsen; eine Matrix hat zwei, ein Bildtensor hier drei.",
+    "Ein digitales Bild ist ein Raster von Pixeln. In einer Graustufenaufnahme steht an jeder Position eine Helligkeitszahl. Ein RGB-Bild besitzt an derselben Position drei Intensitäten für Rot, Grün und Blau. Bei einer 8-Bit-Darstellung liegen die Kanalwerte zwischen 0 und 255.",
+    "Die Daten können als Tensor H × W × C beschrieben werden: Höhe, Breite und Kanalzahl. Für ein 32 × 32 RGB-Bild sind das 32·32·3=3072 Zahlen. Manche Software ordnet die Achsen anders an, etwa C × H × W; die Information ist dieselbe, aber die erwartete Reihenfolge muss stimmen.",
+    "Pixelwerte sind noch keine erkannten Objekte. Ein Modell muss aus lokalen Mustern wie Kanten und Farbwechseln Merkmale gewinnen. Benachbarte Pixel und die Kanäle derselben Position stehen oft in Beziehung. Eine CNN-Schicht nutzt diese lokale Struktur mit gemeinsam verwendeten Filtern.",
+    "Flattening schreibt die Bildzahlen in einen langen Vektor. Es löscht die Werte nicht, gibt einer Dense Layer aber keine explizite räumliche Nachbarschaft vor. Ein CNN behält dagegen in den frühen Schichten Höhe und Breite als Struktur bei.",
+    "Vorverarbeitung kann Pixel beispielsweise durch 255 teilen und auf [0,1] skalieren. Bei Training und Inferenz muss dieselbe vereinbarte Verarbeitung verwendet werden. Verschiebung, Drehung oder Skalierung ändern das Pixelmuster; ein CNN ist nicht allein durch seine Existenz gegen jede solche Veränderung invariant.",
+    "Mathematik lesen: Bei 2×2 RGB gibt es 4 Positionen mal 3 Kanäle=12 Zahlen. Teilen durch 255 skaliert jede Zahl separat, ohne Höhe, Breite oder Kanalzahl zu ändern. Diese Datenzahlen sind keine trainierbaren Parameter."
+  ],
+  "sources": [
+    {
+      "file": "DeepLearning_Tag2_ComputerVision_2026.pdf",
+      "pages": [
+        3,
+        8,
+        9,
+        10,
+        11,
+        13,
+        14,
+        15
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 1,
+  "steps": [
+    "Bildhöhe, Bildbreite und Kanäle bestimmen.",
+    "Kanal- und Tensorreihenfolge beachten.",
+    "Pixelwerte konsistent skalieren.",
+    "Lokale Struktur für die Merkmalsextraktion verwenden."
+  ],
+  "example": "Beispiel: Ein 2 × 2 Graustufenbild hat die Matrix [[0,255],[128,64]]. Nach Division durch 255 wird sie ungefähr [[0,1],[0.502,0.251]].\nEin RGB-Pixel (255,0,0) ist rot, (0,0,0) schwarz und (255,255,255) weiss. Ein 2 × 2 RGB-Bild enthält vier Pixel, aber zwölf Zahlen.\nEin 32 × 32 RGB-Bild ergibt nach Flattening 3072 Inputs. Die Kanalzahl ist weiterhin drei; Flattening macht aus drei Kanälen keine 3072 verschiedenen Farben.",
+  "confusions": [
+    {
+      "term": "Pixel und Kanalwerte",
+      "note": "Ein RGB-Pixel umfasst drei Zahlen. Pixelanzahl H·W und Zahlenanzahl H·W·C sind verschieden."
+    },
+    {
+      "term": "Flattening und CNN",
+      "note": "Flattening ordnet die Werte als Vektor an; eine Convolution verarbeitet lokale räumliche Bereiche."
+    }
+  ],
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "Vom Bild zum Modellinput",
+      "labels": [
+        "Pixelraster|Höhe H und Breite W",
+        "Farbkanäle|C = 1 oder C = 3",
+        "Tensor|H × W × C"
+      ],
+      "caption": "Ein RGB-Bild hat drei Werte je räumlicher Position."
+    },
+    {
+      "kind": "matrix",
+      "title": "Ein kleines Graustufenbild",
+      "labels": [
+        "8-Bit-Pixelwerte"
+      ],
+      "values": [
+        [
+          0,
+          255
+        ],
+        [
+          128,
+          64
+        ]
+      ],
+      "caption": "Vier Pixel ergeben vier Graustufenwerte. Die Zahl beschreibt die Intensität; die blau hinterlegten Zellen sind eine Tabellenillustration, keine Farbreproduktion."
+    }
+  ]
+}

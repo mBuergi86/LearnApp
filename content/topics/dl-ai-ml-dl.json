@@ -1,0 +1,73 @@
+{
+  "id": "dl-ai-ml-dl",
+  "exam_id": "deep-learning-data-science",
+  "module_id": "dl-foundations",
+  "title": "AI, Machine Learning und Deep Learning",
+  "priority": "support",
+  "summary": "Die Folien ordnen Deep Learning als Teilbereich von Machine Learning und Artificial Intelligence ein.",
+  "explanation": [
+    "Zusammenhang: Die Aufgabe, etwa Spam erkennen, ist von der Methode zu trennen. Daten sind Beispiele, das Modell ist die Rechenregel, Parameter sind gelernte Zahlen und Architektur ist der Aufbau. Dass ein System AI heisst, sagt noch nichts über Genauigkeit oder Lernmethode aus.",
+    "Künstliche Intelligenz (AI) ist der Oberbegriff für Systeme, die Aufgaben wie Planen, Entscheiden oder Erkennen lösen. Dazu gehören auch von Menschen festgelegte Regeln. Ein regelbasiertes Schachprogramm kann deshalb AI sein, ohne seine Regeln aus Beispielen zu lernen.",
+    "Machine Learning (ML) ist ein Teilgebiet der AI: Statt alle Entscheidungsregeln von Hand festzulegen, wird ein Modell anhand von Daten angepasst. Beim überwachten Lernen bestehen die Beispiele aus Eingaben und Zielwerten; beim unüberwachten Lernen sucht das Modell Strukturen ohne solche Labels.",
+    "Deep Learning (DL) ist ein Teilgebiet des ML und verwendet neuronale Netze mit mehreren Verarbeitungsschichten. Die frühen Schichten bilden einfache Zwischenmerkmale; spätere Schichten kombinieren sie zu komplexeren Repräsentationen. Tiefe bezeichnet dabei die Anzahl der aufeinanderfolgenden Schichten, nicht die Anzahl der Trainingsbeispiele.",
+    "Bei Bildern kann ein tiefes Netz zunächst Kanten, dann Texturen und später Objektteile erfassen. Diese Merkmale werden zusammen mit der Vorhersageaufgabe gelernt. Klassisches ML verwendet häufig stärker vorgegebene Merkmale. Die Grenze ist praktisch nicht absolut: Beide Ansätze benötigen Daten, ein Lernziel und eine Bewertung.",
+    "Mehr Rechenleistung und grössere Datensätze haben DL begünstigt. Ein tiefes Netz ist aber nicht automatisch die beste Wahl für jedes Problem. Bei wenigen tabellarischen Daten kann ein einfacheres Modell sehr gut funktionieren. Entscheidend ist die Leistung auf unabhängigen Daten, nicht das Etikett AI oder die blosse Grösse des Netzes.",
+    "Prüfungstransfer: Frage bei einem neuen Szenario zuerst «Werden Regeln von Hand festgelegt oder aus Daten gelernt?» und danach «Wird ein mehrschichtiges neuronales Netz trainiert?». Nur mehr Daten oder mehr Iterationen machen eine lineare Regression nicht zu Deep Learning."
+  ],
+  "sources": [
+    {
+      "file": "DeepLearning_Tag1_Einfuhrung_2026_ShaoJuWoo.pdf",
+      "pages": [
+        4,
+        5,
+        6,
+        9,
+        10,
+        11,
+        12
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 1,
+  "steps": [
+    "Aufgabe und verfügbare Daten bestimmen.",
+    "Prüfen, ob Regeln vorgegeben oder aus Daten gelernt werden.",
+    "Bei einem gelernten Modell die Modellklasse bestimmen.",
+    "Leistung an unabhängigen Beispielen beurteilen."
+  ],
+  "example": "Beispiel: Drei Systeme erkennen Spam.\n1. Eine feste Regel «enthält Gewinn UND verlangt Kreditkarte» wurde von einer Person programmiert: AI, aber kein aus Daten trainiertes ML-Modell.\n2. Eine logistische Regression lernt Gewichte für Wortmerkmale aus markierten E-Mails: ML und damit AI, aber kein tiefes Netz.\n3. Ein mehrschichtiges neuronales Netz lernt Repräsentationen und eine Spam-Vorhersage gemeinsam: DL, ML und AI.\nDie verschachtelten Begriffe sagen also etwas über die Methode aus; alle drei Systeme können dieselbe Aufgabe bearbeiten.",
+  "confusions": [
+    {
+      "term": "AI, ML und DL",
+      "note": "DL ⊂ ML ⊂ AI. Nicht jede AI verwendet ML und nicht jedes ML-Modell ist ein tiefes neuronales Netz."
+    },
+    {
+      "term": "Tiefe und Datenmenge",
+      "note": "Mehr Daten machen ein Modell nicht zu Deep Learning; entscheidend ist die Netzarchitektur."
+    }
+  ],
+  "illustrations": [
+    {
+      "kind": "nested",
+      "title": "Die Begriffe sind ineinander enthalten",
+      "labels": [
+        "AI",
+        "Machine Learning",
+        "Deep Learning"
+      ],
+      "values": [],
+      "caption": "Deep Learning gehört zu Machine Learning; Machine Learning gehört zur künstlichen Intelligenz."
+    },
+    {
+      "kind": "comparison",
+      "title": "Eine Aufgabe, drei Methoden",
+      "labels": [
+        "Feste Spam-Regel|AI",
+        "Gelernte Regression|AI + ML",
+        "Tiefes neuronales Netz|AI + ML + DL"
+      ],
+      "caption": "Die drei Kästen vergleichen alternative Methoden zur Spam-Erkennung. Sie sind keine verpflichtenden Entwicklungsschritte."
+    }
+  ]
+}

@@ -1,0 +1,121 @@
+{
+  "id": "supervised-unsupervised",
+  "exam_id": "machine-learning",
+  "module_id": "ml-foundations",
+  "title": "Supervised vs. Unsupervised Learning",
+  "priority": "core",
+  "summary": "Supervised Learning lernt aus Inputs mit zugehörigen Labels. Unsupervised Learning erhält nur Features und sucht darin Strukturen oder Muster.",
+  "explanation": [
+    "Supervised Learning verwendet bekannte Beispiele aus Eingabe x und Ziel y. Die Aufgabe ist nicht, dieselben Fälle auswendig zu lernen, sondern eine Beziehung zu finden, die bei neuen Inputs brauchbare Ziele vorhersagt.",
+    "Regression sagt einen numerischen Wert voraus, beispielsweise einen Preis. Klassifikation sagt eine Klasse voraus, beispielsweise Spam oder kein Spam. Beide benötigen im gewöhnlichen überwachten Training Labels.",
+    "Unsupervised Learning erhält Features ohne vorgegebene Zielwerte. Clustering sucht ähnliche Gruppen; eine Cluster-ID entsteht erst durch das Verfahren. Sie ist keine vorher bekannte fachliche Klassenbezeichnung.",
+    "Die Wahl folgt aus dem Ziel, nicht aus dem Format einzelner Features. Numerische Inputs können sowohl für Klassifikation als auch für Regression verwendet werden. Ein mit 0/1 codiertes Ziel kann weiterhin eine Kategorie bezeichnen.",
+    "Auch ein unüberwachtes Verfahren lernt etwas aus Daten, etwa Clusterzentren. Ohne Labels fehlt aber die gewöhnliche direkte Prüfung gegen richtige Klassen; Distanz, Stabilität und fachliche Interpretierbarkeit werden wichtig."
+  ],
+  "steps": [
+    "Prüfen, ob bekannte Ziele vorliegen.",
+    "Mit Ziel: Zahl oder Klasse unterscheiden.",
+    "Ohne Ziel: passende Strukturaufgabe definieren.",
+    "Die Bewertung an der Aufgabe ausrichten."
+  ],
+  "example": "Eigener Rechenfall: Mit bekannten Autopreisen ist Preisvorhersage Regression: y=12000 CHF und ŷ=11000 CHF ergeben Fehler −1000 CHF. Mit Labels Spam/kein Spam ist es Klassifikation, auch bei Codierung 1/0. Werden Kunden nur anhand ihrer Käufe in drei Gruppen aufgeteilt, ist es Clustering: Gruppe 1 bedeutet nicht automatisch «guter Kunde».",
+  "confusions": [
+    {
+      "term": "Regression und Klassifikation",
+      "note": "Der Zieltyp entscheidet; beide können dieselben numerischen Inputs verwenden."
+    },
+    {
+      "term": "Cluster und Klasse",
+      "note": "Ein Cluster ist eine gefundene Gruppe, keine automatisch richtige fachliche Klasse."
+    }
+  ],
+  "sources": [
+    {
+      "file": "MachineLearning_Tag1_Einfuhrung_2026_ShaoJuWoo.pdf",
+      "pages": [
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 1,
+  "formula": {
+    "expression": "Supervised: (x,y) → f(x); Unsupervised: x → Struktur",
+    "meaning": "Entscheidend ist, ob ein Ziel zum Lernen vorgegeben ist.",
+    "variables": [
+      {
+        "symbol": "x",
+        "meaning": "Features"
+      },
+      {
+        "symbol": "y",
+        "meaning": "bekanntes Label"
+      },
+      {
+        "symbol": "f",
+        "meaning": "gelernte Vorhersageregel"
+      }
+    ],
+    "latex": [
+      "\\text{Supervised: }(x,y)\\mapsto f(x)",
+      "\\text{Unsupervised: }x\\mapsto\\text{Struktur}"
+    ],
+    "worked_example": {
+      "title": "Zieltyp im Szenario erkennen",
+      "given": [
+        "Autos besitzen Features x; im ersten Szenario sind Preise y bekannt.",
+        "Für ein Auto: Ziel y=12000 CHF, Vorhersage ŷ=11000 CHF."
+      ],
+      "steps": [
+        {
+          "text": "Ein vorgegebenes numerisches Label erkennen: Das ist überwachte Regression.",
+          "latex": "(x,y)\\ \\text{mit}\\ y=12000"
+        },
+        {
+          "text": "Vorhersagefehler berechnen, nicht das Label verändern.",
+          "latex": "\\hat y-y=11000-12000=-1000"
+        },
+        {
+          "text": "Den Fall ohne Preislabels abgrenzen: Nur x erlaubt hier z. B. Clustering.",
+          "latex": "x\\mapsto C_j"
+        }
+      ],
+      "result": "Preisvorhersage ist Regression mit Labels. Gruppenbildung ohne Preisziele ist unüberwacht; Cluster-IDs sind keine vorgegebenen Antworten.",
+      "result_latex": "\\mathrm{Regressionsfehler}=-1000\\ \\mathrm{CHF}"
+    }
+  },
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "Welche Aufgabe liegt vor?",
+      "caption": "Mit Labels wird ein Ziel vorhergesagt; ohne Labels wird Struktur gesucht.",
+      "labels": [
+        "Daten und Ziel prüfen",
+        "Numerisches Ziel|Regression",
+        "Kategoriales Ziel|Klassifikation",
+        "Kein vorgegebenes Ziel|z. B. Clustering"
+      ]
+    },
+    {
+      "kind": "bars",
+      "title": "Regressionsfehler",
+      "caption": "Die vorhergesagte Zahl liegt um 1000 CHF unter dem Ziel.",
+      "labels": [
+        "Ziel CHF",
+        "Vorhersage CHF"
+      ],
+      "values": [
+        [
+          12000,
+          11000
+        ]
+      ]
+    }
+  ]
+}

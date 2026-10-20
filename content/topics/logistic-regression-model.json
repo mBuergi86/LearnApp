@@ -1,0 +1,153 @@
+{
+  "id": "logistic-regression-model",
+  "exam_id": "machine-learning",
+  "module_id": "ml-logistic-regression",
+  "title": "Logistische Regression",
+  "priority": "core",
+  "summary": "Logistische Regression nutzt eine lineare Kombination der Features, um Klassifikationswahrscheinlichkeiten zu modellieren.",
+  "explanation": [
+    "Trotz ihres Namens wird logistische Regression gewöhnlich für Klassifikation verwendet. Sie berechnet zuerst einen unbeschränkten linearen Score z=wᵀx+b und daraus mit Sigmoid p=1/(1+e^(−z)).",
+    "p kann als modellierte Wahrscheinlichkeit der positiven Klasse interpretiert werden. Für endliche z liegt p strikt zwischen 0 und 1. z=0 ergibt p=0.5; positive Scores ergeben p>0.5, negative p<0.5.",
+    "Eine Wahrscheinlichkeit ist noch keine Klassenentscheidung. Mit einer ausdrücklich festgelegten Schwelle τ wird beispielsweise positiv vorhergesagt, wenn p≥τ. Die Behandlung des Gleichheitsfalls muss in einer Aufgabe klar sein.",
+    "Training passt w und b anhand von Labels 0/1 an, typischerweise mit Binary Cross-Entropy. Die Labels bleiben fest. Lernrate und Regularisierungsstärke sind Konfigurationen, keine beim selben Gradientenupdate gelernten Gewichte.",
+    "Eine andere Schwelle verändert die Entscheidungen, nicht die bereits berechneten Wahrscheinlichkeiten. Die Modelle liefern nicht automatisch perfekt kalibrierte Sicherheit. Bei mehreren sich ausschliessenden Klassen kann eine Softmax-Erweiterung verwendet werden."
+  ],
+  "confusions": [
+    {
+      "term": "Score, Wahrscheinlichkeit und Klasse",
+      "note": "z kann jede reelle Zahl sein; p liegt in (0,1); ŷ ist hier 0 oder 1."
+    },
+    {
+      "term": "Regression im Namen",
+      "note": "Das gewöhnliche Ziel ist ein Klassenlabel, kein unbeschränkter numerischer Regressionswert."
+    }
+  ],
+  "sources": [
+    {
+      "file": "Machine_Learning_Tag2_Logistic_Regression_2026_ShaoJuWoo.pdf",
+      "pages": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 1,
+  "steps": [
+    "Linearen Score z berechnen.",
+    "Sigmoid auf z anwenden.",
+    "p mit der angegebenen Schwelle vergleichen.",
+    "Wahrscheinlichkeit und Klassenlabel getrennt angeben."
+  ],
+  "example": "Eigener Rechenfall: w=1, x=2, b=−2 ergeben z=0 und p=0.5. Bei Regel p≥0.5 ist die Entscheidung positiv; bei p≥0.7 negativ. Für z=ln(3) gilt e^(−z)=1/3 und p=1/(1+1/3)=0.75. Das ist eine Wahrscheinlichkeit, nicht der lineare Score 0.75.",
+  "formula": {
+    "expression": "z=wᵀx+b; p=1/(1+e^(−z)); ŷ=1 falls p≥τ, sonst 0",
+    "meaning": "Sigmoid erzeugt p; die gesonderte Schwelle erzeugt das Klassenlabel.",
+    "variables": [
+      {
+        "symbol": "z",
+        "meaning": "linearer Score/Logit"
+      },
+      {
+        "symbol": "p",
+        "meaning": "Wahrscheinlichkeit für Klasse 1"
+      },
+      {
+        "symbol": "τ",
+        "meaning": "Entscheidungsschwelle"
+      },
+      {
+        "symbol": "ŷ",
+        "meaning": "vorhergesagtes Klassenlabel"
+      },
+      {
+        "symbol": "w,b",
+        "meaning": "gelernte Parameter"
+      }
+    ],
+    "latex": [
+      "z=w^\\top x+b",
+      "p=\\frac1{1+e^{-z}}",
+      "\\hat y=\\begin{cases}1&p\\ge\\tau\\\\0&p<\\tau\\end{cases}"
+    ],
+    "worked_example": {
+      "title": "Score, Wahrscheinlichkeit und Klasse",
+      "given": [
+        "Score z=ln(3); Schwelle τ=0.5.",
+        "Positive Klasse wird bei p≥τ vorhergesagt.",
+        "Der benötigte Funktionswert e^(−ln3)=1/3 ist vorgegeben."
+      ],
+      "steps": [
+        {
+          "text": "Den negativen Exponenten auswerten.",
+          "latex": "e^{-z}=e^{-\\ln3}=\\frac13"
+        },
+        {
+          "text": "Sigmoid berechnen.",
+          "latex": "p=\\frac1{1+\\frac13}=\\frac34=0.75"
+        },
+        {
+          "text": "Die Wahrscheinlichkeit mit der Schwelle vergleichen.",
+          "latex": "0.75\\ge0.5\\ \\Longrightarrow\\ \\hat y=1"
+        }
+      ],
+      "result": "Der Score ist ln(3), die Wahrscheinlichkeit 0.75 und das Klassenlabel 1. Diese drei Grössen dürfen nicht verwechselt werden.",
+      "result_latex": "p=0.75,\\quad\\hat y=1"
+    }
+  },
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "Drei verschiedene Grössen",
+      "caption": "Die Schwelle kommt erst nach der Wahrscheinlichkeitsrechnung.",
+      "labels": [
+        "Features x",
+        "Score z=wᵀx+b",
+        "Sigmoid p",
+        "Schwelle τ",
+        "Klasse 0 oder 1"
+      ]
+    },
+    {
+      "kind": "plot",
+      "title": "Sigmoid: Score wird Wahrscheinlichkeit",
+      "caption": "Bei z=0 ist p=0.5. Die Kurve nähert sich 0 und 1, ohne die Grenzen bei endlichen Scores exakt zu erreichen.",
+      "labels": [
+        "z",
+        "p"
+      ],
+      "values": [
+        [
+          -4,
+          0.018
+        ],
+        [
+          -2,
+          0.119
+        ],
+        [
+          0,
+          0.5
+        ],
+        [
+          2,
+          0.881
+        ],
+        [
+          4,
+          0.982
+        ]
+      ]
+    }
+  ]
+}

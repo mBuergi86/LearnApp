@@ -1,0 +1,79 @@
+{
+  "id": "transformer-architecture",
+  "exam_id": "deep-learning-data-science",
+  "module_id": "dl-transformer",
+  "title": "Transformer-Architektur",
+  "priority": "core",
+  "summary": "Der Transformer kombiniert Attention-basierte Encoder- und Decoder-Komponenten zur Verarbeitung von Sequenzen.",
+  "explanation": [
+    "Zusammenhang: Ein Transformer ist ein vollständiger Aufbau, nicht nur eine Attention-Formel. Attention tauscht Information zwischen Tokens aus, das Feed-Forward-Netz verarbeitet Features je Token, Residual und Normalisierung ergänzen die Verarbeitung.",
+    "Der ursprüngliche Transformer ist ein Encoder-Decoder-Modell. Token-Embeddings werden um Positionsinformationen ergänzt. Der Encoder verarbeitet die Quelle und liefert kontextualisierte Repräsentationen; der Decoder erzeugt die Zielsequenz autoregressiv.",
+    "Eine Encoderschicht enthält Multi-Head Self-Attention und ein positionsweises Feed-Forward-Netz. Self-Attention tauscht Information zwischen Positionen aus. Das Feed-Forward-Netz verwendet dieselben Gewichte an jeder Position, verarbeitet aber jede Tokenrepräsentation für sich.",
+    "Im ursprünglichen Post-Norm-Aufbau folgt jeder Teilschicht eine Residual-Addition und Layer Normalization: LayerNorm(x+Sublayer(x)). Die Addition erfordert passende Dimensionen. LayerNorm normalisiert die Features eines Tokens, nicht die Tokenpositionen eines Batches wie eine BatchNorm.",
+    "Der Decoder enthält zusätzlich kausal maskierte Self-Attention und Encoder-Decoder-Attention. Die Maske verhindert den Zugriff auf spätere Zielpositionen. In der Cross-Attention kommen Queries aus dem Decoder, Keys und Values aus der Encoder-Ausgabe. So verbindet der Decoder bisherigen Zielkontext mit der Quelle.",
+    "Der ursprüngliche Aufbau stapelt sechs Encoder- und sechs Decoderschichten mit jeweils eigener Parameterfassung. Gleiche Struktur bedeutet nicht überall dieselben Gewichte. Encoder-only- und Decoder-only-Modelle sind weitere Architekturvarianten. Ein autoregressiver Decoder generiert weiterhin Schritt für Schritt, auch wenn Training viele Positionen parallel berechnen kann.",
+    "Prüfungstransfer: Frage bei jeder Attention «Woher kommen Q und K/V?». Encoder-Self vergleicht Quelle mit Quelle, Decoder-Self Ziel mit erlaubtem Ziel, Cross-Attention Ziel mit Quelle. Zeilenzahl stammt von Queries, Spaltenzahl von Keys; das verhindert viele Formfehler."
+  ],
+  "sources": [
+    {
+      "file": "DeepLearning_Tag3_Transformer_2026.pdf",
+      "pages": [
+        21,
+        22,
+        32,
+        33,
+        35,
+        36,
+        37,
+        38,
+        43,
+        44,
+        45,
+        46
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 3,
+  "steps": [
+    "Token-Embeddings und Positionsvektoren kombinieren.",
+    "Quelle im Encoder mit Attention und Feed-Forward verarbeiten.",
+    "Decoder mit bisherigen Zieltokens versorgen und kausal maskieren.",
+    "Cross-Attention auf Encoder-Ausgabe anwenden.",
+    "Token-Scores und Softmax zur nächsten Zielentscheidung berechnen."
+  ],
+  "example": "Beispiel für einen kleinen Übersetzungs-Transformer: Die Quelle hat vier Tokens, der Decoderinput drei bekannte Zielpositionen.\nEncoder-Self-Attention bildet pro Head eine 4 × 4 Score-Matrix. Decoder-Self-Attention bildet eine kausal maskierte 3 × 3 Matrix. Encoder-Decoder-Attention bildet eine 3 × 4 Matrix: drei Decoder-Queries vergleichen sich mit vier Encoder-Keys.\nDas Feed-Forward-Netz verarbeitet die drei Decoderpositionen jeweils einzeln. Der letzte Layer liefert für jede Position Scores über das Zielvokabular.\nBeim Generieren wird jeweils eine nächste Position ergänzt; das fertige Zielsuffix steht dem Modell dabei nicht zur Verfügung.",
+  "confusions": [
+    {
+      "term": "Self-Attention und Cross-Attention",
+      "note": "Die drei Attention-Orte vergleichen unterschiedliche Positionsmengen."
+    },
+    {
+      "term": "BatchNorm und LayerNorm",
+      "note": "Transformer-LayerNorm normalisiert Features je Token. Sie nutzt dafür keine Batch-Statistik."
+    }
+  ],
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "Ursprünglicher Encoder-Decoder-Transformer",
+      "labels": [
+        "Embeddings + Position|Quelle und Decoderinput",
+        "Encoder|Self-Attention + FFN",
+        "Decoder|maskierte Self + Cross + FFN",
+        "Outputprojektion + Softmax|nächstes Zieltoken"
+      ],
+      "caption": "Residual-Verbindungen und LayerNorm umgeben die Teilschichten. Encoder-Ausgaben liefern Keys und Values für Cross-Attention."
+    },
+    {
+      "kind": "comparison",
+      "title": "Drei Attention-Matrixformen",
+      "labels": [
+        "Encoder-Self|4 × 4",
+        "Decoder-Self|3 × 3, kausal maskiert",
+        "Cross-Attention|3 × 4"
+      ],
+      "caption": "Die erste Dimension zählt Queries, die zweite Keys. Unterschiedliche Sequenzlängen sind zulässig."
+    }
+  ]
+}

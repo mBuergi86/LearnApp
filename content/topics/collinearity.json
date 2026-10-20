@@ -1,0 +1,115 @@
+{
+  "id": "collinearity",
+  "exam_id": "machine-learning",
+  "module_id": "ml-preprocessing",
+  "title": "Kollinearität und Multikollinearität",
+  "priority": "support",
+  "summary": "Kollinearität bedeutet, dass Prädiktoren miteinander zusammenhängen; Multikollinearität betrifft mehrere solche Beziehungen.",
+  "explanation": [
+    "Kollinearität meint eine lineare Abhängigkeit zwischen Features; Multikollinearität umfasst auch Kombinationen mehrerer Features. Hohe Korrelation ist ein Hinweis, aber nicht jede Abhängigkeit wird durch einzelne paarweise Korrelationen sichtbar.",
+    "Bei x₂=2x₁ bringen die beiden Features für lineare Regression keine unabhängige Information. Das Modell kann verschiedene Gewichte verwenden und trotzdem dieselben Vorhersagen liefern.",
+    "Das betrifft vor allem die Bestimmbarkeit und Stabilität von Koeffizienten. Kleine Datenänderungen können einzelne Gewichte stark verändern. Die Vorhersage muss dadurch nicht zwangsläufig unbrauchbar sein, aber eine Interpretation einzelner Gewichte wird schwieriger.",
+    "Bei exakter linearer Abhängigkeit besitzt XᵀX keine gewöhnliche Inverse. Eine Pseudoinverse oder Regularisierung kann die Schätzung ermöglichen. Redundante Features zu entfernen ist eine weitere, fachlich zu begründende Möglichkeit.",
+    "Skalierung allein entfernt die Abhängigkeit nicht. Auch alle One-Hot-Spalten plus Intercept ergeben eine exakte Beziehung, weil ihre Zeilensumme immer 1 ist. Eine Referenzkategorie kann diese Redundanz vermeiden."
+  ],
+  "sources": [
+    {
+      "file": "MachineLearning_Tag1_Preprocessing_2026_ShaoJuWoo.pdf",
+      "pages": [
+        40,
+        41
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 5,
+  "steps": [
+    "Paarweise Beziehungen und mögliche Kombinationen prüfen.",
+    "Redundanz und Interpretationsziel unterscheiden.",
+    "Features reduzieren oder Regularisierung wählen.",
+    "Stabilität und Generalisierung mit Validation prüfen."
+  ],
+  "example": "Eigener Rechenfall: x₂=2x₁ und ŷ=w₁x₁+w₂x₂=(w₁+2w₂)x₁. Sowohl (w₁,w₂)=(2,0) als auch (0,1) liefern ŷ=2x₁. Für x₁=3 ist die Vorhersage in beiden Fällen 6. Die einzelnen Gewichte sind daher aus dieser Beziehung nicht eindeutig bestimmbar.",
+  "formula": {
+    "expression": "x₂=2x₁ ⇒ ŷ=(w₁+2w₂)x₁",
+    "meaning": "Unterschiedliche Koeffizienten können dieselbe Vorhersageregel darstellen.",
+    "variables": [
+      {
+        "symbol": "x₁,x₂",
+        "meaning": "linear abhängige Features"
+      },
+      {
+        "symbol": "w₁,w₂",
+        "meaning": "Regressionsgewichte"
+      },
+      {
+        "symbol": "ŷ",
+        "meaning": "Vorhersage"
+      }
+    ],
+    "latex": [
+      "x_2=2x_1\\ \\Longrightarrow\\ \\hat y=(w_1+2w_2)x_1"
+    ],
+    "worked_example": {
+      "title": "Gleiche Vorhersage mit anderen Gewichten",
+      "given": [
+        "x₁=3 und x₂=2x₁=6.",
+        "Modell ŷ=w₁x₁+w₂x₂, ohne Bias."
+      ],
+      "steps": [
+        {
+          "text": "Das abhängige Feature x₂ in die Rechenregel einsetzen.",
+          "latex": "\\hat y=w_1x_1+w_2(2x_1)=(w_1+2w_2)x_1"
+        },
+        {
+          "text": "Erste mögliche Gewichte (2,0) auswerten.",
+          "latex": "\\hat y=2\\cdot3+0\\cdot6=6"
+        },
+        {
+          "text": "Zweite mögliche Gewichte (0,1) auswerten.",
+          "latex": "\\hat y=0\\cdot3+1\\cdot6=6"
+        }
+      ],
+      "result": "Beide Gewichtspaare liefern 6. Der Zusammenhang ist eindeutig vorhersagbar, die einzelnen Gewichte sind hier aber nicht eindeutig bestimmbar.",
+      "result_latex": "(w_1,w_2)=(2,0)\\ \\text{oder}\\ (0,1)\\ \\Longrightarrow\\ \\hat y=6"
+    }
+  },
+  "confusions": [
+    {
+      "term": "Korrelation und Multikollinearität",
+      "note": "Eine Abhängigkeit kann mehrere Features gemeinsam betreffen."
+    },
+    {
+      "term": "Stabile Vorhersage und interpretierbare Gewichte",
+      "note": "Ähnliche Vorhersagen garantieren keine eindeutig bestimmbaren Einzelgewichte."
+    }
+  ],
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "Redundanz in der Regression",
+      "caption": "Exakte Abhängigkeit verhindert die gewöhnliche inverse Normalengleichung.",
+      "labels": [
+        "Features prüfen",
+        "Lineare Abhängigkeit erkennen",
+        "Gewichte nicht eindeutig",
+        "Reduktion oder Regularisierung"
+      ]
+    },
+    {
+      "kind": "bars",
+      "title": "Gleiche Vorhersage mit anderen Gewichten",
+      "caption": "Bei x₁=3,x₂=6 liefern (2,0) und (0,1) beide 6.",
+      "labels": [
+        "Gewichte (2,0)",
+        "Gewichte (0,1)"
+      ],
+      "values": [
+        [
+          6,
+          6
+        ]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "id": "data-cleaning-noise",
+  "exam_id": "machine-learning",
+  "module_id": "ml-preprocessing",
+  "title": "Rauschen in Daten reduzieren",
+  "priority": "support",
+  "summary": "Rohdaten können Rauschen enthalten; Filterung, Resampling oder Binning können die Darstellung stabilisieren.",
+  "explanation": [
+    "Rauschen bezeichnet unerwünschte Schwankungen oder Messfehler. Eine echte schnelle Veränderung ist dagegen ein Signal. Glättung soll Störungen reduzieren, kann aber auch wichtige Ereignisse entfernen.",
+    "Ein gleitender Mittelwert ersetzt einen Wert durch den Durchschnitt eines Fensters. Ein gleitender Median verwendet den mittleren sortierten Fensterwert und reagiert weniger stark auf einzelne extreme Spitzen.",
+    "Resampling verändert die zeitliche Auflösung, etwa von Minuten zu Stunden. Dabei braucht man eine Aggregationsregel wie Mittelwert oder Summe. Für Niederschlagsmengen kann eine Summe sinnvoll sein, für Temperaturen eher ein Mittelwert.",
+    "Binning fasst numerische Werte in Intervalle zusammen. Das vereinfacht die Darstellung, verliert aber exakte Unterschiede innerhalb eines Intervalls. Die Intervallgrenzen müssen klar sein, damit Randwerte eindeutig zugeordnet werden.",
+    "Bei Zukunftsvorhersagen darf eine Vorbereitung keine späteren Messungen verwenden. Ein zentriertes Fenster kann in Echtzeit Leakage verursachen. Eine kausale Glättung verwendet nur aktuelle und frühere verfügbare Werte."
+  ],
+  "sources": [
+    {
+      "file": "MachineLearning_Tag1_Preprocessing_2026_ShaoJuWoo.pdf",
+      "pages": [
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 2,
+  "steps": [
+    "Signal, Störung und zeitliche Verfügbarkeit bestimmen.",
+    "Fenster oder Intervalle festlegen.",
+    "Mittelwert, Median oder fachlich passende Aggregation berechnen.",
+    "Informationsverlust und mögliche Zukunfts-Leakage prüfen."
+  ],
+  "example": "Eigener Rechenfall: Fenster (2,100,4). Mittelwert=(2+100+4)/3≈35.333; Median nach Sortierung (2,4,100) ist 4. Bei einer einzelnen Messspitze wirkt der Median robuster. Für Bins [0,10),[10,20) gehört 10 in den zweiten Bin, nicht in beide. Ob 100 ein Fehler oder echtes Ereignis war, entscheidet der Kontext, nicht die Rechnung.",
+  "formula": {
+    "expression": "Gleitendes Mittel=(x₁+…+x_k)/k",
+    "meaning": "Die Rechnung gilt für das gewählte Fenster; bei Vorhersagen dürfen darin keine unerlaubten Zukunftswerte stehen.",
+    "variables": [
+      {
+        "symbol": "k",
+        "meaning": "Fenstergrösse"
+      },
+      {
+        "symbol": "xᵢ",
+        "meaning": "Messwert im Fenster"
+      }
+    ],
+    "latex": [
+      "\\mathrm{Fenstermittel}=\\frac1k\\sum_{i=1}^k x_i"
+    ],
+    "worked_example": {
+      "title": "Mittelwert und Median bei einer Messspitze",
+      "given": [
+        "Fenster (2,100,4), Fenstergrösse k=3."
+      ],
+      "steps": [
+        {
+          "text": "Alle drei Fensterwerte addieren.",
+          "latex": "2+100+4=106"
+        },
+        {
+          "text": "Für den gleitenden Mittelwert durch die Fenstergrösse teilen.",
+          "latex": "\\frac{106}{3}\\approx35.333"
+        },
+        {
+          "text": "Zum Vergleich sortieren und den mittleren Wert wählen.",
+          "latex": "(2,4,100)\\ \\Longrightarrow\\ \\mathrm{Median}=4"
+        }
+      ],
+      "result": "Die Spitze zieht den Mittelwert auf etwa 35.333; der Median bleibt 4. Welcher Filter sinnvoll ist, hängt davon ab, ob 100 Störung oder echtes Signal ist.",
+      "result_latex": "\\mathrm{Mittel}\\approx35.333,\\quad \\mathrm{Median}=4"
+    }
+  },
+  "confusions": [
+    {
+      "term": "Glätten und verbessern",
+      "note": "Weniger Schwankung kann auch weniger relevantes Signal bedeuten."
+    },
+    {
+      "term": "Kausal und zentriert",
+      "note": "Zentrierte Fenster können zukünftige Messungen enthalten."
+    }
+  ],
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "Vorverarbeitung mit Zweck",
+      "caption": "Die Wahl muss zur Messgrösse und Vorhersagezeit passen.",
+      "labels": [
+        "Rohmessungen",
+        "Störung prüfen",
+        "Filter oder Bins wählen",
+        "Informationsverlust bewerten"
+      ]
+    },
+    {
+      "kind": "bars",
+      "title": "Mittelwert und Median bei einer Spitze",
+      "caption": "Das Fenster 2,100,4 ergibt Mittelwert etwa 35.333 und Median 4.",
+      "labels": [
+        "Mittelwert",
+        "Median"
+      ],
+      "values": [
+        [
+          35.333,
+          4
+        ]
+      ]
+    }
+  ]
+}

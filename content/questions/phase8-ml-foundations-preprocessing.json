@@ -1,0 +1,868 @@
+{
+  "questions": [
+    {
+      "id": "ml-lifecycle-start",
+      "topic_id": "ml-lifecycle",
+      "type": "single-choice",
+      "prompt": "Welcher Schritt steht im ML-Lifecycle vor dem Training?",
+      "explanation": "Vor dem Trainieren werden Ziel, erlaubte Features und Datenqualität geklärt. Ein erst später bekannter Verkaufspreis darf beispielsweise kein Input für seine eigene Vorhersage sein. Training ist Parameteranpassung, nicht Ersatz für diese Aufgabenklärung.",
+      "difficulty": 1,
+      "enabled": true,
+      "options": [
+        {
+          "id": "a",
+          "text": "Daten und Ziel verstehen"
+        },
+        {
+          "id": "b",
+          "text": "Testset final bewerten"
+        },
+        {
+          "id": "c",
+          "text": "Clusterlabels vorgeben"
+        },
+        {
+          "id": "d",
+          "text": "Gewichte einfrieren"
+        }
+      ],
+      "correct_answer": "a"
+    },
+    {
+      "id": "ml-lifecycle-order",
+      "topic_id": "ml-lifecycle",
+      "type": "ordering",
+      "prompt": "Bringe den vereinfachten ML-Lifecycle in die richtige Reihenfolge.",
+      "explanation": "Daten und Ziel verstehen, geeignet trennen und vorbereiten, Kandidaten trainieren und validieren, dann unabhängig testen. Iteration benutzt Training und Validation; das Testset soll nicht durch fortlaufende Auswahl seine unabhängige Rolle verlieren.",
+      "difficulty": 2,
+      "enabled": true,
+      "options": [
+        {
+          "id": "a",
+          "text": "Daten und Ziel definieren"
+        },
+        {
+          "id": "b",
+          "text": "Daten explorieren und vorbereiten"
+        },
+        {
+          "id": "c",
+          "text": "Modell trainieren und auswählen"
+        },
+        {
+          "id": "d",
+          "text": "Auf unbekannten Daten bewerten"
+        }
+      ],
+      "correct_order": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ]
+    },
+    {
+      "id": "ml-lifecycle-iterative",
+      "topic_id": "ml-lifecycle",
+      "type": "true-false",
+      "prompt": "Der ML-Lifecycle ist nach der Bewertung zwingend abgeschlossen und wird nicht erneut durchlaufen.",
+      "explanation": "Falsch: Erkenntnisse können zu einer neuen Trainings- und Validierungsrunde führen. Dabei bleiben die Grenzen der Schlussbewertung wichtig: Ein Test, der wiederholt zur Verbesserung verwendet wurde, ist kein unberührter Test mehr.",
+      "difficulty": 1,
+      "enabled": true,
+      "options": [
+        {
+          "id": "f",
+          "text": "Falsch"
+        },
+        {
+          "id": "t",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "f"
+    },
+    {
+      "id": "ml-lifecycle-evaluate",
+      "topic_id": "ml-lifecycle",
+      "type": "numeric-choice",
+      "prompt": "Welche Vorhersage liefert das Modell für 90 m²?",
+      "explanation": "Zuerst 2000·90=180000, dann Bias 50000 addieren: ŷ=230000 CHF. 180000 lässt den Bias weg; 250000 entspricht 100 statt 90 m²; 90000 verwechselt Input und Zielskala. Fläche ist Input, die beiden Koeffizienten sind Modellparameter.",
+      "difficulty": 2,
+      "enabled": true,
+      "options": [
+        {
+          "id": "answer-1",
+          "text": "180000 CHF"
+        },
+        {
+          "id": "answer-2",
+          "text": "230000 CHF"
+        },
+        {
+          "id": "answer-3",
+          "text": "250000 CHF"
+        },
+        {
+          "id": "answer-4",
+          "text": "90000 CHF"
+        }
+      ],
+      "correct_answer": "answer-2",
+      "context": "Ein trainiertes Hauspreis-Modell verwendet ŷ=2000x+50000 CHF; x ist die Fläche in m²."
+    },
+    {
+      "id": "ml-features-matrix",
+      "topic_id": "features-datatypes",
+      "type": "numeric-choice",
+      "prompt": "Wie viele Featurewerte enthält X?",
+      "explanation": "X hat 8 Zeilen und 3 Spalten, also 8·3=24 Featurewerte. 8 zählt Fälle, 3 zählt Spalten; 11 addiert Dimensionen statt Einträge zu zählen. Die acht Labels zählen nicht zu X.",
+      "difficulty": 2,
+      "enabled": true,
+      "options": [
+        {
+          "id": "answer-1",
+          "text": "8"
+        },
+        {
+          "id": "answer-2",
+          "text": "3"
+        },
+        {
+          "id": "answer-3",
+          "text": "11"
+        },
+        {
+          "id": "answer-4",
+          "text": "24"
+        }
+      ],
+      "correct_answer": "answer-4",
+      "context": "Die numerische Eingabematrix enthält acht Beobachtungen mit je drei Features; Labels liegen in einem getrennten Vektor."
+    },
+    {
+      "id": "ml-features-types",
+      "topic_id": "features-datatypes",
+      "type": "multiple-select",
+      "prompt": "Mehrere Antworten sind richtig. Welche Datentypen nennt die Lernseite als unterschiedliche Feature-Arten?",
+      "explanation": "Numerisch beschreibt messbare Grössen, ordinal geordnete Kategorien, nominal ungeordnete Kategorien. «Nur zufällig» ist keine dieser fachlichen Datentypklassen. Postleitzahlen sind trotz Ziffern meist nicht als metrische Grösse zu verstehen.",
+      "difficulty": 1,
+      "enabled": true,
+      "options": [
+        {
+          "id": "a",
+          "text": "Numerisch"
+        },
+        {
+          "id": "b",
+          "text": "Ordinal"
+        },
+        {
+          "id": "c",
+          "text": "Nominal"
+        },
+        {
+          "id": "d",
+          "text": "Nur zufällig"
+        }
+      ],
+      "correct_answers": [
+        "a",
+        "b",
+        "c"
+      ]
+    },
+    {
+      "id": "ml-features-engineering",
+      "topic_id": "features-datatypes",
+      "type": "true-false",
+      "prompt": "Feature Engineering leitet aus vorhandenen Merkmalen geeignetere Eingaben ab.",
+      "explanation": "Richtig: Aus Fläche und Zimmerzahl kann etwa Fläche/Zimmer entstehen. Das ist ein neues Inputmerkmal, kein neu erfundenes Ziel-Label. Die Ableitung darf keine Information verwenden, die bei der späteren Vorhersage noch unbekannt wäre.",
+      "difficulty": 1,
+      "enabled": true,
+      "options": [
+        {
+          "id": "f",
+          "text": "Falsch"
+        },
+        {
+          "id": "t",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "t"
+    },
+    {
+      "id": "ml-features-importance",
+      "topic_id": "features-datatypes",
+      "type": "single-choice",
+      "prompt": "Warum ist der Datentyp eines Features für ML relevant?",
+      "explanation": "Ein Datentyp bestimmt, ob Grössenabstände, Reihenfolge oder nur Gleichheit sinnvoll sind. Das beeinflusst Diagramme, Encoding und Modellverarbeitung. Er legt nicht automatisch die Testgrösse fest und ersetzt weder Training noch benötigte Labels.",
+      "difficulty": 2,
+      "enabled": true,
+      "options": [
+        {
+          "id": "a",
+          "text": "Er bestimmt eine geeignete Darstellung und Analyse"
+        },
+        {
+          "id": "b",
+          "text": "Er legt immer die Testsetgrösse fest"
+        },
+        {
+          "id": "c",
+          "text": "Er ersetzt das Modelltraining"
+        },
+        {
+          "id": "d",
+          "text": "Er macht Labels überflüssig"
+        }
+      ],
+      "correct_answer": "a"
+    },
+    {
+      "id": "ml-eda-purpose",
+      "topic_id": "eda-workflow",
+      "type": "single-choice",
+      "prompt": "Was ist das zentrale Ziel der explorativen Datenanalyse?",
+      "explanation": "EDA untersucht Bedeutung, Verteilungen und Qualität der Trainingsdaten. Ein 250 Jahre alter Eintrag wird geprüft, nicht automatisch als normales Alter ins Modell gegeben. EDA ist keine Optimierung der Gewichte und beweist aus einem Scatterplot keine Ursache.",
+      "difficulty": 1,
+      "enabled": true,
+      "options": [
+        {
+          "id": "a",
+          "text": "Daten vor dem Training verstehen"
+        },
+        {
+          "id": "b",
+          "text": "Hyperparameter final auswählen"
+        },
+        {
+          "id": "c",
+          "text": "Bäume per Voting kombinieren"
+        },
+        {
+          "id": "d",
+          "text": "Labels zufällig erzeugen"
+        }
+      ],
+      "correct_answer": "a"
+    },
+    {
+      "id": "ml-eda-steps",
+      "topic_id": "eda-workflow",
+      "type": "ordering",
+      "prompt": "Welche Reihenfolge passt zum EDA-Workflow?",
+      "explanation": "Struktur und Einheiten zuerst verstehen, dann einzelne Verteilungen und gemeinsame Beziehungen prüfen, schliesslich Vorbereitung begründen. Diese Reihenfolge ist ein sinnvoller vereinfachter Workflow, keine Behauptung, dass reale EDA niemals iteriert.",
+      "difficulty": 2,
+      "enabled": true,
+      "options": [
+        {
+          "id": "a",
+          "text": "Datentypen und Struktur prüfen"
+        },
+        {
+          "id": "b",
+          "text": "Verteilungen und Kennzahlen betrachten"
+        },
+        {
+          "id": "c",
+          "text": "Zusammenhänge visualisieren"
+        },
+        {
+          "id": "d",
+          "text": "Preprocessing-Probleme festhalten"
+        }
+      ],
+      "correct_order": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ]
+    },
+    {
+      "id": "ml-eda-problems",
+      "topic_id": "eda-workflow",
+      "type": "multiple-select",
+      "prompt": "Mehrere Antworten sind richtig. Welche Probleme kann EDA sichtbar machen?",
+      "explanation": "EDA kann fehlende Werte, mögliche Ausreisser und ungeeignete Inputs sichtbar machen. Ein Ausreisser ist zunächst ein Hinweis, kein bewiesener Fehler. Die Analyse allein garantiert keine gute Modellleistung und ersetzt die spätere unabhängige Bewertung nicht.",
+      "difficulty": 2,
+      "enabled": true,
+      "options": [
+        {
+          "id": "a",
+          "text": "Fehlende Werte"
+        },
+        {
+          "id": "b",
+          "text": "Ausreisser"
+        },
+        {
+          "id": "c",
+          "text": "Ungeeignete Features"
+        },
+        {
+          "id": "d",
+          "text": "Automatisch korrekte Labels"
+        }
+      ],
+      "correct_answers": [
+        "a",
+        "b",
+        "c"
+      ]
+    },
+    {
+      "id": "ml-eda-before-model",
+      "topic_id": "eda-workflow",
+      "type": "numeric-choice",
+      "prompt": "Wie gross ist der Anteil fehlender Alterswerte?",
+      "explanation": "Anteil=18/120=0.15, also 15 %. 18 % setzt die Fallzahl mit dem Prozentwert gleich; 6.67 % verwendet eine andere Rechnung; 85 % ist der Anteil vorhandener Werte. Vor einer Behandlung werden Ausmass und Gründe untersucht.",
+      "difficulty": 2,
+      "enabled": true,
+      "options": [
+        {
+          "id": "answer-1",
+          "text": "18 %"
+        },
+        {
+          "id": "answer-2",
+          "text": "15 %"
+        },
+        {
+          "id": "answer-3",
+          "text": "6.67 %"
+        },
+        {
+          "id": "answer-4",
+          "text": "85 %"
+        }
+      ],
+      "correct_answer": "answer-2",
+      "context": "Bei der EDA der Trainingsdaten fehlen in 18 von 120 Fällen die Alterswerte."
+    },
+    {
+      "id": "ml-eda-distribution",
+      "topic_id": "eda-statistics",
+      "type": "single-choice",
+      "prompt": "Wozu dienen Kennzahlen und Verteilungsdarstellungen in der EDA?",
+      "explanation": "Kennzahlen und Diagramme zeigen Lage und Streuung. Für (2,4,60) ist der Median 4, der Mittelwert 22: Eine einzelne Kennzahl verdeckt leicht den Extremwert. Bei nominalen IDs ist ein Durchschnitt der Codes fachlich meist sinnlos.",
+      "difficulty": 1,
+      "enabled": true,
+      "options": [
+        {
+          "id": "a",
+          "text": "Eigenschaften von Merkmalen zusammenfassen"
+        },
+        {
+          "id": "b",
+          "text": "Trainingslabels ersetzen"
+        },
+        {
+          "id": "c",
+          "text": "Gewichte eines Netzes aktualisieren"
+        },
+        {
+          "id": "d",
+          "text": "Clusterzentren festlegen"
+        }
+      ],
+      "correct_answer": "a"
+    },
+    {
+      "id": "ml-eda-outlier",
+      "topic_id": "eda-statistics",
+      "type": "numeric-choice",
+      "prompt": "Welche Populationsvarianz ergibt sich, auf drei Dezimalstellen gerundet?",
+      "explanation": "Mittelwert=3. Abweichungen −2,0,2; Quadrate 4,0,4. Varianz=8/3≈2.667. 4.000 wäre die Stichprobenvarianz mit Nenner 2; 1.633 die Populationsstandardabweichung; 2.000 ist keine dieser verlangten Varianzen.",
+      "difficulty": 2,
+      "enabled": true,
+      "options": [
+        {
+          "id": "answer-1",
+          "text": "2.000"
+        },
+        {
+          "id": "answer-2",
+          "text": "2.667"
+        },
+        {
+          "id": "answer-3",
+          "text": "4.000"
+        },
+        {
+          "id": "answer-4",
+          "text": "1.633"
+        }
+      ],
+      "correct_answer": "answer-2",
+      "context": "Betrachtet wird die vollständige kleine Wertemenge (1,3,5); Varianz hier mit Nenner N, nicht N−1."
+    },
+    {
+      "id": "ml-correlation-scatter",
+      "topic_id": "eda-correlation-outliers",
+      "type": "single-choice",
+      "prompt": "Welches Diagramm zeigt den Zusammenhang zweier numerischer Variablen direkt?",
+      "explanation": "Ein Scatterplot zeichnet je Fall ein Wertepaar als Punkt und zeigt Beziehungen zweier numerischer Merkmale. Ein Histogramm untersucht dagegen typischerweise eine Verteilung, ein Balkendiagramm Kategorienhäufigkeiten. Eine Punktwolke beweist keine Kausalität.",
+      "difficulty": 1,
+      "enabled": true,
+      "options": [
+        {
+          "id": "a",
+          "text": "Scatterplot"
+        },
+        {
+          "id": "b",
+          "text": "Confusion Matrix"
+        },
+        {
+          "id": "c",
+          "text": "Feature Map"
+        },
+        {
+          "id": "d",
+          "text": "Entscheidungsblatt"
+        }
+      ],
+      "correct_answer": "a"
+    },
+    {
+      "id": "ml-correlation-coefficient",
+      "topic_id": "eda-correlation-outliers",
+      "type": "numeric-choice",
+      "prompt": "Wie gross ist der Korrelationskoeffizient?",
+      "explanation": "Alle Punkte liegen auf y=3x, einer exakt steigenden Geraden. r=1. Die Steigung 3 ist nicht r; r liegt immer zwischen −1 und 1. 0 würde keinen linearen Trend anzeigen, −1 einen exakt fallenden. Auch r=1 beweist keine Ursache.",
+      "difficulty": 2,
+      "enabled": true,
+      "options": [
+        {
+          "id": "answer-1",
+          "text": "3"
+        },
+        {
+          "id": "answer-2",
+          "text": "0"
+        },
+        {
+          "id": "answer-3",
+          "text": "1"
+        },
+        {
+          "id": "answer-4",
+          "text": "−1"
+        }
+      ],
+      "correct_answer": "answer-3",
+      "context": "Gepaarte Messwerte: x=(1,2,3), y=(3,6,9). Gefragt ist Pearson-r, nicht die Steigung."
+    },
+    {
+      "id": "ml-correlation-outlier-effect",
+      "topic_id": "eda-correlation-outliers",
+      "type": "true-false",
+      "prompt": "Ein Ausreisser kann Kennzahlen und ein späteres Modell beeinflussen.",
+      "explanation": "Richtig: Ein extremer Punkt kann Mittelwert, Korrelation und Least-Squares-Anpassung stark verändern. Ob er ein Messfehler oder ein echtes seltenes Ereignis ist, muss fachlich geprüft werden. Automatisches Löschen nur für schönere Scores wäre problematisch.",
+      "difficulty": 2,
+      "enabled": true,
+      "options": [
+        {
+          "id": "f",
+          "text": "Falsch"
+        },
+        {
+          "id": "t",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "t"
+    },
+    {
+      "id": "ml-missing-delete-impute",
+      "topic_id": "missing-values",
+      "type": "matching",
+      "prompt": "Ordne dem Vorgehen die passende Wirkung zu.",
+      "explanation": "Löschen entfernt Fälle oder Features; Imputation ersetzt fehlende Einträge. Mittelwert-Imputation für (4,8,12,fehlend) verwendet die drei bekannten Werte und ergibt 8. Sie garantiert nicht, dass der unbekannte Originalwert tatsächlich 8 war.",
+      "difficulty": 2,
+      "enabled": true,
+      "match_items": [
+        {
+          "id": "delete",
+          "text": "Löschen",
+          "correct_option_id": "discard"
+        },
+        {
+          "id": "impute",
+          "text": "Imputation",
+          "correct_option_id": "replace"
+        }
+      ],
+      "match_options": [
+        {
+          "id": "discard",
+          "text": "Beobachtungen oder Spalten verwerfen"
+        },
+        {
+          "id": "replace",
+          "text": "Fehlende Werte ersetzen"
+        }
+      ]
+    },
+    {
+      "id": "ml-missing-impute-measures",
+      "topic_id": "missing-values",
+      "type": "multiple-select",
+      "prompt": "Mehrere Antworten sind richtig. Welche Kennzahlen eignen sich als Ersatzwerte für fehlende numerische Daten?",
+      "explanation": "Mittelwert und Median sind mögliche Ersatzwerte für numerische Features. Der Median ist bei Extremwerten robuster. Nominale Kategorien brauchen eine andere sinnvolle Regel, etwa häufigste Kategorie. Eine Null zu setzen ist nicht automatisch eine neutrale Behandlung.",
+      "difficulty": 1,
+      "enabled": true,
+      "options": [
+        {
+          "id": "a",
+          "text": "Mittelwert"
+        },
+        {
+          "id": "b",
+          "text": "Median"
+        },
+        {
+          "id": "c",
+          "text": "Clusterlabel"
+        },
+        {
+          "id": "d",
+          "text": "Testfehler"
+        }
+      ],
+      "correct_answers": [
+        "a",
+        "b"
+      ]
+    },
+    {
+      "id": "ml-missing-choice",
+      "topic_id": "missing-values",
+      "type": "true-false",
+      "prompt": "Die Wahl zwischen Löschen und Imputation hängt vom Datensatz und der Bedeutung des Merkmals ab.",
+      "explanation": "Richtig: Viele fehlende Werte, ihr Entstehungsgrund und die Featurebedeutung beeinflussen die Entscheidung. Löschen kann Zusammensetzung verändern, Imputation kann Unsicherheit verbergen. Ersatzwerte werden auf Training gelernt, nicht auf Test neu geschätzt.",
+      "difficulty": 2,
+      "enabled": true,
+      "options": [
+        {
+          "id": "f",
+          "text": "Falsch"
+        },
+        {
+          "id": "t",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "t"
+    },
+    {
+      "id": "ml-noise-sequential",
+      "topic_id": "data-cleaning-noise",
+      "type": "single-choice",
+      "prompt": "Welche Verfahren können verrauschte sequenzielle numerische Daten glätten oder zusammenfassen?",
+      "explanation": "Gleitendes Mittel, Median und Resampling können zeitliche Messungen glätten oder zusammenfassen. Bei Zukunftsvorhersage dürfen ihre Fenster keine unbekannten späteren Werte enthalten. Ein zentriertes Fenster ist daher nicht automatisch für Echtzeitprognosen zulässig.",
+      "difficulty": 1,
+      "enabled": true,
+      "options": [
+        {
+          "id": "a",
+          "text": "Gleitende Mittel oder Resampling"
+        },
+        {
+          "id": "b",
+          "text": "Klassenlabels zufällig vertauschen"
+        },
+        {
+          "id": "c",
+          "text": "Nur One-Hot-Encoding"
+        },
+        {
+          "id": "d",
+          "text": "Keine Daten mehr verwenden"
+        }
+      ],
+      "correct_answer": "a"
+    },
+    {
+      "id": "ml-noise-binning",
+      "topic_id": "data-cleaning-noise",
+      "type": "numeric-choice",
+      "prompt": "Welcher gefilterte Wert entsteht?",
+      "explanation": "Sortieren ergibt (3,5,99), der mittlere Wert ist 5. 35.667 wäre ungefähr der Mittelwert; 99 ist das Maximum und 3 das Minimum. Der Median ist robust gegen eine einzelne Spitze, beweist aber nicht, dass 99 ein Messfehler war.",
+      "difficulty": 2,
+      "enabled": true,
+      "options": [
+        {
+          "id": "answer-1",
+          "text": "35.667"
+        },
+        {
+          "id": "answer-2",
+          "text": "99"
+        },
+        {
+          "id": "answer-3",
+          "text": "3"
+        },
+        {
+          "id": "answer-4",
+          "text": "5"
+        }
+      ],
+      "correct_answer": "answer-4",
+      "context": "Ein gleitendes Medianfilter betrachtet das Fenster (3,99,5)."
+    },
+    {
+      "id": "ml-noise-information",
+      "topic_id": "data-cleaning-noise",
+      "type": "true-false",
+      "prompt": "Eine Rauschreduktion kann Information verändern und muss zum Anwendungsfall passen.",
+      "explanation": "Richtig: Eine Mittelung kann Messrauschen, aber auch eine echte kurze Spitze entfernen. Binning verliert genaue Unterschiede innerhalb eines Intervalls. Weniger Schwankung ist deshalb nicht automatisch besseres fachliches Signal.",
+      "difficulty": 2,
+      "enabled": true,
+      "options": [
+        {
+          "id": "f",
+          "text": "Falsch"
+        },
+        {
+          "id": "t",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "t"
+    },
+    {
+      "id": "ml-scaling-purpose",
+      "topic_id": "feature-scaling",
+      "type": "single-choice",
+      "prompt": "Warum kann Merkmalsskalierung für das Modelltraining nötig sein?",
+      "explanation": "Gross skalierte Features können Distanzen oder Optimierungsschritte dominieren. Standardisierung bringt Werte relativ zu Trainingsmittel und -streuung auf eine vergleichbare Skala. Sie erzeugt weder automatisch eine Normalverteilung noch neue Labels.",
+      "difficulty": 1,
+      "enabled": true,
+      "options": [
+        {
+          "id": "a",
+          "text": "Unterschiedliche Skalen können die Anpassung beeinflussen"
+        },
+        {
+          "id": "b",
+          "text": "Sie erzeugt neue Klassenlabels"
+        },
+        {
+          "id": "c",
+          "text": "Sie ersetzt die Loss-Funktion"
+        },
+        {
+          "id": "d",
+          "text": "Sie macht Validation unnötig"
+        }
+      ],
+      "correct_answer": "a"
+    },
+    {
+      "id": "ml-scaling-vs-encoding",
+      "topic_id": "feature-scaling",
+      "type": "single-choice",
+      "prompt": "Was unterscheidet Skalierung von Encoding?",
+      "explanation": "Skalierung verändert numerische Grössen, etwa (x−μ)/σ. Encoding stellt Kategorien dar, etwa rot=(1,0,0). Kategorien-IDs zu standardisieren schafft nicht automatisch eine sinnvolle numerische Ordnung. Beide Operationen haben verschiedene Zwecke.",
+      "difficulty": 2,
+      "enabled": true,
+      "options": [
+        {
+          "id": "a",
+          "text": "Skalierung verändert numerische Werte, Encoding codiert Kategorien"
+        },
+        {
+          "id": "b",
+          "text": "Skalierung erzeugt Labels, Encoding entfernt sie"
+        },
+        {
+          "id": "c",
+          "text": "Beide sind ausschliesslich Testverfahren"
+        },
+        {
+          "id": "d",
+          "text": "Es gibt keinen Unterschied"
+        }
+      ],
+      "correct_answer": "a"
+    },
+    {
+      "id": "ml-scaling-log",
+      "topic_id": "feature-scaling",
+      "type": "true-false",
+      "prompt": "Eine Log-Transformation kann stark schiefe positive Variablen komprimieren.",
+      "explanation": "Richtig für geeignete positive Inputs: Eine Log-Transformation komprimiert grosse Werte stärker als kleine. ln(0) ist nicht definiert; negative Werte brauchen eine andere begründete Behandlung. Die Transformation muss bei Training und Inferenz konsistent sein.",
+      "difficulty": 1,
+      "enabled": true,
+      "options": [
+        {
+          "id": "f",
+          "text": "Falsch"
+        },
+        {
+          "id": "t",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "t"
+    },
+    {
+      "id": "ml-encoding-match",
+      "topic_id": "feature-encoding",
+      "type": "matching",
+      "prompt": "Ordne die Feature-Art der passenden Aussage zu.",
+      "explanation": "Ordinal hat eine fachliche Reihenfolge, nominal nicht. One-Hot bildet Kategorien als getrennte Indikatorspalten ab. Beispielsweise grün=(0,1,0) behauptet nicht, dass grün zwischen rot und blau liegt. Eine numerische ID allein kann eine falsche Ordnung nahelegen.",
+      "difficulty": 2,
+      "enabled": true,
+      "match_items": [
+        {
+          "id": "ordinal",
+          "text": "Ordinales Feature",
+          "correct_option_id": "order"
+        },
+        {
+          "id": "nominal",
+          "text": "Nominales Feature",
+          "correct_option_id": "no-order"
+        },
+        {
+          "id": "onehot",
+          "text": "One-Hot-Encoding",
+          "correct_option_id": "dummy"
+        }
+      ],
+      "match_options": [
+        {
+          "id": "order",
+          "text": "Kategorien besitzen eine fachliche Reihenfolge"
+        },
+        {
+          "id": "no-order",
+          "text": "Kategorien besitzen keine Ordnung"
+        },
+        {
+          "id": "dummy",
+          "text": "Pro Ausprägung entsteht eine Dummy-Spalte"
+        }
+      ]
+    },
+    {
+      "id": "ml-encoding-multihot",
+      "topic_id": "feature-encoding",
+      "type": "single-choice",
+      "prompt": "Wann ist Multi-Hot-Encoding passend?",
+      "explanation": "Multi-Hot passt, wenn mehrere Kategorien gleichzeitig zutreffen: Deutsch und Englisch kann (1,0,1) sein. One-Hot erlaubt im gewöhnlichen Fall genau eine aktive Kategorie. Die Wahl richtet sich nach Bedeutung, nicht danach, welches Encoding kürzer aussieht.",
+      "difficulty": 2,
+      "enabled": true,
+      "options": [
+        {
+          "id": "a",
+          "text": "Wenn mehrere Kategorien zugleich zutreffen können"
+        },
+        {
+          "id": "b",
+          "text": "Wenn ein Feature immer kontinuierlich ist"
+        },
+        {
+          "id": "c",
+          "text": "Wenn keine Daten vorhanden sind"
+        },
+        {
+          "id": "d",
+          "text": "Wenn der Testsetanteil berechnet wird"
+        }
+      ],
+      "correct_answer": "a"
+    },
+    {
+      "id": "ml-encoding-periodic",
+      "topic_id": "feature-encoding",
+      "type": "numeric-choice",
+      "prompt": "Welcher Vektor gehört zu h=0?",
+      "explanation": "Bei h=0 ist der Winkel 0: sin(0)=0 und cos(0)=1. Daher (0,1). (0,0) übersieht den Cosinus; (1,0) vertauscht die Werte; (1,1) setzt Sinus fälschlich auf 1. Die zwei Komponenten halten Tagesanfang und -ende geometrisch nah.",
+      "difficulty": 2,
+      "enabled": true,
+      "options": [
+        {
+          "id": "answer-1",
+          "text": "(0,0)"
+        },
+        {
+          "id": "answer-2",
+          "text": "(0,1)"
+        },
+        {
+          "id": "answer-3",
+          "text": "(1,0)"
+        },
+        {
+          "id": "answer-4",
+          "text": "(1,1)"
+        }
+      ],
+      "correct_answer": "answer-2",
+      "context": "Zyklische Uhrzeitcodierung verwendet (sin(2πh/24),cos(2πh/24)); gerechnet wird im Bogenmass."
+    },
+    {
+      "id": "ml-collinearity-definition",
+      "topic_id": "collinearity",
+      "type": "single-choice",
+      "prompt": "Was beschreibt Kollinearität?",
+      "explanation": "Kollinearität ist hier eine lineare Abhängigkeit, nicht irgendeine beliebige Beziehung. Bei x₂=2x₁ sind einzelne Regressionsgewichte nicht eindeutig bestimmbar. Auch wenn Vorhersagen ähnlich bleiben, kann ihre fachliche Einzelinterpretation instabil sein.",
+      "difficulty": 1,
+      "enabled": true,
+      "options": [
+        {
+          "id": "a",
+          "text": "Eine lineare Abhängigkeit zwischen Prädiktoren"
+        },
+        {
+          "id": "b",
+          "text": "Jede beliebige nichtlineare Beziehung ist exakt kollinear"
+        },
+        {
+          "id": "c",
+          "text": "Die Zahl der Testbeispiele"
+        },
+        {
+          "id": "d",
+          "text": "Eine Reihenfolge nominaler Labels"
+        }
+      ],
+      "correct_answer": "a"
+    },
+    {
+      "id": "ml-collinearity-detect",
+      "topic_id": "collinearity",
+      "type": "numeric-choice",
+      "prompt": "Welche Vorhersage ergibt sich bei x₁=3?",
+      "explanation": "x₂=6, deshalb ŷ=1·3+2·6=15. Effektives Gewicht auf x₁ ist 1+2·2=5. 5 lässt die Multiplikation mit x₁ weg; 9 verwechselt Feature oder Gewicht; 18 verwendet zwei Beiträge von 9. Abhängige Features können denselben effektiven Zusammenhang mit anderen Einzelgewichten darstellen.",
+      "difficulty": 2,
+      "enabled": true,
+      "options": [
+        {
+          "id": "answer-1",
+          "text": "5"
+        },
+        {
+          "id": "answer-2",
+          "text": "9"
+        },
+        {
+          "id": "answer-3",
+          "text": "15"
+        },
+        {
+          "id": "answer-4",
+          "text": "18"
+        }
+      ],
+      "correct_answer": "answer-3",
+      "context": "Zwei Features erfüllen x₂=2x₁. Das Modell lautet ŷ=w₁x₁+w₂x₂ mit w₁=1,w₂=2."
+    }
+  ]
+}

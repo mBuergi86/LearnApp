@@ -1,0 +1,139 @@
+{
+  "id": "backpropagation",
+  "exam_id": "deep-learning-data-science",
+  "module_id": "dl-training",
+  "title": "Backpropagation",
+  "priority": "core",
+  "summary": "Backpropagation berechnet mit der Kettenregel die Gradienten der Kosten bezüglich der Gewichte und Biases eines mehrschichtigen Netzes.",
+  "explanation": [
+    "Vorwissen: Zuerst Neuron, Aktivierung, Loss und Ableitung unterscheiden. Eine partielle Ableitung ∂C/∂w fragt, wie sich die Loss bei einer kleinen Änderung genau dieses Gewichts verändert. Kettenregel bedeutet, die Einflüsse der hintereinanderliegenden Rechenschritte zu multiplizieren.",
+    "Backpropagation berechnet die Ableitungen einer Loss nach den Parametern eines Netzes. Jeder Parameter beeinflusst die Loss über nachfolgende Berechnungen. Die Kettenregel zerlegt diesen Einfluss in lokale Ableitungen, die in umgekehrter Reihenfolge des Forward Pass zusammengesetzt werden.",
+    "Die Vorlesung nennt eᵢˡ = ∂C/∂zᵢˡ den lokalen Fehler eines Neurons. zᵢˡ ist sein gewichteter Input vor der Aktivierung. Dieser Fehler ist eine Empfindlichkeit, keine blosse Differenz zwischen Label und Output; erst in bestimmten Fällen lässt er sich besonders einfach als Differenz ausdrücken.",
+    "BP1 berechnet den Fehler der Output-Schicht aus der Loss-Ableitung nach der Aktivierung und der Aktivierungsableitung. BP2 führt ihn durch die transponierten nachfolgenden Gewichte rückwärts und multipliziert mit der Aktivierungsableitung der aktuellen Schicht.",
+    "BP3 ergibt ∂C/∂bᵢˡ = eᵢˡ, weil der Bias additiv in z eingeht. BP4 ergibt ∂C/∂wᵢₖˡ = aₖˡ⁻¹ · eᵢˡ. Das zugehörige Gewicht verbindet die vorgeschaltete Aktivierung mit dem aktuellen Neuron. Die Lernrate ist kein Faktor dieses Gradienten; sie wird erst beim Update verwendet.",
+    "Die lokalen Ableitungen werden effizient wiederverwendet, statt für jeden Parameter den kompletten Netzoutput neu auszurechnen. Bei mehreren Beispielen werden Gradienten passend zur gemittelten Loss aggregiert. Backpropagation liefert das Rechenwerkzeug; Gradient Descent oder ein anderer Optimierer setzt die Parameteränderungen um.",
+    "Mathematik lesen: Der obere Index l bezeichnet eine Schicht, keine Potenz; i bezeichnet ein Neuron, k seinen Vorgänger. aₖ^(l−1) ist die Aktivierung aus der vorigen Schicht. Die Formelzeichen eᵢˡ in diesem Thema stehen für lokale Fehlerableitungen, nicht für die Eulerzahl e der Sigmoid-Funktion."
+  ],
+  "steps": [
+    "Forward Pass ausführen und benötigte Aktivierungen speichern.",
+    "Output-Fehler mit BP1 bestimmen.",
+    "Fehler mit BP2 schichtweise zurückführen.",
+    "Bias- und Gewichtsgradienten mit BP3 und BP4 berechnen.",
+    "Gradienten im Optimierungsschritt verwenden."
+  ],
+  "example": "Beispiel für BP3/BP4: Ein Neuron empfängt a_vorher = 2 und hat den lokalen Fehler e = −0.3.\nBias-Gradient: ∂C/∂b = e = −0.3.\nGewichtsgradient: ∂C/∂w = 2 · (−0.3) = −0.6.\nBei w=0.5, b=0.1 und η=0.1 ergibt das Update w_neu=0.56 und b_neu=0.13.\nAls separates Loss-Beispiel der Folien gilt für y=(1,0), aᴸ=(0.8,0.3): Cₓ=½[(1−0.8)²+(0−0.3)²]=0.065. Dieser Loss-Wert allein ist noch kein Gewichtsgradient.\nVollständige Kette: x=3,w=2,b=1,y=5 und ReLU. z=2·3+1=7, a=7, C=½(7−5)²=2. ∂C/∂a=2 und ReLU′(7)=1, also e=2. Gewichtsgradient=3·2=6, Biasgradient=2. Mit η=0.1 folgen w=1.4 und b=0.8. Der neue Output ist 5 und die Loss 0.",
+  "formula": {
+    "expression": "eᵢˡ = ∂C/∂zᵢˡ\n∂C/∂bᵢˡ = eᵢˡ\n∂C/∂wᵢₖˡ = aₖˡ⁻¹eᵢˡ",
+    "meaning": "BP3 und BP4 verwenden den bereits rückwärts berechneten lokalen Fehler.",
+    "variables": [
+      {
+        "symbol": "C",
+        "meaning": "skalare Loss"
+      },
+      {
+        "symbol": "zᵢˡ",
+        "meaning": "gewichteter Input von Neuron i in Schicht l"
+      },
+      {
+        "symbol": "eᵢˡ",
+        "meaning": "lokale Ableitung ∂C/∂zᵢˡ"
+      },
+      {
+        "symbol": "aₖˡ⁻¹",
+        "meaning": "Aktivierung des Vorgängers k in der vorigen Schicht"
+      },
+      {
+        "symbol": "wᵢₖˡ,bᵢˡ",
+        "meaning": "Gewicht und Bias der aktuellen Schicht"
+      },
+      {
+        "symbol": "∂",
+        "meaning": "partielle Ableitung"
+      }
+    ],
+    "latex": [
+      "e_i^\\ell=\\frac{\\partial C}{\\partial z_i^\\ell}",
+      "\\frac{\\partial C}{\\partial b_i^\\ell}=e_i^\\ell",
+      "\\frac{\\partial C}{\\partial w_{ik}^\\ell}=a_k^{\\ell-1}e_i^\\ell"
+    ],
+    "worked_example": {
+      "title": "Gegebene Fehlerableitung in Parameteränderungen übersetzen",
+      "given": [
+        "Vorherige Aktivierung a=2; lokaler Fehler e=−0.3 ist bereits berechnet.",
+        "Aktuelles Gewicht w=0.5, Bias b=0.1; Lernrate η=0.1."
+      ],
+      "steps": [
+        {
+          "text": "Der Bias-Gradient ist direkt der gegebene lokale Fehler.",
+          "latex": "g_b=e=-0.3"
+        },
+        {
+          "text": "Für den Gewichtsgradienten Aktivierung mit dem lokalen Fehler multiplizieren.",
+          "latex": "g_w=a\\,e=2(-0.3)=-0.6"
+        },
+        {
+          "text": "Das Gewicht mit dem berechneten Gradienten aktualisieren.",
+          "latex": "w_{\\mathrm{neu}}=0.5-0.1(-0.6)=0.56"
+        },
+        {
+          "text": "Den Bias auf dieselbe Weise aktualisieren.",
+          "latex": "b_{\\mathrm{neu}}=0.1-0.1(-0.3)=0.13"
+        }
+      ],
+      "result": "Das neue Gewicht ist 0.56 und der neue Bias 0.13. Für diese einfache Rechnung ist die lokale Ableitung vorgegeben; es ist keine vollständige Ableitungsherleitung nötig.",
+      "result_latex": "w_{\\mathrm{neu}}=0.56,\\quad b_{\\mathrm{neu}}=0.13"
+    }
+  },
+  "confusions": [
+    {
+      "term": "Lokaler Fehler und Loss",
+      "note": "e = ∂C/∂z ist eine Ableitung; C ist der Verlustwert."
+    },
+    {
+      "term": "BP4 und Lernrate",
+      "note": "BP4 enthält Aktivierung und lokalen Fehler. η wird erst beim Optimierungsschritt multipliziert."
+    }
+  ],
+  "sources": [
+    {
+      "file": "DeepLearning_Tag1_Einfuhrung_2026_ShaoJuWoo.pdf",
+      "pages": [
+        42,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        61,
+        63
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 2,
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "Die vier BP-Gleichungen",
+      "labels": [
+        "BP1|Fehler am Output",
+        "BP2|Fehler rückwärts übertragen",
+        "BP3|Bias-Gradient = e",
+        "BP4|Gewichtsgradient = a_vorher · e"
+      ],
+      "caption": "BP3 und BP4 gewinnen unterschiedliche Parametergradienten aus demselben lokalen Fehler; die Kästen ordnen die Funktionen der Gleichungen."
+    },
+    {
+      "kind": "flow",
+      "title": "Ein lokaler Gradient",
+      "labels": [
+        "a_vorher = 2; e = −0.3|∂C/∂w = −0.6",
+        "w = 0.5; η = 0.1|Update = +0.06",
+        "Neues Gewicht|w_neu = 0.56"
+      ],
+      "caption": "Das negative Ableitungsvorzeichen führt beim Gradientenabstieg zu einem positiven Gewichtsupdate."
+    }
+  ]
+}

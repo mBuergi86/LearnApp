@@ -1,0 +1,76 @@
+{
+  "id": "cnn-architecture",
+  "exam_id": "deep-learning-data-science",
+  "module_id": "dl-cnn",
+  "title": "CNN-Architektur und Feature Maps",
+  "priority": "core",
+  "summary": "Ein CNN kombiniert Convolutional Layers und weitere Schichten, um aus lokalen Bildmerkmalen schrittweise Vorhersagen zu bilden.",
+  "explanation": [
+    "Zusammenhang: Das Bild ist der Input, Convolution und Aktivierung bilden Hidden-Repräsentationen, der letzte Kopf erzeugt den Aufgabenoutput. Kanäle einer Hidden Layer sind keine bereits festgelegten Objektklassen.",
+    "Ein CNN kombiniert mehrere Verarbeitungsschichten. Typisch sind Convolution, nichtlineare Aktivierung und gegebenenfalls Pooling oder eine andere räumliche Reduktion. Am Ende werden die Merkmale zu einer Vorhersage verdichtet, etwa durch globale Mittelung und eine Klassifikationsschicht.",
+    "Die erste Convolution sieht die Bildkanäle. Jede folgende Convolution sieht die Feature Maps der vorherigen Schicht. Ein Filter kann dadurch zunächst einfache Kontraste und später Kombinationen aus bereits erkannten Mustern bearbeiten. Hierarchische Merkmale sind gelernt; sie müssen nicht als feste Kanten- oder Augenfilter vorgegeben werden.",
+    "Die räumliche Dimension H × W und die Kanaldimension C erfüllen verschiedene Rollen. Mehr Filter erhöhen die Zahl der Output-Kanäle. Ohne passendes Padding kann gleichzeitig die räumliche Auflösung sinken. Ein Netz kann also schmalere Feature Maps mit grösserer Kanalzahl besitzen.",
+    "VGG16 verwendet viele 3 × 3 Convolutions und dient in den Folien als konkretes Architekturbeispiel. ResNet ergänzt Residual-Verbindungen. Die Architekturen verfolgen denselben grundsätzlichen Weg von Bilddaten über Merkmale zur Vorhersage, unterscheiden sich aber in Verbindungen und Schichtaufbau.",
+    "Eine Aktivierung zwischen Convolutions ist wichtig für nichtlineare Repräsentationen. Die Anzahl Filter ist nicht die Anzahl möglicher Klassen. Nur der Klassifikationsoutput muss zu den Zielklassen passen. Auch CNNs benötigen eine geeignete Loss und ein Training mit nachvollziehbarer Validierung.",
+    "Prüfungstransfer: Schreibe nach jedem Layer die Form H×W×C auf. Der nächste Filter muss die Kanalzahl seines unmittelbaren Inputs verwenden, nicht immer die ursprünglichen drei RGB-Kanäle. Zähle Parameter je Layer und addiere sie erst danach."
+  ],
+  "sources": [
+    {
+      "file": "DeepLearning_Tag2_ComputerVision_2026.pdf",
+      "pages": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 2,
+  "steps": [
+    "Bildtensor einspeisen.",
+    "Lokale Merkmale mit Convolution und Aktivierung bilden.",
+    "Merkmale über weitere Schichten kombinieren.",
+    "Räumliche Information gezielt reduzieren.",
+    "Auf die gewünschten Klassen oder Zielwerte abbilden."
+  ],
+  "example": "Beispiel: Input 32 × 32 × 3. Eine Convolution mit sechs 5 × 5 Filtern, Stride 1 und ohne Padding erzeugt 28 × 28 × 6.\nDie nächste Convolution hat zehn 5 × 5 Filter. Jeder dieser Filter benötigt Tiefe 6; die Ausgabe ist 24 × 24 × 10.\nDie zweite Schicht enthält 10·(5·5·6+1)=1510 Parameter bei einem Bias je Filter. Sie besitzt nicht zehn Filter der Tiefe 3, weil ihr Input aus sechs Feature Maps besteht.\nFür eine spätere Drei-Klassen-Vorhersage wäre ein Output mit drei Scores nötig; die zehn Maps sind Zwischenmerkmale.",
+  "confusions": [
+    {
+      "term": "Kanäle und Klassen",
+      "note": "Feature-Kanäle sind Zwischenmerkmale. Klassenausgaben entstehen erst am passenden Output."
+    },
+    {
+      "term": "Netztiefe und Map-Tiefe",
+      "note": "Netztiefe zählt Schichten; Map-Tiefe meint die Kanalzahl einer Repräsentation."
+    }
+  ],
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "Hierarchische Bildverarbeitung",
+      "labels": [
+        "Bild|Pixel und Kanäle",
+        "Frühe Convolutions|lokale Muster",
+        "Weitere Convolutions|Kombinationen von Merkmalen",
+        "Klassifikationskopf|Scores für Zielklassen"
+      ],
+      "caption": "Die Verbindung von lokalen Filtern und Nichtlinearitäten bildet schrittweise reichere Repräsentationen."
+    },
+    {
+      "kind": "flow",
+      "title": "Dimensionen eines kleinen CNN",
+      "labels": [
+        "Input|32 × 32 × 3",
+        "6 Filter: 5 × 5 × 3|28 × 28 × 6",
+        "10 Filter: 5 × 5 × 6|24 × 24 × 10"
+      ],
+      "caption": "Beide Schichten verwenden Stride 1 und kein Padding. Jede zweite Filtertiefe entspricht den sechs Input-Maps."
+    }
+  ]
+}

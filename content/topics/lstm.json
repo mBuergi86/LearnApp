@@ -1,0 +1,130 @@
+{
+  "id": "lstm",
+  "exam_id": "deep-learning-data-science",
+  "module_id": "dl-sequence-models",
+  "title": "LSTM: Zellzustand und Gates",
+  "priority": "core",
+  "summary": "Eine LSTM-Zelle kombiniert einen Zellzustand mit Forget-, Input- und Output-Gate, um alte Information zu erhalten und neue Information gezielt einzufügen.",
+  "explanation": [
+    "Vorwissen: Ein Gate ist hier ein berechneter Zahlenvektor zwischen 0 und 1, der Anteile steuert. Gate-Werte sind Aktivierungen; die Gewichte, aus denen diese Werte berechnet werden, sind die trainierbaren Parameter.",
+    "LSTM ist eine rekurrente Zelle mit zwei Zuständen: dem Zellzustand c_t und dem Hidden State h_t. Der Zellzustand bietet einen additiven Speicherpfad. Gates steuern, welcher Anteil alter Information erhalten und welcher Anteil neuer Information ergänzt wird.",
+    "Das Forget-Gate f_t ist eine Sigmoid-Ausgabe zwischen 0 und 1. Es multipliziert den alten Zellzustand elementweise. Ein Wert nahe 1 erhält diesen Anteil; ein Wert nahe 0 unterdrückt ihn. Die Gate-Werte sind für jedes Beispiel berechnet und nicht von Hand vorgegebene Ja/Nein-Regeln.",
+    "Das Input-Gate i_t bestimmt, wie stark ein neuer Kandidat c̃_t in den Speicher einfliesst. Der Kandidat wird typischerweise mit Tanh berechnet und kann positive oder negative Werte enthalten. Die Aktualisierung lautet c_t=f_t⊙c_t−1+i_t⊙c̃_t.",
+    "Das Output-Gate o_t bestimmt, welcher Teil des transformierten Speichers als Hidden State ausgegeben wird: h_t=o_t⊙tanh(c_t). Speicher und sichtbarer Zustand sind daher verschieden. Die gewöhnliche LSTM hat drei benannte Gates: Forget, Input und Output; die Speicheraktualisierung ist kein zusätzliches viertes Gate.",
+    "Auf dem direkten Zellpfad hängt der Gradientenfluss wesentlich vom Produkt der Forget-Gates ab. Werte nahe 1 können Information über längere Strecken erhalten. Weitere indirekte Ableitungspfade und die übrige Architektur bleiben relevant. LSTM reduziert viele Schwierigkeiten eines einfachen RNN, garantiert aber keine vollständig verschwindensfreien Gradienten.",
+    "Mathematik lesen: ⊙ bedeutet komponentenweise Multiplikation, nicht Skalarprodukt oder Matrixprodukt. Der alte Speicheranteil und der neue Kandidatenanteil werden addiert. Der Zellzustand kann ausserhalb [−1,1] liegen; erst tanh(c_t) liegt in diesem offenen Bereich."
+  ],
+  "confusions": [
+    {
+      "term": "Drei Gates und Speicherupdate",
+      "note": "Forget, Input und Output sind Gates. Das Addieren des Speicherupdates ist keine eigenständige vierte Gate-Funktion."
+    },
+    {
+      "term": "c_t und h_t",
+      "note": "c_t trägt Speicher; h_t ist die gefilterte Ausgabe für weitere Berechnungen."
+    }
+  ],
+  "sources": [
+    {
+      "file": "DeepLearning_Tag3_2026_Sequence-to-Sequence Modelle.pdf",
+      "pages": [
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 4,
+  "steps": [
+    "Forget-, Input- und Output-Gate aus x_t und h_t−1 berechnen.",
+    "Neuen Zellkandidaten bestimmen.",
+    "Alten Speicher filtern und neuen Anteil addieren.",
+    "Mit Output-Gate den neuen Hidden State berechnen."
+  ],
+  "example": "Beispiel für eine einzelne Speicherkomponente: c_alt=2, f=0.8, i=0.5, c̃=−0.4 und o=0.9.\nAlter Anteil: 0.8·2=1.6. Neuer Anteil: 0.5·(−0.4)=−0.2. Neuer Speicher: c_neu=1.4.\nHidden State: h_neu=0.9·tanh(1.4)≈0.797.\nDer Hidden State ist nicht 1.4, weil der Speicher erst durch Tanh und das Output-Gate gefiltert wird.\nIm Vergleichsbeispiel der Folien bleibt entlang eines direkten Pfads nach 20 Schritten mit f=0.9 der Faktor 0.9²⁰≈0.122; ein Faktor 0.5 pro Schritt ergäbe nur etwa 9.54·10⁻⁷.",
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "LSTM-Speicherpfad",
+      "labels": [
+        "Alter Speicher c_t−1|mit Forget-Gate f_t filtern",
+        "Neuen Anteil addieren|i_t · c̃_t",
+        "Neuer Speicher c_t|weitertragen",
+        "Output filtern|h_t = o_t · tanh(c_t)"
+      ],
+      "caption": "Der additive Zellpfad verbindet erhaltenen alten Speicher und kontrollierten neuen Inhalt."
+    },
+    {
+      "kind": "flow",
+      "title": "Ein konkretes Speicherupdate",
+      "labels": [
+        "Alter Anteil|0.8 · 2 = 1.6",
+        "Neuer Anteil|0.5 · (−0.4) = −0.2",
+        "Zellzustand|c = 1.4",
+        "Hidden State|h ≈ 0.797"
+      ],
+      "caption": "c und h unterscheiden sich. Der Hidden State entsteht aus Tanh des Speichers und dem Output-Gate."
+    }
+  ],
+  "formula": {
+    "expression": "c_t=f_t⊙c_t−1+i_t⊙c̃_t\nh_t=o_t⊙tanh(c_t)",
+    "meaning": "⊙ bedeutet elementweise Multiplikation.",
+    "variables": [
+      {
+        "symbol": "f, i, o",
+        "meaning": "Forget-, Input- und Output-Gate"
+      },
+      {
+        "symbol": "c̃",
+        "meaning": "neuer Zellkandidat"
+      },
+      {
+        "symbol": "c",
+        "meaning": "Zellzustand"
+      },
+      {
+        "symbol": "h",
+        "meaning": "Hidden State"
+      }
+    ],
+    "latex": [
+      "c_t=f_t\\odot c_{t-1}+i_t\\odot\\widetilde c_t",
+      "h_t=o_t\\odot\\tanh(c_t)"
+    ],
+    "worked_example": {
+      "title": "Speicher und Hidden State getrennt berechnen",
+      "given": [
+        "c_alt=2, f=0.8, i=0.5, Kandidat c̃=−0.4, o=0.9.",
+        "Einzelne Speicherkomponente; ⊙ wird hier zu gewöhnlicher Multiplikation.",
+        "Für die Handrechnung ist tanh(1.4)≈0.885352 gegeben; alternativ am Taschenrechner auswerten."
+      ],
+      "steps": [
+        {
+          "text": "Den behaltenen alten Speicheranteil bestimmen.",
+          "latex": "f\\,c_{\\mathrm{alt}}=0.8\\cdot2=1.6"
+        },
+        {
+          "text": "Den neuen Kandidatenanteil bestimmen.",
+          "latex": "i\\,\\widetilde c=0.5(-0.4)=-0.2"
+        },
+        {
+          "text": "Anteile zum neuen Zellzustand addieren.",
+          "latex": "c_{\\mathrm{neu}}=1.6-0.2=1.4"
+        },
+        {
+          "text": "Erst für h den Speicher mit tanh und Output-Gate filtern.",
+          "latex": "h_{\\mathrm{neu}}=0.9\\tanh(1.4)\\approx0.797"
+        }
+      ],
+      "result": "Der Zellzustand ist 1.4; der Hidden State etwa 0.797. Ein Speicherwert muss nicht im Wertebereich von tanh liegen.",
+      "result_latex": "c_{\\mathrm{neu}}=1.4,\\quad h_{\\mathrm{neu}}\\approx0.797"
+    }
+  }
+}

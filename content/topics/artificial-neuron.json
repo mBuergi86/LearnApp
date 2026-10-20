@@ -1,0 +1,127 @@
+{
+  "id": "artificial-neuron",
+  "exam_id": "deep-learning-data-science",
+  "module_id": "dl-neural-networks",
+  "title": "Künstliches Neuron: Gewichte, Bias und Aktivierung",
+  "priority": "core",
+  "summary": "Ein künstliches Neuron bildet eine gewichtete Summe seiner Inputs plus Bias und wendet darauf eine Aktivierungsfunktion an.",
+  "explanation": [
+    "Zusammenhang: Ein einzelnes Neuron ist eine kleine Recheneinheit innerhalb eines Modells. Inputs x kommen aus dem Datensatz oder einer vorherigen Schicht; Gewichte und Bias gehören zum Modell. In einer Hidden Layer ist a ein Zwischenmerkmal, im Output kann es die Vorhersage sein.",
+    "Ein künstliches Neuron empfängt Zahlen x₁ bis xₙ. Jeder Input wird mit einem Gewicht wᵢ multipliziert. Die Summe dieser Produkte beschreibt den gemeinsamen Einfluss der Inputs. Ein positives Gewicht verstärkt einen positiven Input; ein negatives Gewicht wirkt in die andere Richtung.",
+    "Zum Ergebnis wird der Bias b addiert: z = Σwᵢxᵢ + b. Der Bias erlaubt eine Verschiebung unabhängig von den momentanen Inputs. Bei einer Schwellenentscheidung verschiebt er die Entscheidungsgrenze; ohne Bias müsste die zugehörige lineare Grenze durch den Ursprung gehen.",
+    "Die Aktivierungsfunktion φ verarbeitet z und erzeugt a = φ(z). Bei ReLU ist a = max(0,z). Bei Sigmoid liegt a zwischen 0 und 1. Die Aktivierung a ist die Zahl, die an nachfolgende Neuronen weitergegeben wird. z und a sind deshalb unterschiedliche Grössen.",
+    "Gewichte und Bias werden beim Training angepasst. Die Inputs eines einzelnen Beispiels sind dabei gegeben. Backpropagation berechnet, wie stark eine Änderung jedes Parameters die Loss beeinflusst, und der Optimierer setzt die Aktualisierung um.",
+    "Das biologische Neuron dient als Inspiration, aber das mathematische Modell beschreibt keine vollständige Nervenzelle. Für die Prüfung ist der Rechenweg wichtig: Inputs gewichten, aufsummieren, Bias addieren und die gewählte Aktivierungsfunktion anwenden. Eine nichtlineare Aktivierung macht aus einer reinen linearen Kombination eine flexiblere Recheneinheit.",
+    "Mathematik lesen: Σᵢwᵢxᵢ bedeutet «multipliziere jedes passende Zahlenpaar und addiere alle Produkte». Erst danach b addieren, erst danach aktivieren. Zum Beispiel (−2)·(−1)=+2, während (−2)·1=−2. Ein Gewicht und ein Bias sind Parameter; Neuronenanzahl und Lernrate sind Hyperparameter."
+  ],
+  "sources": [
+    {
+      "file": "DeepLearning_Tag1_Einfuhrung_2026_ShaoJuWoo.pdf",
+      "pages": [
+        26,
+        27,
+        28,
+        29,
+        30
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 1,
+  "steps": [
+    "Inputs mit ihren Gewichten multiplizieren.",
+    "Produkte aufsummieren.",
+    "Bias addieren und z erhalten.",
+    "Aktivierungsfunktion anwenden und a weitergeben."
+  ],
+  "example": "Beispiel: x₁ = 2, x₂ = −1, w₁ = 0.5, w₂ = −2 und b = −1.\nGewichtete Beiträge: 0.5 · 2 = 1 und (−2) · (−1) = 2.\nGewichteter Input: z = 1 + 2 − 1 = 2.\nMit ReLU folgt a = max(0,2) = 2. Mit Sigmoid wäre a = 1/(1 + e⁻²) ≈ 0.881.\nDasselbe z kann also abhängig von der Aktivierungsfunktion einen anderen Output erzeugen. Wäre b = −4, ergäbe sich z = −1 und ReLU würde a = 0 liefern.",
+  "confusions": [
+    {
+      "term": "Gewichteter Input und Aktivierung",
+      "note": "z ist die Summe plus Bias; a entsteht erst nach der Aktivierungsfunktion."
+    },
+    {
+      "term": "Gewicht und Bias",
+      "note": "Ein Gewicht multipliziert einen Input. Der Bias ist ein additiver Parameter."
+    }
+  ],
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "Rechenweg eines Neurons",
+      "labels": [
+        "Inputs x₁, x₂|mit w₁, w₂ gewichten",
+        "Summe + Bias|z = Σwᵢxᵢ + b",
+        "Aktivierung φ|a = φ(z)"
+      ],
+      "caption": "Der Bias wird vor der Aktivierungsfunktion addiert. Nachfolgende Schichten erhalten a."
+    },
+    {
+      "kind": "flow",
+      "title": "Zahlenbeispiel mit ReLU",
+      "labels": [
+        "Beiträge|1 und 2",
+        "Bias −1|z = 1 + 2 − 1 = 2",
+        "ReLU|a = max(0,2) = 2"
+      ],
+      "caption": "Das negative Gewicht −2 multipliziert den negativen Input −1 und liefert den positiven Beitrag 2."
+    }
+  ],
+  "formula": {
+    "expression": "z = Σᵢ wᵢxᵢ + b; a = φ(z)",
+    "meaning": "Zuerst wird linear kombiniert, danach aktiviert.",
+    "variables": [
+      {
+        "symbol": "xᵢ",
+        "meaning": "Input"
+      },
+      {
+        "symbol": "wᵢ",
+        "meaning": "lernbarer Einfluss dieses Inputs"
+      },
+      {
+        "symbol": "b",
+        "meaning": "lernbarer Bias"
+      },
+      {
+        "symbol": "φ",
+        "meaning": "Aktivierungsfunktion"
+      },
+      {
+        "symbol": "z",
+        "meaning": "gewichteter Input vor Aktivierung"
+      },
+      {
+        "symbol": "a",
+        "meaning": "Ausgabe nach der Aktivierung"
+      }
+    ],
+    "latex": [
+      "z=\\sum_i w_i x_i+b",
+      "a=\\varphi(z)"
+    ],
+    "worked_example": {
+      "title": "Ein vollständiges Neuron vorwärts rechnen",
+      "given": [
+        "x₁=2,x₂=−1; w₁=0.5,w₂=−2; b=−1.",
+        "Aktivierungsfunktion ReLU."
+      ],
+      "steps": [
+        {
+          "text": "Jeden Input mit seinem eigenen Gewicht multiplizieren.",
+          "latex": "w_1x_1=0.5\\cdot2=1,\\quad w_2x_2=(-2)(-1)=2"
+        },
+        {
+          "text": "Die Beiträge summieren und erst dann Bias addieren.",
+          "latex": "z=1+2-1=2"
+        },
+        {
+          "text": "Die Aktivierung auf den fertigen z-Wert anwenden.",
+          "latex": "a=\\max(0,2)=2"
+        }
+      ],
+      "result": "Der gewichtete Input z und die Aktivierung a sind hier beide 2, aber das gilt nicht allgemein. Bei z=−1 würde ReLU a=0 liefern.",
+      "result_latex": "z=2,\\quad a=2"
+    }
+  }
+}

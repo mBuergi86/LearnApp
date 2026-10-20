@@ -1,0 +1,132 @@
+{
+  "id": "neural-network-architecture",
+  "exam_id": "deep-learning-data-science",
+  "module_id": "dl-neural-networks",
+  "title": "Schichten und Architektur neuronaler Netze",
+  "priority": "core",
+  "summary": "Neuronale Netze bestehen aus Input Layer, Hidden Layers und Output Layer; die Schichten verarbeiten Aktivierungen nacheinander.",
+  "explanation": [
+    "Vorwissen: Eine Schicht ist eine Gruppe von Recheneinheiten auf derselben Verarbeitungsstufe. Der Input enthält beobachtete Featurewerte, Hidden Layers erzeugen daraus Zwischenmerkmale, der Output passt zur Aufgabe. «Hidden» bedeutet nicht geheim, sondern ohne direkt vorgegebenes Label für jedes Zwischenneuron.",
+    "Ein Feed-Forward-Netz verarbeitet Eingaben von links nach rechts durch aufeinanderfolgende Schichten. Der Input Layer repräsentiert die Daten; er ist nicht automatisch eine trainierbare Rechenschicht. Hidden Layers berechnen Zwischenrepräsentationen, und der Output Layer erzeugt die zur Aufgabe passende Vorhersage.",
+    "In einer vollverbundenen Schicht erhält jedes Output-Neuron alle Aktivierungen der vorherigen Schicht. Für n Inputs und m Outputs besitzt die Schicht n · m Gewichte und m Biases. Die Gewichtsmatrix hat entsprechend m Zeilen und n Spalten, wenn Aktivierungen als Spaltenvektoren geschrieben werden.",
+    "Jede trainierbare Schicht bildet zuerst eine affine Kombination und wendet danach eine Aktivierung an. Mehr Hidden Layers erhöhen die Tiefe. Mehr Neuronen innerhalb einer Schicht erhöhen deren Breite. Beides kann die Kapazität verändern, erhöht aber auch Rechenaufwand und gegebenenfalls die Gefahr der Überanpassung.",
+    "Beim Ziffernbeispiel wird ein 28 × 28 Graustufenbild als 784 Zahlen dargestellt. Ein Output mit zehn Komponenten kann die Ziffern 0 bis 9 repräsentieren. Mit Softmax lassen sich diese Outputs als Verteilung über zehn gegenseitig ausschliessende Klassen interpretieren.",
+    "Die Architektur legt Verbindungen und Dimensionen fest; sie enthält noch nicht die fertig gelernten Gewichte. Zwei Netze mit derselben Architektur können durch unterschiedliche Trainingsdaten oder Startwerte verschiedenes Verhalten lernen. Auch ein grosser Parameterbestand garantiert keine gute Leistung auf neuen Bildern.",
+    "Mathematik lesen: Bei Spaltenvektoren gilt z=W·a_vorher+b. Eine Matrix mit m Zeilen und n Spalten verwandelt n Inputs in m Outputs. In jeder Zeile stehen die n Gewichte eines Output-Neurons. Die Zahl trainierbarer Parameter zählt alle Verbindungsgewichte und Biases, nicht die Datenwerte oder die Loss."
+  ],
+  "example": "Beispiel: Ein vereinfachtes Netz besitzt 784 Inputs, eine Hidden Layer mit 16 Neuronen und zehn Outputs.\nErste Schicht: 784 · 16 = 12 544 Gewichte plus 16 Biases, also 12 560 Parameter.\nOutput-Schicht: 16 · 10 = 160 Gewichte plus zehn Biases, also 170 Parameter.\nGesamt: 12 730 trainierbare Parameter.\nDie Input-Pixel sind Daten und werden nicht zu dieser Zahl gezählt. Das Netz gibt zehn Scores aus; Softmax wandelt sie in Klassenwahrscheinlichkeiten um. Das ist ein Lernbeispiel zur Dimensionierung, keine vorgegebene optimale Architektur.\nKleine Vorwärtsrechnung: Input (1,2), Hidden-Neuron A mit Gewichten (1,−1), Bias 0 und ReLU ergibt max(0,1−2)=0. Neuron B mit (0,1), Bias 1 ergibt max(0,0+2+1)=3. Ein linearer Output mit Gewichten (2,1) und Bias −1 erzeugt 2·0+1·3−1=2. Die beiden Hidden-Werte sind Zwischenmerkmale, die letzte 2 ist die Modellvorhersage.",
+  "sources": [
+    {
+      "file": "DeepLearning_Tag1_Einfuhrung_2026_ShaoJuWoo.pdf",
+      "pages": [
+        36,
+        37,
+        38,
+        39,
+        40
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 3,
+  "steps": [
+    "Input-Dimension aus der Datenrepräsentation bestimmen.",
+    "Anzahl und Breite der Hidden Layers wählen.",
+    "Verbindungs- und Parameterdimensionen prüfen.",
+    "Output-Dimension und Aktivierung an die Aufgabe anpassen."
+  ],
+  "confusions": [
+    {
+      "term": "Tiefe und Breite",
+      "note": "Tiefe zählt aufeinanderfolgende Schichten; Breite zählt Neuronen innerhalb einer Schicht."
+    },
+    {
+      "term": "Input und Parameter",
+      "note": "Pixelwerte sind Inputs. Gewichte und Biases sind trainierbare Parameter."
+    }
+  ],
+  "illustrations": [
+    {
+      "kind": "network",
+      "title": "Vollverbundene Schichten",
+      "labels": [
+        "Input",
+        "Hidden",
+        "Output"
+      ],
+      "values": [
+        [
+          3,
+          4,
+          2
+        ]
+      ],
+      "caption": "Jeder Kreis der Hidden Layer ist mit allen Inputs verbunden; die Kreise stehen hier schematisch für Neuronen."
+    },
+    {
+      "kind": "network",
+      "title": "Ziffernbeispiel: 784 → 16 → 10",
+      "labels": [
+        "Pixel",
+        "ReLU",
+        "Klassen"
+      ],
+      "values": [
+        [
+          784,
+          16,
+          10
+        ]
+      ],
+      "caption": "Die Kreise sind nur Stellvertreter. Die Zahlen unter den Schichten zeigen die tatsächlichen Dimensionen des Beispiels."
+    }
+  ],
+  "formula": {
+    "expression": "Parameter einer Dense Layer = n_in · n_out + n_out",
+    "meaning": "Pro Verbindung ein Gewicht, pro Output-Neuron ein Bias.",
+    "variables": [
+      {
+        "symbol": "n_in",
+        "meaning": "Anzahl Inputwerte dieser Layer"
+      },
+      {
+        "symbol": "n_out",
+        "meaning": "Anzahl Output-Neuronen dieser Layer"
+      },
+      {
+        "symbol": "n_in·n_out",
+        "meaning": "Anzahl Verbindungsgewichte"
+      },
+      {
+        "symbol": "+n_out",
+        "meaning": "ein Bias je Output-Neuron"
+      }
+    ],
+    "latex": [
+      "\\#\\mathrm{Parameter}=n_{\\mathrm{in}}n_{\\mathrm{out}}+n_{\\mathrm{out}}"
+    ],
+    "worked_example": {
+      "title": "Verbindungen und Biases zählen",
+      "given": [
+        "Dense Layer mit drei Inputs und zwei Output-Neuronen.",
+        "Jedes Output-Neuron hat einen Bias."
+      ],
+      "steps": [
+        {
+          "text": "Jedes Output-Neuron erhält alle drei Inputwerte: Gewichte zählen.",
+          "latex": "n_{\\mathrm{in}}n_{\\mathrm{out}}=3\\cdot2=6"
+        },
+        {
+          "text": "Ein Bias je Output-Neuron hinzufügen.",
+          "latex": "\\#\\mathrm{Biases}=n_{\\mathrm{out}}=2"
+        },
+        {
+          "text": "Beide Arten trainierbarer Parameter addieren.",
+          "latex": "\\#\\mathrm{Parameter}=6+2=8"
+        }
+      ],
+      "result": "Die Layer hat acht Parameter. Inputs sind Beispieldaten und werden nicht als zusätzliche Gewichte mitgezählt.",
+      "result_latex": "\\#\\mathrm{Parameter}=8"
+    }
+  }
+}

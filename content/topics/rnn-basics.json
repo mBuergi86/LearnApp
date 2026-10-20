@@ -1,0 +1,124 @@
+{
+  "id": "rnn-basics",
+  "exam_id": "deep-learning-data-science",
+  "module_id": "dl-sequence-models",
+  "title": "Rekurrente neuronale Netze (RNN)",
+  "priority": "core",
+  "summary": "RNNs verarbeiten Sequenzen schrittweise und tragen dabei einen Zustand zwischen Zeitschritten weiter.",
+  "explanation": [
+    "Vorwissen: Ein Hidden State ist ein momentan berechneter Speichervektor, kein Gewicht. Der Input x_t stammt vom aktuellen Schritt. Das RNN-Modell besitzt gelernte feste Matrizen, die mit wechselnden Inputs und Zuständen rechnen.",
+    "Ein rekurrentes neuronales Netz verarbeitet eine Sequenz Schritt für Schritt. Im Zeitschritt t erhält es den aktuellen Input x_t und den bisherigen Hidden State h_t−1. Daraus berechnet es einen neuen Hidden State h_t, der Informationen für nachfolgende Schritte trägt.",
+    "Ein einfaches RNN verwendet h_t=tanh(W_xx_t+W_hh_t−1+b). Der Zustand ist ein Vektor, nicht bloss das zuletzt gelesene Wort. Seine Komponenten können unterschiedliche Informationen über das bisherige Präfix speichern, wobei die Darstellung durch Training gelernt wird.",
+    "Über die Zeit werden dieselben Gewichte W_x, W_h und derselbe Bias verwendet. Das entfaltete Diagramm zeigt mehrere Kopien der Recheneinheit, aber keine unabhängig trainierten Netze für jeden Zeitpunkt. Parameterteilung erlaubt die Verarbeitung verschieden langer Sequenzen.",
+    "Ein Output kann aus jedem Zustand oder erst aus dem letzten Zustand berechnet werden. Ein Sprachmodell kann pro Position nächste-Token-Scores liefern; eine Sentiment-Aufgabe kann das gesamte Präfix in eine abschliessende Klassifikation überführen. Hidden State und Output erfüllen unterschiedliche Rollen.",
+    "Der Zustand schafft eine Möglichkeit, frühere Informationen zu berücksichtigen, garantiert aber keine verlustfreie Erinnerung. Lange Abhängigkeiten können beim Training durch kleine Gradienten schwer gelernt werden. Ausserdem hängt h_t vom vorherigen Zustand ab, sodass ein einfaches RNN innerhalb einer Sequenz nicht alle Zeitpositionen unabhängig parallel berechnen kann.",
+    "Mathematik lesen: t−1 bedeutet den vorherigen Zeitpunkt. Rechne zuerst h₁ aus h₀ und x₁, dann h₂ aus h₁ und x₂. Die rekurrente Matrix W_h wird wiederverwendet; zwei Zeitpositionen verdoppeln daher nicht automatisch die Zahl Modellparameter."
+  ],
+  "sources": [
+    {
+      "file": "DeepLearning_Tag3_2026_Sequence-to-Sequence Modelle.pdf",
+      "pages": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 2,
+  "steps": [
+    "Initialzustand festlegen, häufig h₀=0.",
+    "Aktuelles x_t mit h_t−1 kombinieren.",
+    "Nichtlinearen Hidden State berechnen.",
+    "Bei Bedarf Output erzeugen und Zustand weitertragen."
+  ],
+  "example": "Beispiel mit skalarem Zustand: h_t=tanh(x_t+0.5h_t−1), h₀=0, Inputs x₁=1 und x₂=0.\nErster Schritt: h₁=tanh(1)≈0.762.\nZweiter Schritt: h₂=tanh(0+0.5·0.762)=tanh(0.381)≈0.363.\nObwohl der zweite Input null ist, beeinflusst x₁ den zweiten Zustand über h₁. Bei einer anderen Eingabereihenfolge (0,1) entsteht h₁=0 und h₂≈0.762. Die Zustände sind also reihenfolgeabhängig, während die Gewichte in beiden Schritten dieselben bleiben.",
+  "confusions": [
+    {
+      "term": "State und Output",
+      "note": "Der interne Zustand wird weitergetragen; ein Output wird daraus passend zur Aufgabe abgeleitet."
+    },
+    {
+      "term": "Entfalten und neue Parameter",
+      "note": "Zeitkopien einer RNN-Zelle teilen ihre Parameter."
+    }
+  ],
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "RNN über drei Zeitschritte",
+      "labels": [
+        "x₁ + h₀ → h₁|dieselben Gewichte W",
+        "x₂ + h₁ → h₂|dieselben Gewichte W",
+        "x₃ + h₂ → h₃|dieselben Gewichte W"
+      ],
+      "caption": "Jeder Schritt hängt vom vorherigen Zustand ab. Die entfalteten Zellen teilen W."
+    },
+    {
+      "kind": "flow",
+      "title": "Ein früher Input wirkt weiter",
+      "labels": [
+        "h₀ = 0; x₁ = 1|h₁ ≈ 0.762",
+        "x₂ = 0|h₂ ≈ 0.363"
+      ],
+      "caption": "Der zweite Zustand hängt trotz x₂ = 0 über den rekurrenten Term vom ersten Input ab."
+    }
+  ],
+  "formula": {
+    "expression": "h_t=tanh(W_xx_t+W_hh_t−1+b)",
+    "meaning": "Die Parameter bleiben über Zeitschritte gleich; die Zustände ändern sich.",
+    "variables": [
+      {
+        "symbol": "x_t",
+        "meaning": "Input zum Zeitpunkt t"
+      },
+      {
+        "symbol": "h_t,h_(t−1)",
+        "meaning": "aktueller und vorheriger Zustand"
+      },
+      {
+        "symbol": "W_x,W_h",
+        "meaning": "über die Zeit geteilte gelernte Matrizen"
+      },
+      {
+        "symbol": "b",
+        "meaning": "geteilter Bias"
+      },
+      {
+        "symbol": "tanh",
+        "meaning": "Aktivierungsfunktion mit Output in (−1,1)"
+      }
+    ],
+    "latex": [
+      "h_t=\\tanh(W_xx_t+W_hh_{t-1}+b)"
+    ],
+    "worked_example": {
+      "title": "Zwei Zeitschritte mit denselben Gewichten",
+      "given": [
+        "Skalares RNN h_t=tanh(x_t+0.5h_(t−1)), Anfang h₀=0.",
+        "Inputs x₁=1 und x₂=0; Bias 0.",
+        "Funktionswerte sind gegeben: tanh(1)≈0.761594 und tanh(0.380797)≈0.363400."
+      ],
+      "steps": [
+        {
+          "text": "Ersten Input mit dem Anfangszustand kombinieren.",
+          "latex": "h_1=\\tanh(1+0.5\\cdot0)=\\tanh1\\approx0.762"
+        },
+        {
+          "text": "Ersten Zustand als vorherigen Zustand in Schritt 2 verwenden.",
+          "latex": "h_2=\\tanh(0+0.5h_1)"
+        },
+        {
+          "text": "Mit dem ungerundeten ersten Zustand auswerten.",
+          "latex": "h_2=\\tanh(0.5\\tanh1)\\approx0.363"
+        }
+      ],
+      "result": "Auch bei zweitem Input null bleibt Einfluss des ersten Inputs vorhanden. Zustände ändern sich, die Gewichte 1 und 0.5 bleiben in beiden Schritten dieselben.",
+      "result_latex": "h_2\\approx0.363"
+    }
+  }
+}

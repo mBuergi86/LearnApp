@@ -1,0 +1,128 @@
+{
+  "id": "feature-scaling",
+  "exam_id": "machine-learning",
+  "module_id": "ml-preprocessing",
+  "title": "Merkmalsskalierung und Transformation",
+  "priority": "core",
+  "summary": "Transformationen bringen Features auf geeignete Skalen oder Verteilungen, damit Modelle sie sinnvoll verarbeiten.",
+  "explanation": [
+    "Skalierung verändert die Zahlenbereiche numerischer Features. Ein Merkmal in CHF kann viel grössere Zahlen liefern als eines in Metern. Distanzbasierte Verfahren und gradientenbasierte Optimierung können dadurch von einer Skala dominiert werden.",
+    "Standardisierung berechnet z=(x−μ)/σ. μ und σ werden aus Training geschätzt. Das verschiebt den Trainingsmittelwert auf 0 und bringt die Streuung auf Standardabweichung 1; es macht die Verteilung nicht automatisch normalverteilt.",
+    "Min-Max-Skalierung berechnet (x−min)/(max−min). Die Trainingswerte liegen dann normalerweise in [0,1]. Ein neuer Wert ausserhalb des Trainingsbereichs kann kleiner als 0 oder grösser als 1 werden.",
+    "Skalierung wird auf Training angepasst und unverändert auf Validation, Test und neue Daten angewendet. Bei Cross-Validation muss der Scaler je Trainingsfold neu gelernt werden. Ein konstanter Featurewert braucht eine definierte Sonderbehandlung statt Division durch null.",
+    "Log-Transformation kann grosse positive Werte komprimieren; log(0) ist nicht definiert. log(1+x) erlaubt x=0, verlangt aber x>−1. Bäume benötigen gewöhnlich keine Skalierung, weil monotone Transformationen die Reihenfolge der Werte erhalten."
+  ],
+  "confusions": [
+    {
+      "term": "Skalierung und Normalverteilung",
+      "note": "Mittelwert 0 und Standardabweichung 1 garantieren keine Glockenkurve."
+    },
+    {
+      "term": "Min-Max und neue Daten",
+      "note": "Nur Werte innerhalb der Trainingsgrenzen werden auf [0,1] abgebildet."
+    }
+  ],
+  "sources": [
+    {
+      "file": "MachineLearning_Tag1_Preprocessing_2026_ShaoJuWoo.pdf",
+      "pages": [
+        18,
+        19,
+        20,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 3,
+  "steps": [
+    "Skalen und geeignetes Verfahren bestimmen.",
+    "Statistiken ausschliesslich auf Training lernen.",
+    "Trainingswerte transformieren.",
+    "Validation und Test mit denselben Statistiken transformieren."
+  ],
+  "example": "Eigener Rechenfall: Die Trainingswerte (10,20,30) haben μ=20 und Populationsstandardabweichung σ=√(200/3)≈8.165. Für x=30 ist z≈1.225. Ein Testwert 40 wird mit denselben μ und σ zu z≈2.449. Min-Max mit Trainingsgrenzen 10 und 30 ergibt für 20 den Wert 0.5, für den neuen Wert 40 aber 1.5.",
+  "formula": {
+    "expression": "z=(x−μ_train)/σ_train; u=(x−min_train)/(max_train−min_train)",
+    "meaning": "Standardisierung und Min-Max verwenden verschiedene Statistiken, beide nur aus Training.",
+    "variables": [
+      {
+        "symbol": "x",
+        "meaning": "ursprünglicher Wert"
+      },
+      {
+        "symbol": "z",
+        "meaning": "standardisierter Wert"
+      },
+      {
+        "symbol": "u",
+        "meaning": "Min-Max-transformierter Wert"
+      },
+      {
+        "symbol": "μ_train,σ_train",
+        "meaning": "Trainingsmittelwert und -standardabweichung"
+      }
+    ],
+    "latex": [
+      "z=\\frac{x-\\mu_{\\mathrm{train}}}{\\sigma_{\\mathrm{train}}}",
+      "u=\\frac{x-\\min_{\\mathrm{train}}}{\\max_{\\mathrm{train}}-\\min_{\\mathrm{train}}}"
+    ],
+    "worked_example": {
+      "title": "Einen Testwert mit festem Scaler transformieren",
+      "given": [
+        "Auf Training gelernt: μ=10, σ=2; Trainingsminimum 6, Maximum 14.",
+        "Neuer Testwert x=16."
+      ],
+      "steps": [
+        {
+          "text": "Nur die bereits gelernten Trainingsstatistiken verwenden.",
+          "latex": "x-\\mu_{\\mathrm{train}}=16-10=6"
+        },
+        {
+          "text": "Für Standardisierung durch die Trainingsstandardabweichung teilen.",
+          "latex": "z=\\frac62=3"
+        },
+        {
+          "text": "Min-Max als andere Transformation separat berechnen.",
+          "latex": "u=\\frac{16-6}{14-6}=\\frac{10}{8}=1.25"
+        }
+      ],
+      "result": "Der standardisierte Wert ist 3. Min-Max liefert 1.25, weil der Testwert über dem Trainingsmaximum liegt; neue Werte sind nicht garantiert in [0,1].",
+      "result_latex": "z=3,\\quad u=1.25"
+    }
+  },
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "Ein Scaler, dieselbe Verarbeitung",
+      "caption": "Testdaten bestimmen keine neuen Skalierungsparameter.",
+      "labels": [
+        "Trainingswerte",
+        "μ und σ lernen",
+        "Training transformieren",
+        "Test mit gleichem Scaler"
+      ]
+    },
+    {
+      "kind": "bars",
+      "title": "Neue Daten ausserhalb [0,1]",
+      "caption": "Bei Trainingsgrenzen 10 und 30 ergibt 20 den Wert 0.5 und 40 den Wert 1.5.",
+      "labels": [
+        "Training: x=20",
+        "Test: x=40"
+      ],
+      "values": [
+        [
+          0.5,
+          1.5
+        ]
+      ]
+    }
+  ]
+}

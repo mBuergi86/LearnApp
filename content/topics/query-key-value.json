@@ -1,0 +1,135 @@
+{
+  "id": "query-key-value",
+  "exam_id": "deep-learning-data-science",
+  "module_id": "dl-transformer",
+  "title": "Query, Key und Value",
+  "priority": "core",
+  "summary": "In Self-Attention sucht eine Query über die Keys nach relevanten Tokens und mischt deren Values entsprechend den normalisierten Attention-Gewichten.",
+  "explanation": [
+    "Vorwissen: Query, Key und Value sind gelernte Repräsentationen, keine Datenbank-Zugangsdaten. Intuitiv sucht die Query etwas, Keys beschreiben Vergleichsmerkmale und Values liefern den zu mischenden Inhalt. Diese Analogie ersetzt nicht die Zahlenrechnung.",
+    "Query, Key und Value sind drei Rollen innerhalb von Attention. Für Self-Attention werden sie aus den Tokenrepräsentationen X mit getrennten lernbaren Projektionen erzeugt: Q=XW_Q, K=XW_K und V=XW_V. Dieselben Projektionsmatrizen werden auf alle Tokens eines Heads angewendet.",
+    "Die Query beschreibt, welche Information ein Token in dieser Repräsentation sucht. Ein Key liefert vergleichbare Merkmale für den Relevanzscore. Der Value trägt den Inhalt, der nach der Gewichtung gemischt wird. Diese Rollen sind trainiert und müssen keine von Menschen benannten semantischen Eigenschaften sein.",
+    "Der Score zwischen Position i und Position j entsteht aus q_i·k_j. Query und Key müssen deshalb dieselbe Dimension d_k haben. Values können dagegen eine andere Dimension d_v besitzen. Die Output-Dimension eines Heads folgt der Value-Dimension, nicht der Zahl der Tokens.",
+    "Scaled Dot-Product Attention teilt die Scores durch √d_k. Das begrenzt bei grossen Dimensionen ihre typische Grössenordnung, bevor Softmax angewendet wird. Softmax normalisiert getrennt für jede Query über die verfügbaren Keypositionen.",
+    "Die normalisierten Gewichte werden auf Values angewendet: z_i=Σ_jα_ijv_j. Der Key entscheidet mit der Query über Gewichtung, ist aber nicht der zu addierende Inhalt. Bei Cross-Attention stammen Queries und Key/Value aus unterschiedlichen Repräsentationen, etwa Decoder und Encoder.",
+    "Mathematik lesen: (1,2)·(3,4)=1·3+2·4=11 ist ein Skalarprodukt. QKᵀ berechnet viele solcher Vergleiche; ᵀ tauscht Matrixzeilen und -spalten. Softmax normalisiert Scores, AV mischt Values. Man addiert nicht einfach die Keys als Output. Eine Projektion von acht Inputfeatures auf zwei Queryfeatures benötigt ohne Bias eine 8×2-Matrix, also 16 Gewichte. Dieselbe Matrix wird auf alle Tokens angewendet."
+  ],
+  "steps": [
+    "Q, K und V linear projizieren.",
+    "Query-Key-Skalarprodukte berechnen.",
+    "Scores durch √d_k skalieren und gegebenenfalls maskieren.",
+    "Softmax je Query über Keys anwenden.",
+    "Values gewichten und addieren."
+  ],
+  "example": "Beispiel: q=(1,0), k₁=(2,0), k₂=(0,1), v₁=(10,0), v₂=(0,4), d_k=2.\nScores: q·k₁=2 und q·k₂=0. Skaliert: (1.414,0).\nSoftmax ergibt ungefähr (0.804,0.196).\nKontext: 0.804·(10,0)+0.196·(0,4)≈(8.04,0.784).\nKeys werden für den Vergleich benutzt; im Ergebnis werden die Values gemischt. Die Embedding-Grösse 512 des ursprünglichen Transformers ist eine Architekturwahl. Bei acht Heads werden dort d_k=d_v=64 je Head verwendet.",
+  "formula": {
+    "expression": "Q=XW_Q; K=XW_K; V=XW_V\nZ=softmax(QKᵀ/√d_k)V",
+    "meaning": "Softmax wird zeilenweise angewendet; jede Zeile entspricht einer Query.",
+    "variables": [
+      {
+        "symbol": "X",
+        "meaning": "Tokenrepräsentationen"
+      },
+      {
+        "symbol": "W_Q,W_K,W_V",
+        "meaning": "lernbare Projektionsmatrizen"
+      },
+      {
+        "symbol": "Q,K,V",
+        "meaning": "Queries, Keys und Values"
+      },
+      {
+        "symbol": "d_k",
+        "meaning": "gleiche Featuredimension von Query und Key"
+      },
+      {
+        "symbol": "ᵀ",
+        "meaning": "Transponieren"
+      },
+      {
+        "symbol": "Z",
+        "meaning": "gewichtete Mischung der Values"
+      }
+    ],
+    "latex": [
+      "Q=XW_Q,\\qquad K=XW_K,\\qquad V=XW_V",
+      "Z=\\operatorname{softmax}\\!\\left(\\frac{QK^\\top}{\\sqrt{d_k}}\\right)V"
+    ],
+    "worked_example": {
+      "title": "Skalarprodukte, Normalisierung und gewichtete Summe",
+      "given": [
+        "q=(1,0),k₁=(2,0),k₂=(0,1),d_k=2; v₁=(10,0),v₂=(0,4).",
+        "Für die Handrechnung gegeben: √2≈1.414214 und e^(√2)≈4.113250."
+      ],
+      "steps": [
+        {
+          "text": "Passende Query- und Key-Komponenten multiplizieren und addieren.",
+          "latex": "s_1=1\\cdot2+0\\cdot0=2,\\quad s_2=1\\cdot0+0\\cdot1=0"
+        },
+        {
+          "text": "Durch die gegebene Wurzel teilen.",
+          "latex": "\\widetilde s=\\left(\\frac2{\\sqrt2},0\\right)\\approx(1.414214,0)"
+        },
+        {
+          "text": "Die Exponentialwerte durch ihre Summe normalisieren.",
+          "latex": "\\alpha_1\\approx\\frac{4.113250}{4.113250+1}\\approx0.804430,\\quad\\alpha_2\\approx0.195570"
+        },
+        {
+          "text": "Mit ausreichend genauen Gewichten die Values mischen und am Ende runden.",
+          "latex": "z\\approx0.804430(10,0)+0.195570(0,4)\\approx(8.044,0.782)"
+        }
+      ],
+      "result": "Der Output ist ungefähr (8.044,0.782). Hier werden einfache Produkte und Summen berechnet; die benötigten Funktionswerte sind gegeben. Keys bestimmen die Gewichtung, Values den gemischten Inhalt.",
+      "result_latex": "z\\approx(8.044,0.782)"
+    }
+  },
+  "confusions": [
+    {
+      "term": "Key und Value",
+      "note": "Key liefert den Vergleichspartner für die Query; Value liefert den gewichteten Inhalt."
+    },
+    {
+      "term": "Embedding- und Head-Dimension",
+      "note": "d_model=512 und d_k=64 sind im ursprünglichen Transformer verschiedene Dimensionen."
+    }
+  ],
+  "sources": [
+    {
+      "file": "DeepLearning_Tag3_Transformer_2026.pdf",
+      "pages": [
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 4,
+  "illustrations": [
+    {
+      "kind": "comparison",
+      "title": "Die drei Rollen",
+      "labels": [
+        "Query q|wonach suche ich?",
+        "Key k|woran erkenne ich Relevanz?",
+        "Value v|welcher Inhalt wird gemischt?"
+      ],
+      "caption": "Die Kästen beschreiben unterschiedliche Rollen, keine zeitliche Berechnungsreihenfolge."
+    },
+    {
+      "kind": "flow",
+      "title": "Ein Attention-Vektor",
+      "labels": [
+        "Query-Key-Scores|(2,0)",
+        "Skalierte Scores|(1.414,0)",
+        "Softmax-Gewichte|(0.804,0.196)",
+        "Values mischen|z ≈ (8.04,0.784)"
+      ],
+      "caption": "Die Gewichtung verwendet Keys; der Output wird aus Values berechnet."
+    }
+  ]
+}

@@ -1,0 +1,120 @@
+{
+  "id": "train-validation-test",
+  "exam_id": "machine-learning",
+  "module_id": "ml-model-selection",
+  "title": "Train, Validation und Test",
+  "priority": "core",
+  "summary": "Training passt Modelle an, Validation wählt Modell und Hyperparameter, und Test bewertet das fertige Verfahren einmal unabhängig.",
+  "explanation": [
+    "Training, Validation und Test sind Datenrollen, keine unterschiedlichen Modellarten. Der Split trennt Beispiele, um Lernen, Auswahl und unabhängige Bewertung auseinanderzuhalten.",
+    "Training passt Modellparameter wie Gewichte und Biases an. Die Loss dieses Anteils liefert das Optimierungssignal. Die bekannten Labels werden dabei nicht so umgeschrieben, dass die Vorhersage richtig aussieht.",
+    "Validation vergleicht Modellfamilien und Hyperparameter wie Baumtiefe oder Lernrate. Ihre Bewertung beeinflusst die Auswahl, deshalb ist sie keine völlig unabhängige abschliessende Leistungsschätzung.",
+    "Das Testset wird erst nach der Auswahl zur Bewertung des fertigen Verfahrens verwendet. Wird anhand des Tests immer wieder nachgebessert, übernimmt es faktisch eine Validierungsrolle und die Endschätzung ist zu optimistisch.",
+    "Vorverarbeitung wird nur auf Training gelernt. Zeitreihen werden zeitlich passend und zusammengehörige Fälle gruppenweise getrennt. Es gibt keinen universell richtigen Prozent-Split: Die 60/20/20-Aufteilung ist ein Beispiel, keine Naturregel."
+  ],
+  "steps": [
+    "Passenden Split erstellen, bevor Vorbereitung gelernt wird.",
+    "Kandidaten auf Training anpassen.",
+    "Konfiguration mit Validation auswählen.",
+    "Fertiges Verfahren auf unberührtem Test bewerten."
+  ],
+  "example": "Eigener Rechenfall: 1000 unabhängige Fälle mit 60/20/20-Split ergeben 600 Training, 200 Validation und 200 Test. Kandidat A hat Validation-Loss 0.4, B 0.3; bei gleicher Bewertungsdefinition wird B gewählt. Die Test-Loss 0.35 von B wird danach berichtet, nicht erneut zur Auswahl von A oder B verwendet.",
+  "confusions": [
+    {
+      "term": "Parameter und Hyperparameter",
+      "note": "Parameter werden im Training gelernt, Hyperparameterkonfigurationen mithilfe von Validation ausgewählt."
+    },
+    {
+      "term": "Validation und Test",
+      "note": "Beide bewerten, aber nur Validation soll die laufende Auswahl beeinflussen."
+    }
+  ],
+  "sources": [
+    {
+      "file": "MachineLearning_Tag2_ModelTraining_Selection_2026_ShaoJuWoo.pdf",
+      "pages": [
+        59,
+        60,
+        61,
+        62,
+        63,
+        64
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 2,
+  "formula": {
+    "expression": "N_train=0.6N; N_val=0.2N; N_test=0.2N",
+    "meaning": "Diese Zahlen gelten nur für den ausdrücklich gewählten Beispielsplitt.",
+    "variables": [
+      {
+        "symbol": "N",
+        "meaning": "Gesamtzahl Fälle"
+      },
+      {
+        "symbol": "N_train,N_val,N_test",
+        "meaning": "Fallzahlen je Datenrolle"
+      }
+    ],
+    "latex": [
+      "N_{\\mathrm{train}}=0.6N",
+      "N_{\\mathrm{val}}=0.2N",
+      "N_{\\mathrm{test}}=0.2N"
+    ],
+    "worked_example": {
+      "title": "Eine ausdrücklich gewählte Aufteilung berechnen",
+      "given": [
+        "1000 unabhängige Fälle.",
+        "Split 60 % Training, 20 % Validation, 20 % Test."
+      ],
+      "steps": [
+        {
+          "text": "Prozentwerte in Anteile umrechnen.",
+          "latex": "60\\%=0.6,\\qquad20\\%=0.2"
+        },
+        {
+          "text": "Fallzahlen je Rolle bestimmen.",
+          "latex": "N_{\\mathrm{train}}=600,\\quad N_{\\mathrm{val}}=200,\\quad N_{\\mathrm{test}}=200"
+        },
+        {
+          "text": "Kontrollieren, dass alle Teile die Gesamtzahl ergeben.",
+          "latex": "600+200+200=1000"
+        }
+      ],
+      "result": "600 Fälle lernen Parameter, 200 vergleichen Konfigurationen, 200 bleiben zur Schlussbewertung. Die Prozentaufteilung ist ein Beispiel, keine universelle Regel.",
+      "result_latex": "(N_{\\mathrm{train}},N_{\\mathrm{val}},N_{\\mathrm{test}})=(600,200,200)"
+    }
+  },
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "Auswahl ohne Test-Abkürzung",
+      "caption": "Test bleibt bis zur Schlussbewertung getrennt.",
+      "labels": [
+        "1000 Fälle trennen",
+        "600: Training",
+        "200: Validation",
+        "Kandidat festlegen",
+        "200: Test"
+      ]
+    },
+    {
+      "kind": "bars",
+      "title": "60/20/20 als Rechenbeispiel",
+      "caption": "Der Validierungsanteil beträgt 0.2·1000=200 Fälle.",
+      "labels": [
+        "Training",
+        "Validation",
+        "Test"
+      ],
+      "values": [
+        [
+          600,
+          200,
+          200
+        ]
+      ]
+    }
+  ]
+}

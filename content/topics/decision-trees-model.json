@@ -1,0 +1,159 @@
+{
+  "id": "decision-trees-model",
+  "exam_id": "machine-learning",
+  "module_id": "ml-decision-trees",
+  "title": "Decision Trees",
+  "priority": "core",
+  "summary": "Ein Entscheidungsbaum zerlegt Daten durch aufeinanderfolgende Merkmals-Splits bis zu einer Vorhersage an den Blättern.",
+  "explanation": [
+    "Ein Decision Tree stellt nacheinander Fragen an einzelne Features, etwa «Fläche ≤80?». Innere Knoten verzweigen, Blätter liefern eine Vorhersage. Ein Schwellenwert im Baum ist ein Feature-Split, nicht die Wahrscheinlichkeitsschwelle eines Sigmoid-Outputs.",
+    "Beim Klassifikationsbaum soll ein Split die Klassen in den Kindern möglichst rein machen. Gini=1−Σp_c² und Entropie=−Σp_c log₂p_c messen die Mischung. Ein reiner Knoten hat jeweils Impurity 0.",
+    "Die Kinder werden nach ihrer Fallzahl gewichtet. Der Gewinn ist Eltern-Impurity minus gewichtete Kinder-Impurity. Nur den kleinsten Einzelkindwert zu betrachten wäre falsch, weil ein grosses unreines Kind mitgezählt werden muss.",
+    "Rekursion endet durch Regeln wie maximale Tiefe oder minimale Blattgrösse. Tiefe Bäume können Trainingsdetails auswendig lernen. Eine passende Begrenzung wird mit Validation gewählt.",
+    "Klassifikationsblätter verwenden etwa die Mehrheitsklasse; Regressionsblätter etwa den Mittelwert numerischer Ziele. Bäume lernen Grenzen lokal und brauchen bei gewöhnlichen monotonen Featuretransformationen meist keine Skalierung."
+  ],
+  "steps": [
+    "Mögliche Feature-Splits betrachten.",
+    "Eltern- und Kinder-Impurity berechnen.",
+    "Kinder nach Fallzahl gewichten und Gewinn vergleichen.",
+    "Rekursiv aufteilen oder mit Blattvorhersage stoppen."
+  ],
+  "sources": [
+    {
+      "file": "Machine_Learning_Tag3_Decision_Trees_2026_ShaoJuWoo.pdf",
+      "pages": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 1,
+  "example": "Eigener Rechenfall: Elternknoten hat 4 positive und 4 negative Fälle. Gini=1−0.5²−0.5²=0.5. Ein Split erzeugt links (4 positiv,0 negativ) mit Gini 0 und rechts (0,4) ebenfalls 0. Gewichteter Kinderwert=4/8·0+4/8·0=0; Gewinn=0.5. Ein Knoten mit Anteilen 0.75/0.25 hätte Gini 1−0.75²−0.25²=0.375.",
+  "formula": {
+    "expression": "Gini=1−Σ_c p_c²\nH=−Σ_c p_c log₂(p_c)\nGewinn=I_Eltern−Σ_j(N_j/N)I_j",
+    "meaning": "Für Entropie gilt 0·log₂(0)=0 als Grenzwert.",
+    "variables": [
+      {
+        "symbol": "p_c",
+        "meaning": "Klassenanteil im betrachteten Knoten"
+      },
+      {
+        "symbol": "N_j/N",
+        "meaning": "Gewicht des Kindes nach Fallzahl"
+      },
+      {
+        "symbol": "I",
+        "meaning": "gewähltes Impurity-Mass"
+      },
+      {
+        "symbol": "H",
+        "meaning": "Entropie"
+      },
+      {
+        "symbol": "I_Eltern,I_j",
+        "meaning": "Eltern- bzw. Kinder-Impurity nach gewähltem Kriterium"
+      }
+    ],
+    "latex": [
+      "\\mathrm{Gini}=1-\\sum_c p_c^2",
+      "H=-\\sum_c p_c\\log_2p_c",
+      "\\mathrm{Gewinn}=I_{\\mathrm{Eltern}}-\\sum_j\\frac{N_j}{N}I_j"
+    ],
+    "worked_example": {
+      "title": "Einen perfekten binären Split bewerten",
+      "given": [
+        "Elternknoten: vier positive und vier negative Fälle.",
+        "Kinder: links vier positive, rechts vier negative.",
+        "Für den Entropievergleich ist log₂(0.5)=−1 gegeben."
+      ],
+      "steps": [
+        {
+          "text": "Klassenanteile des Elternknotens berechnen.",
+          "latex": "p_+=p_-=\\frac48=0.5"
+        },
+        {
+          "text": "Gini und Entropie des Elternknotens berechnen; Entropie hier mit log₂.",
+          "latex": "\\mathrm{Gini}=1-0.5^2-0.5^2=0.5"
+        },
+        {
+          "text": "Beide Kinder sind rein; nach Fallzahl gewichtet bleibt die Kinder-Impurity null.",
+          "latex": "\\frac48\\cdot0+\\frac48\\cdot0=0"
+        },
+        {
+          "text": "Die Reinheitsverbesserung vom Elternwert abziehen.",
+          "latex": "\\mathrm{Gewinn}_{\\mathrm{Gini}}=0.5-0=0.5"
+        },
+        {
+          "text": "Für dieselbe Mischung ist die Entropie ein anderes Zahlenmass.",
+          "latex": "H=-2\\cdot0.5\\log_2(0.5)=1\\ \\mathrm{bit}"
+        }
+      ],
+      "result": "Der perfekte Split hat Gini-Gewinn 0.5. Entropie verwendet eine andere Formel und hat hier Elternwert 1 bit; beides ist nicht die Fehlerquote eines ganzen Baums.",
+      "result_latex": "\\mathrm{Gini\\!-\\!Gewinn}=0.5"
+    }
+  },
+  "confusions": [
+    {
+      "term": "Baumschwelle und Klassifikationsschwelle",
+      "note": "Eine prüft ein Inputfeature, die andere eine fertige positive Wahrscheinlichkeit."
+    },
+    {
+      "term": "Gini und Entropie",
+      "note": "Beide messen Mischung, haben aber verschiedene Formeln und Zahlenwerte."
+    }
+  ],
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "Ein Split wird bewertet",
+      "caption": "Reinheit beider Kinder zählt, gewichtet nach Grösse.",
+      "labels": [
+        "Elternklassen zählen",
+        "Feature-Schwelle wählen",
+        "Kinder bilden",
+        "Gewichtete Impurity",
+        "Gewinn vergleichen"
+      ]
+    },
+    {
+      "kind": "bars",
+      "title": "Gini für drei Mischungen",
+      "caption": "Rein ist 0; 75/25 ergibt 0.375; 50/50 ergibt 0.5.",
+      "labels": [
+        "100/0",
+        "75/25",
+        "50/50"
+      ],
+      "values": [
+        [
+          0,
+          0.375,
+          0.5
+        ]
+      ]
+    }
+  ]
+}

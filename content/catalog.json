@@ -1,0 +1,41 @@
+{
+  "exams": [
+    {"id":"machine-learning","name":"Machine Learning","description":"Prüfungsbereich mit Grundlagen, Datenanalyse, klassischen Modellen und Modellselektion.","sort_order":1},
+    {"id":"deep-learning-data-science","name":"Deep Learning & Data Science","description":"Prüfungsbereich mit neuronalen Netzen, CNNs, Sequenzmodellen und Transformern.","sort_order":2}
+  ],
+  "modules": [
+    {"id":"ml-foundations","exam_id":"machine-learning","name":"ML-Grundlagen","description":"Lernarten, Features, Targets und Entwicklungsprozess.","sort_order":1},
+    {"id":"ml-eda","exam_id":"machine-learning","name":"EDA","description":"Daten verstehen, Qualität prüfen und Zusammenhänge erkunden.","sort_order":2},
+    {"id":"ml-preprocessing","exam_id":"machine-learning","name":"Preprocessing","description":"Bereinigung, Transformation, Encoding und Feature Selection.","sort_order":3},
+    {"id":"ml-regression","exam_id":"machine-learning","name":"Regression","description":"Lineare und multiple lineare Regression.","sort_order":4},
+    {"id":"ml-logistic-regression","exam_id":"machine-learning","name":"Logistische Regression","description":"Klassifikation mit logistischer Regression.","sort_order":5},
+    {"id":"ml-model-selection","exam_id":"machine-learning","name":"Training und Model Selection","description":"Generalisierung, Datensplits und Cross-Validation.","sort_order":6},
+    {"id":"ml-decision-trees","exam_id":"machine-learning","name":"Decision Trees","description":"Entscheidungsbäume, Impurity und Pruning.","sort_order":7},
+    {"id":"ml-ensemble","exam_id":"machine-learning","name":"Ensemble Learning","description":"Bagging und Random Forest.","sort_order":8},
+    {"id":"ml-clustering","exam_id":"machine-learning","name":"Clustering","description":"Unüberwachtes Lernen und K-Means.","sort_order":9},
+
+    {"id":"dl-foundations","exam_id":"deep-learning-data-science","name":"Deep-Learning-Grundlagen","description":"Einordnung und Zutaten eines Lernalgorithmus.","sort_order":1},
+    {"id":"dl-neural-networks","exam_id":"deep-learning-data-science","name":"Neural Networks","description":"Neuronen, Gewichte, Bias und Aktivierungen.","sort_order":2},
+    {"id":"dl-training","exam_id":"deep-learning-data-science","name":"Training neuronaler Netze","description":"Forward Pass, Loss, Gradienten und Backpropagation.","sort_order":3},
+    {"id":"dl-cnn","exam_id":"deep-learning-data-science","name":"Computer Vision und CNN","description":"Convolution, Filter, Feature Maps, Stride, Padding und Pooling.","sort_order":4},
+    {"id":"dl-sequence-models","exam_id":"deep-learning-data-science","name":"Sequence Models","description":"RNN, BPTT und längere Abhängigkeiten.","sort_order":5},
+    {"id":"dl-seq2seq","exam_id":"deep-learning-data-science","name":"Seq2Seq","description":"Encoder, Context Vector und Decoder.","sort_order":6},
+    {"id":"dl-attention","exam_id":"deep-learning-data-science","name":"Attention","description":"Attention-Gewichte und kontextabhängige Auswahl.","sort_order":7},
+    {"id":"dl-transformer","exam_id":"deep-learning-data-science","name":"Transformer","description":"Self-Attention, QKV und Transformer-Architektur.","sort_order":8}
+  ],
+  "pdfs": [
+    {"file":"MachineLearning_Tag1_Einfuhrung_2026_ShaoJuWoo.pdf","title":"Machine Learning – Einführung, Tag 1","exam_id":"machine-learning"},
+    {"file":"MachineLearning_Tag1_EDA_2026_ShaoJuWoo.pdf","title":"Machine Learning – EDA, Tag 1","exam_id":"machine-learning"},
+    {"file":"MachineLearning_Tag1_Preprocessing_2026_ShaoJuWoo.pdf","title":"Machine Learning – Preprocessing, Tag 1","exam_id":"machine-learning"},
+    {"file":"MachineLearning_Tag2_Lineare_Regression_2026_ShaoJuWoo.pdf","title":"Machine Learning – Lineare Regression, Tag 2","exam_id":"machine-learning"},
+    {"file":"Machine_Learning_Tag2_Logistic_Regression_2026_ShaoJuWoo.pdf","title":"Machine Learning – Logistische Regression, Tag 2","exam_id":"machine-learning"},
+    {"file":"MachineLearning_Tag2_ModelTraining_Selection_2026_ShaoJuWoo.pdf","title":"Machine Learning – Model Training und Selection, Tag 2","exam_id":"machine-learning"},
+    {"file":"Machine_Learning_Tag3_Decision_Trees_2026_ShaoJuWoo.pdf","title":"Machine Learning – Decision Trees, Tag 3","exam_id":"machine-learning"},
+    {"file":"Machine_Learning_Tag3_Ensemble_Learning_2026_ShaoJuWoo.pdf","title":"Machine Learning – Ensemble Learning, Tag 3","exam_id":"machine-learning"},
+    {"file":"Machine_Learning_Tag3_Clustering_2026_ShaoJuWoo.pdf","title":"Machine Learning – Clustering, Tag 3","exam_id":"machine-learning"},
+    {"file":"DeepLearning_Tag1_Einfuhrung_2026_ShaoJuWoo.pdf","title":"Deep Learning – Einführung, Tag 1","exam_id":"deep-learning-data-science"},
+    {"file":"DeepLearning_Tag2_ComputerVision_2026.pdf","title":"Deep Learning – Computer Vision, Tag 2","exam_id":"deep-learning-data-science"},
+    {"file":"DeepLearning_Tag3_2026_Sequence-to-Sequence Modelle.pdf","title":"Deep Learning – Sequence-to-Sequence Modelle, Tag 3","exam_id":"deep-learning-data-science"},
+    {"file":"DeepLearning_Tag3_Transformer_2026.pdf","title":"Deep Learning – Transformer, Tag 3","exam_id":"deep-learning-data-science"}
+  ]
+}

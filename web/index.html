@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="de" data-theme="system">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Lokaler Lerntrainer für die Machine-Learning- und Deep-Learning-Prüfungen.">
+  <title>ML/DL Exam Trainer</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="/styles.css?v=17.1">
+  <script src="/ui-state.js?v=17.1" defer></script>
+  <script src="/learning-visuals.js?v=17.1" defer></script>
+  <script src="/vendor/katex/katex.min.js?v=0.19.0" defer></script>
+  <script src="/formula-renderer.js?v=17.1" defer></script>
+  <script src="/app.js?v=17.1" defer></script>
+</head>
+<body data-auth-state="unknown">
+  <a class="skip-link" href="#main-content">Zum Inhalt springen</a>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Hauptnavigation">
+      <a class="brand" href="#/" aria-label="ML/DL Exam Trainer Startseite"><svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect width="64" height="64" rx="14" fill="#0B1220"/><g fill="none" stroke="#38BDF8" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 22H44M21 25L31 42M43 25L33 42"/></g><g fill="#38BDF8"><circle cx="19" cy="22" r="7"/><circle cx="45" cy="22" r="7"/><circle cx="32" cy="44" r="7"/></g><g fill="#E0F2FE"><circle cx="19" cy="22" r="2"/><circle cx="45" cy="22" r="2"/><circle cx="32" cy="44" r="2"/></g></svg><span><strong>Exam Trainer</strong><small>Lokal und prüfungsnah</small></span></a>
+      <nav id="desktop-nav">
+        <a data-nav="home" href="#/"><span aria-hidden="true">⌂</span>Heute</a>
+        <a data-nav="machine-learning" href="#/exam/machine-learning"><span aria-hidden="true">M</span>Machine Learning</a>
+        <a data-nav="deep-learning-data-science" href="#/exam/deep-learning-data-science"><span aria-hidden="true">D</span>Deep Learning &amp; Data Science</a>
+        <a data-nav="practice" href="#/practice"><span aria-hidden="true">?</span>Üben</a>
+        <a data-nav="simulation" href="#/exam-simulation"><span aria-hidden="true">◷</span>Prüfung</a>
+        <a data-nav="progress" href="#/progress"><span aria-hidden="true">✓</span>Stand</a>
+        <a data-nav="settings" href="#/settings"><span aria-hidden="true">⚙</span>Einstellungen</a>
+      </nav>
+      <p class="sidebar-note">Lokaler ML/DL Exam Trainer</p>
+    </aside>
+    <main id="main-content" tabindex="-1">
+      <header class="topbar"><div class="breadcrumb" id="breadcrumb" aria-live="polite">Heute</div><div class="topbar-actions"><fieldset class="theme-switcher"><legend>Darstellung</legend><button type="button" data-theme-choice="system" aria-pressed="true">System</button><button type="button" data-theme-choice="light" aria-pressed="false">Hell</button><button type="button" data-theme-choice="dark" aria-pressed="false">Dunkel</button></fieldset><button type="button" class="logout-button" id="logout-button">Abmelden</button></div></header>
+      <div id="global-status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+      <div id="app" class="page"><section class="auth-loading" role="status" aria-live="polite"><span class="loading-mark" aria-hidden="true"></span><p>Sitzung wird geprüft …</p></section></div>
+      <footer class="app-footer" id="app-footer" aria-label="Anwendungsversion"><span id="app-version"></span></footer>
+    </main>
+    <nav class="bottom-nav" aria-label="Mobile Navigation"><a data-mobile-nav="home" href="#/"><span aria-hidden="true">⌂</span>Heute</a><a data-mobile-nav="topics" href="#/exam/machine-learning"><span aria-hidden="true">▦</span>Themen</a><a data-mobile-nav="practice" href="#/practice"><span aria-hidden="true">?</span>Üben</a><a data-mobile-nav="progress" href="#/progress"><span aria-hidden="true">✓</span>Stand</a><a data-mobile-nav="settings" href="#/settings" aria-label="Einstellungen und Daten"><span aria-hidden="true">⚙</span>Daten</a></nav>
+  </div>
+</body>
+</html>

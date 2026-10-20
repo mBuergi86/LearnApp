@@ -1,0 +1,71 @@
+{
+  "id": "forward-backward-pass",
+  "exam_id": "deep-learning-data-science",
+  "module_id": "dl-training",
+  "title": "Forward Pass und Backward Pass",
+  "priority": "core",
+  "summary": "Im Forward Pass entstehen Aktivierungen und Loss; im Backward Pass werden daraus Gradienten für Gewichte und Biases berechnet.",
+  "explanation": [
+    "Zusammenhang: Ein Trainingsschritt ist eine Kette aus Vorhersage, Loss, Ableitung und Update. Der Forward Pass beantwortet «Was sagt das Modell?», der Backward Pass «Wie empfindlich ist der Fehler?», der Optimierer «Welche Parameter ändern wir?».",
+    "Der Forward Pass berechnet mit den aktuellen Gewichten eine Vorhersage. In jeder Schicht entstehen gewichtete Inputs und Aktivierungen; die letzte Aktivierung ist der Modelloutput. Für die spätere Ableitung werden benötigte Zwischenwerte des Berechnungsgraphen gespeichert.",
+    "Anschliessend wird die Loss aus Vorhersage und Zielwert berechnet. Die Loss ist eine Zahl. Der Backward Pass startet bei dieser Zahl und verfolgt rückwärts, wie sie von den Zwischenwerten und Parametern abhängt. Dazu wird die Kettenregel angewendet.",
+    "Das Ergebnis des Backward Pass sind Gradienten, zum Beispiel ∂L/∂w. Ein Gradient ist weder ein neuer Parameterwert noch eine neue Vorhersage. Er beschreibt die lokale Empfindlichkeit der Loss gegenüber einer Parameteränderung.",
+    "Erst der Optimierungsschritt ändert Gewichte und Biases. Bei Gradient Descent gilt w_neu = w_alt − η · ∂L/∂w. Der folgende Forward Pass verwendet diese neuen Werte. So wiederholen sich Vorhersage, Fehlerbewertung, Ableitung und Aktualisierung.",
+    "Bei der reinen Vorhersage auf neuen Daten genügt der Forward Pass. Es gibt dann typischerweise weder Zielwerte noch einen Backward Pass oder Parameterupdates. Trainings- und Auswertungsmodus beeinflussen zusätzlich Schichten wie Dropout und Batch Normalization, obwohl auch die Auswertung vorwärts gerechnet wird.",
+    "Mathematik lesen: Die Kettenregel multipliziert lokale Änderungsraten: ∂L/∂w=(∂L/∂ŷ)·(∂ŷ/∂w). Das Symbol ∂ kennzeichnet eine Ableitung nach einer bestimmten Grösse, während andere Grössen festgehalten werden. Eine negative Ableitung ist kein negativer Loss, sondern eine Änderungsrichtung."
+  ],
+  "confusions": [
+    {
+      "term": "Backward Pass und Update",
+      "note": "Der Backward Pass berechnet Ableitungen; erst der Optimierer verändert Parameter."
+    },
+    {
+      "term": "Training und Inferenz",
+      "note": "Bei Inferenz werden Vorhersagen berechnet, ohne die Modellparameter zu trainieren."
+    }
+  ],
+  "sources": [
+    {
+      "file": "DeepLearning_Tag1_Einfuhrung_2026_ShaoJuWoo.pdf",
+      "pages": [
+        61,
+        62,
+        63,
+        64,
+        65
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 4,
+  "steps": [
+    "Mit aktuellen Parametern vorwärts rechnen.",
+    "Loss aus Vorhersage und Ziel berechnen.",
+    "Gradienten rückwärts durch die Kettenregel bestimmen.",
+    "Parameter im separaten Optimierungsschritt aktualisieren."
+  ],
+  "example": "Beispiel: Ein lineares Neuron verwendet ŷ = wx, x = 2, w = 1 und Ziel y = 4; Bias ist hier 0.\nForward: ŷ = 1 · 2 = 2.\nLoss: L = ½(ŷ−y)² = ½(−2)² = 2.\nBackward: ∂L/∂ŷ = −2 und ∂ŷ/∂w = x = 2, daher ∂L/∂w = −4.\nUpdate mit η = 0.1: w_neu = 1 − 0.1 · (−4) = 1.4.\nEin neuer Forward Pass ergibt ŷ = 2.8 und L = ½(2.8−4)² = 0.72. Das Update hat in diesem Beispiel die Loss reduziert.",
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "Ein Trainingsschritt",
+      "labels": [
+        "Forward|x → ŷ",
+        "Loss|ŷ mit y vergleichen",
+        "Backward|∂L/∂θ berechnen",
+        "Update|θ_neu = θ − η∇L"
+      ],
+      "caption": "Die Reihenfolge trennt Gradientenberechnung und Parameteraktualisierung."
+    },
+    {
+      "kind": "flow",
+      "title": "Ein Neuron lernt",
+      "labels": [
+        "w = 1, x = 2|ŷ = 2; L = 2",
+        "Gradient = −4|η = 0.1",
+        "w_neu = 1.4|ŷ_neu = 2.8; L_neu = 0.72"
+      ],
+      "caption": "Der negative Gradient führt hier zu einer Erhöhung des Gewichts und zu einer Vorhersage näher am Ziel y = 4."
+    }
+  ]
+}

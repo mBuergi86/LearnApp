@@ -1,0 +1,124 @@
+{
+  "id": "rnn-bptt",
+  "exam_id": "deep-learning-data-science",
+  "module_id": "dl-sequence-models",
+  "title": "Backpropagation Through Time",
+  "priority": "core",
+  "summary": "RNNs werden über die entfaltete Zeitstruktur mit Backpropagation Through Time trainiert.",
+  "explanation": [
+    "Zusammenhang: BPTT verwendet dieselbe Kettenregel wie Backpropagation, aber entlang zeitlicher Abhängigkeiten. Die aufeinanderfolgenden Zustände sind Rechenschritte; das geteilte Gewicht ist nur einmal als Parameter vorhanden.",
+    "Backpropagation Through Time (BPTT) ist Backpropagation auf dem zeitlich entfalteten RNN. Der Forward Pass erstellt Zustände h₁ bis h_T. Die Loss kann Beiträge an mehreren Zeitpositionen enthalten; deren Summe oder Mittelwert ist das Trainingsziel.",
+    "Die gleichen Parameter beeinflussen den Output an vielen Zeitpunkten. Ihr Gesamtgradient enthält deshalb Beiträge aus mehreren Zeitkopien. Diese Beiträge werden addiert, weil eine Änderung eines geteilten Gewichts mehrere Teile der Berechnung gleichzeitig betrifft.",
+    "Ein später Loss kann einen früheren Zustand über mehrere rekurrente Verbindungen beeinflussen. Der Backward Pass läuft diese Abhängigkeiten rückwärts entlang der Zeit. Ein Gradient an h_t berücksichtigt dabei lokale Loss-Beiträge und Rückwirkungen späterer Zustände.",
+    "Die lange Kettenregel enthält Produkte von Zustandsableitungen. Viele kleine Faktoren führen zu Vanishing Gradients; ungünstige grosse Faktoren können Exploding Gradients verursachen. Gradient Clipping begrenzt grosse Updates, stellt aber verlorene kleine Gradienten nicht wieder her.",
+    "Truncated BPTT begrenzt, wie viele Zeitschritte rückwärts verfolgt werden. Ein Zustand kann zwischen Fenstern weitergetragen werden, während sein Graph vom alten Fenster getrennt wird. Das reduziert Aufwand, entfernt aber Trainingsgradienten über die Trunkierungsgrenze und verkürzt die lernbare Abhängigkeit.",
+    "Mathematik lesen: Gradientenbeiträge werden zu einem gemeinsamen Parameter summiert. Ob danach durch T geteilt wird, hängt von Summe oder Mittelwert der Loss ab. Ein solcher Mittelwert ist nicht automatisch durch die Anzahl Modellgewichte zu teilen."
+  ],
+  "sources": [
+    {
+      "file": "DeepLearning_Tag3_2026_Sequence-to-Sequence Modelle.pdf",
+      "pages": [
+        24,
+        25
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 3,
+  "steps": [
+    "Sequenz vorwärts entfalten.",
+    "Loss-Beiträge zum Trainingsziel aggregieren.",
+    "Rückwärts durch die abhängigen Zeitpositionen ableiten.",
+    "Beiträge zu geteilten Parametern summieren.",
+    "Parameter gemeinsam aktualisieren."
+  ],
+  "example": "Beispiel: Ein geteilter Parameter w tritt in drei Zeitkopien auf. Die drei bereits vollständig berechneten Gradientenbeiträge sind 0.2,−0.1 und 0.4. Für die summierte Loss ist der Gesamtgradient 0.5.\nWird stattdessen der Mittelwert dieser drei Loss-Beiträge trainiert, ist der Gradient 0.5/3≈0.1667. Die Aggregation der Loss bestimmt also die Skalierung.\nEin vereinfachter zehn-Schritt-Pfad mit Ableitungsfaktor 0.5 hat das Produkt 0.5¹⁰≈0.000977. Er zeigt, warum ein weit zurückliegender Input wenig Trainingssignal erhalten kann.",
+  "confusions": [
+    {
+      "term": "Geteilte Parameter und separate Updates",
+      "note": "Es gibt einen geteilten Parameter; seine Beiträge werden aggregiert, nicht als unabhängige Zeitgewichte gespeichert."
+    },
+    {
+      "term": "Clipping und Vanishing",
+      "note": "Clipping hilft gegen zu grosse Gradienten. Es vergrössert nicht die durch lange Produkte verschwundenen Gradienten."
+    }
+  ],
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "BPTT auf dem entfalteten RNN",
+      "labels": [
+        "Forward: t = 1 → T|Zustände und Loss speichern",
+        "Backward: t = T → 1|zeitliche Abhängigkeiten ableiten",
+        "Geteiltes W|Gradientenbeiträge summieren"
+      ],
+      "caption": "Die rückwärtige Richtung folgt dem Berechnungsgraphen; die Gewichte werden über Zeitpositionen geteilt."
+    },
+    {
+      "kind": "bars",
+      "title": "Beiträge zum geteilten Gewicht",
+      "labels": [
+        "Zeitkopie 1",
+        "Zeitkopie 2",
+        "Zeitkopie 3"
+      ],
+      "values": [
+        [
+          0.2,
+          -0.1,
+          0.4
+        ]
+      ],
+      "caption": "Die vorzeichenbehafteten Werte ergeben zusammen 0.5. Balkenlängen zeigen Beträge; das Minuszeichen der zweiten Beschriftung kennzeichnet seinen gegenläufigen Beitrag."
+    }
+  ],
+  "formula": {
+    "expression": "J=Σ_tJ_t; ∂J/∂W=Σ_t∂J_t/∂W",
+    "meaning": "Jeder Beitrag enthält seine vollständigen rekurrenten Abhängigkeiten.",
+    "variables": [
+      {
+        "symbol": "J_t",
+        "meaning": "Loss-Beitrag an Zeitpunkt t"
+      },
+      {
+        "symbol": "J",
+        "meaning": "hier Summe der Zeitverluste"
+      },
+      {
+        "symbol": "W",
+        "meaning": "über Zeitschritte geteilter Parameter"
+      },
+      {
+        "symbol": "∂J_t/∂W",
+        "meaning": "vollständiger Gradientenbeitrag mit rekurrenten Abhängigkeiten"
+      }
+    ],
+    "latex": [
+      "J=\\sum_tJ_t",
+      "\\frac{\\partial J}{\\partial W}=\\sum_t\\frac{\\partial J_t}{\\partial W}"
+    ],
+    "worked_example": {
+      "title": "Beiträge zu einem geteilten Gewicht zusammenfassen",
+      "given": [
+        "Vollständig berechnete Beiträge: 0.2,−0.1,0.4.",
+        "Zunächst wird die Summe der drei Zeitverluste optimiert."
+      ],
+      "steps": [
+        {
+          "text": "Der Parameter W ist geteilt und bekommt alle Beiträge.",
+          "latex": "g_1=0.2,\\quad g_2=-0.1,\\quad g_3=0.4"
+        },
+        {
+          "text": "Die Beiträge für die summierte Loss addieren.",
+          "latex": "\\frac{\\partial J}{\\partial W}=0.2-0.1+0.4=0.5"
+        },
+        {
+          "text": "Nur bei einer mittleren Loss zusätzlich durch die drei Zeitverluste teilen.",
+          "latex": "\\frac{0.5}{3}\\approx0.1667"
+        }
+      ],
+      "result": "Für die summierte Loss ist der Gradient 0.5. Ein Mittelungsfaktor hängt von der Loss-Definition ab, nicht von der Anzahl Zeitkopien, die als unabhängige Gewichte gespeichert würden.",
+      "result_latex": "\\nabla_W J=0.5"
+    }
+  }
+}

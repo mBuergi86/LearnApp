@@ -1,0 +1,127 @@
+{
+  "id": "batch-iteration-epoch",
+  "exam_id": "deep-learning-data-science",
+  "module_id": "dl-training",
+  "title": "Batch, Iteration und Epoche",
+  "priority": "core",
+  "summary": "Batch, Iteration und Epoche beschreiben unterschiedliche Einheiten des Trainingsablaufs.",
+  "explanation": [
+    "Zusammenhang: Das Dataset sind alle Trainingsfälle; ein Batch ist eine gemeinsam verarbeitete Teilgruppe. Eine Iteration ist hier ein Update, eine Epoche ein kompletter Durchlauf. Batchgrösse, Epochenzahl und Lernrate sind Einstellungen, nicht gelernte Gewichte.",
+    "Ein Batch ist eine Gruppe von Trainingsbeispielen, die gemeinsam für einen Trainingsschritt verarbeitet werden. Bei Full-Batch umfasst er den ganzen Trainingsdatensatz. Bei Mini-Batch-Training ist er eine kleinere Teilmenge; Batchgrösse 1 entspricht SGD im engen Sinn.",
+    "Eine Iteration meint hier einen Trainingsschritt mit einem Batch: Forward Pass, Loss, Backward Pass und Parameterupdate. Die Parameter werden also gewöhnlich nach jedem Batch geändert. Sie bleiben nicht bis zum Ende einer Epoche zwangsläufig unverändert.",
+    "Eine Epoche ist ein vollständiger Durchlauf durch die Trainingsbeispiele. Wenn die Beispiele ohne Wiederholung in Batches aufgeteilt werden, wurde am Ende der Epoche jedes Beispiel einmal verwendet. Für die nächste Epoche wird häufig neu gemischt.",
+    "Für N Beispiele und Batchgrösse B ergeben sich bei Verwendung eines kleineren letzten Batches ceil(N/B) Iterationen pro Epoche. Ist N durch B teilbar, genügt N/B. Wird ein unvollständiger letzter Batch ausdrücklich verworfen, gilt floor(N/B); dann werden in diesem Durchlauf nicht alle Beispiele genutzt.",
+    "Batchgrösse beeinflusst Speicherbedarf und die Streuung der Gradientenschätzung. Grössere Batches liefern nicht automatisch bessere Generalisierung. Die Zahl der Updates hängt sowohl von der Batchgrösse als auch von der Epochenzahl ab. Diese Grössen müssen beim Vergleich zweier Trainingsläufe auseinandergehalten werden.",
+    "Mathematik lesen: ceil bedeutet aufrunden, floor abrunden. 1050/250=4.2 bedeutet vier volle Batches und einen Rest, nicht 4.2 tatsächlich ausführbare Updates. Mit verarbeitetem Rest sind es fünf Schritte; über E Epochen multipliziert man die Schrittzahl mit E."
+  ],
+  "sources": [
+    {
+      "file": "DeepLearning_Tag1_Einfuhrung_2026_ShaoJuWoo.pdf",
+      "pages": [
+        55,
+        56,
+        58,
+        59,
+        60,
+        62
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 5,
+  "steps": [
+    "N Trainingsbeispiele in Batches aufteilen.",
+    "Für einen Batch einen vollständigen Trainingsschritt ausführen.",
+    "Mit dem nächsten Batch fortfahren.",
+    "Nach dem letzten Batch die Epoche abschliessen.",
+    "Für weitere Epochen die Daten neu anordnen."
+  ],
+  "example": "Beispiel aus Folie 62: N=1000 und B=250. Eine Epoche besteht aus vier Iterationen mit jeweils 250 Beispielen; drei Epochen enthalten zwölf Updates.\nZweites Beispiel: N=1050, B=250, letzter Batch bleibt erhalten. Die Batchgrössen sind 250,250,250,250,50, also fünf Iterationen pro Epoche.\nWird der letzte Batch stattdessen verworfen, gibt es vier Iterationen und 50 Beispiele werden in diesem Durchlauf ausgelassen. Darum muss eine Rechenfrage die Behandlung des letzten Batches ausdrücklich nennen.",
+  "confusions": [
+    {
+      "term": "Batch, Iteration und Epoche",
+      "note": "Batch bezeichnet Daten; Iteration bezeichnet einen Schritt; Epoche bezeichnet einen Datendurchlauf."
+    },
+    {
+      "term": "SGD-Begriff",
+      "note": "Manche Texte nennen auch Mini-Batch-Verfahren SGD. Bei Zahlenaufgaben zählt die explizite Batchgrösse."
+    }
+  ],
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "Vom Batch zur Epoche",
+      "labels": [
+        "Batch 1|Forward, Backward, Update",
+        "Batch 2|Forward, Backward, Update",
+        "… letzter Batch|Epoche abgeschlossen"
+      ],
+      "caption": "Ein Update erfolgt je Iteration; eine Epoche enthält gewöhnlich mehrere Iterationen."
+    },
+    {
+      "kind": "bars",
+      "title": "1050 Beispiele in fünf Batches",
+      "labels": [
+        "Batch 1",
+        "Batch 2",
+        "Batch 3",
+        "Batch 4",
+        "Batch 5"
+      ],
+      "values": [
+        [
+          250,
+          250,
+          250,
+          250,
+          50
+        ]
+      ],
+      "caption": "Mit Batchgrösse 250 und beibehaltenem letzten Batch sind fünf Iterationen nötig."
+    }
+  ],
+  "formula": {
+    "expression": "Iterationen/Epoche = ceil(N/B)",
+    "meaning": "Gilt, wenn der kleinere letzte Batch verarbeitet und kein Gradient über mehrere Batches akkumuliert wird.",
+    "variables": [
+      {
+        "symbol": "N",
+        "meaning": "Anzahl Trainingsbeispiele"
+      },
+      {
+        "symbol": "B",
+        "meaning": "Batchgrösse"
+      },
+      {
+        "symbol": "ceil",
+        "meaning": "aufrunden auf nächste ganze Zahl"
+      }
+    ],
+    "latex": [
+      "\\mathrm{Iterationen/Epoche}=\\left\\lceil\\frac NB\\right\\rceil"
+    ],
+    "worked_example": {
+      "title": "Letzten kleineren Batch mitzählen",
+      "given": [
+        "N=1050 Beispiele, Batchgrösse B=250.",
+        "Restbatch wird verarbeitet; ein Update je Batch."
+      ],
+      "steps": [
+        {
+          "text": "Die Zahl voller Batches und den Rest bestimmen.",
+          "latex": "1050=4\\cdot250+50"
+        },
+        {
+          "text": "Den Rest als zusätzlichen kleineren Batch zählen.",
+          "latex": "\\left\\lceil\\frac{1050}{250}\\right\\rceil=\\lceil4.2\\rceil=5"
+        },
+        {
+          "text": "Für drei Epochen die Updates pro Epoche multiplizieren.",
+          "latex": "3\\cdot5=15"
+        }
+      ],
+      "result": "Eine Epoche benötigt fünf Updates, drei Epochen fünfzehn. Ohne den ausdrücklich verarbeiteten Rest wäre die Zahl anders.",
+      "result_latex": "5\\ \\mathrm{Updates/Epoche}"
+    }
+  }
+}

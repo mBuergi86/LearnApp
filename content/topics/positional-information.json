@@ -1,0 +1,143 @@
+{
+  "id": "positional-information",
+  "exam_id": "deep-learning-data-science",
+  "module_id": "dl-transformer",
+  "title": "Positionsinformation im Transformer",
+  "priority": "support",
+  "summary": "Positionsinformation ergänzt Token-Repräsentationen, damit ein Transformer die Reihenfolge einer Sequenz berücksichtigen kann.",
+  "explanation": [
+    "Vorwissen: Das Embedding beschreibt zunächst den Tokeninhalt. Positionsinformation ergänzt, wo dieser Inhalt im Satz steht. Die Addition verlangt gleich lange Vektoren und verändert nicht die Zahl Tokens.",
+    "Self-Attention ohne Positionsinformation kennt keine absolute Reihenfolge allein aus den Tokenrepräsentationen. Werden unmaskierte Tokens samt Queries, Keys und Values gleichartig umgeordnet, werden die Outputs entsprechend umgeordnet. Das Verfahren ist permutationsäquivariant, nicht automatisch ein Modell von Wortreihenfolge.",
+    "Der ursprüngliche Transformer addiert zu jedem Token-Embedding einen gleich grossen Positionsvektor. So hängt die Repräsentation nicht nur von der Token-ID, sondern auch von ihrer Position ab. Zweimal dasselbe Wort kann dadurch verschiedene Eingaberepräsentationen erhalten.",
+    "Die sinusförmige Variante nutzt Sinus für gerade und Cosinus für ungerade Dimensionen. Unterschiedliche Dimensionspaare verwenden unterschiedliche Frequenzen. Im Ausdruck ω_i=1/10000^(2i/d_model) nimmt die Frequenz mit wachsendem i ab; die zugehörige Wellenlänge nimmt zu.",
+    "An Position 0 ist jeder Sinuswert 0 und jeder Cosinuswert 1. Für andere Positionen verändern sich die Komponenten nach ihren Frequenzen. Die Kombination verschiedener Skalen stellt lokale und weiter entfernte Positionsbeziehungen dar.",
+    "Es gibt auch gelernte und andere relative Positionsverfahren. Die sinusförmige Form kann für grössere Positionsindizes berechnet werden, garantiert aber allein keine gute Modellleistung auf beliebig langen unbekannten Sequenzen. Für die Kursrechnung müssen Position, Dimensionsindex und Modelldimension klar sein.",
+    "Mathematik lesen: Sinus und Cosinus werden hier mit Winkeln im Bogenmass verwendet. Für Position 0 gilt unabhängig von der Frequenz sin(0)=0 und cos(0)=1. 2i und 2i+1 sind die beiden Komponenten eines Dimensionspaares, keine Anzahl Wörter."
+  ],
+  "sources": [
+    {
+      "file": "DeepLearning_Tag3_Transformer_2026.pdf",
+      "pages": [
+        39,
+        40,
+        41,
+        42
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 4,
+  "steps": [
+    "Positionsindex pos des Tokens bestimmen.",
+    "Positionsvektor in d_model Dimensionen berechnen.",
+    "Token-Embedding und Positionsvektor addieren.",
+    "Positionsabhängige Repräsentation im Transformer verwenden."
+  ],
+  "example": "Beispiel mit d_model=4 und Position 0: PE=(sin0,cos0,sin0,cos0)=(0,1,0,1).\nAn Position 1 ist das erste Paar ungefähr (0.8415,0.5403). Das zweite Paar verwendet ω₁=1/100=0.01 und ist ungefähr (0.0100,0.99995).\nDasselbe Token-Embedding e=(0.2,0.3,−0.1,0.4) ergibt an Position 0 e+PE=(0.2,1.3,−0.1,1.4).\nAn Position 1 ergibt sich ungefähr (1.0415,0.8403,−0.0900,1.39995). Der Tokeninhalt ist gleich, der Positionsteil unterscheidet sich.",
+  "confusions": [
+    {
+      "term": "Position und Token-ID",
+      "note": "Position beschreibt die Stelle in der Sequenz; Token-ID beschreibt den Vokabulareintrag."
+    },
+    {
+      "term": "Frequenz und Wellenlänge",
+      "note": "Mit wachsendem Dimensionspaarindex wird ω kleiner und die Wellenlänge grösser."
+    }
+  ],
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "Inhalt plus Position",
+      "labels": [
+        "Token-Embedding e|gleicher Inhalt bei gleicher ID",
+        "Positionsvektor PE(pos)|abhängig von der Position",
+        "Transformerinput|e + PE(pos)"
+      ],
+      "caption": "Im ursprünglichen Transformer werden zwei gleich dimensionierte Vektoren addiert."
+    },
+    {
+      "kind": "matrix",
+      "title": "Sinus/Cosinus-Paare für d = 4",
+      "labels": [
+        "Position 0 / Position 1"
+      ],
+      "values": [
+        [
+          0,
+          1,
+          0,
+          1
+        ],
+        [
+          0.8415,
+          0.5403,
+          0.01,
+          0.99995
+        ]
+      ],
+      "caption": "Zeilen zeigen die zwei Positionen. Das erste Dimensionspaar verändert sich schneller als das zweite."
+    }
+  ],
+  "formula": {
+    "expression": "PE(pos,2i)=sin(pos/10000^(2i/d_model))\nPE(pos,2i+1)=cos(pos/10000^(2i/d_model))",
+    "meaning": "Die Dimensionen treten in Sinus/Cosinus-Paaren mit verschiedenen Frequenzen auf.",
+    "variables": [
+      {
+        "symbol": "pos",
+        "meaning": "Tokenposition, Zählung hier ab 0"
+      },
+      {
+        "symbol": "i",
+        "meaning": "Index eines Sinus/Cosinus-Dimensionspaares"
+      },
+      {
+        "symbol": "d_model",
+        "meaning": "gerade Modelldimension"
+      },
+      {
+        "symbol": "PE",
+        "meaning": "Positionsvektor"
+      },
+      {
+        "symbol": "sin,cos",
+        "meaning": "Winkelfunktionen im Bogenmass"
+      },
+      {
+        "symbol": "p",
+        "meaning": "Positionsindex; entspricht pos in der bisherigen Formel"
+      }
+    ],
+    "latex": [
+      "\\mathrm{PE}(p,2i)=\\sin\\!\\left(\\frac{p}{10000^{2i/d_{\\mathrm{model}}}}\\right)",
+      "\\mathrm{PE}(p,2i+1)=\\cos\\!\\left(\\frac{p}{10000^{2i/d_{\\mathrm{model}}}}\\right)"
+    ],
+    "worked_example": {
+      "title": "Positionsvektor bei Position null",
+      "given": [
+        "d_model=4, Position p=0, Dimensionspaare i=0 und i=1.",
+        "Token-Embedding e=(0.2,0.3,−0.1,0.4); Bogenmass.",
+        "Für Position null sind die einfachen Funktionswerte sin(0)=0 und cos(0)=1 gegeben."
+      ],
+      "steps": [
+        {
+          "text": "Für Position null ist das Argument in beiden Frequenzpaaren null.",
+          "latex": "\\frac0{10000^{2i/4}}=0"
+        },
+        {
+          "text": "Sinus- und Cosinuswerte je Paar auswerten.",
+          "latex": "\\sin0=0,\\qquad\\cos0=1"
+        },
+        {
+          "text": "Den vierdimensionalen Positionsvektor zusammensetzen.",
+          "latex": "\\mathrm{PE}(0)=(0,1,0,1)"
+        },
+        {
+          "text": "Komponentenweise zum gleich grossen Embedding addieren.",
+          "latex": "e+\\mathrm{PE}(0)=(0.2,1.3,-0.1,1.4)"
+        }
+      ],
+      "result": "Gleicher Tokeninhalt erhält je nach Position eine ergänzte Repräsentation. Der Positionsvektor ist nicht in allen Komponenten null.",
+      "result_latex": "e+\\mathrm{PE}(0)=(0.2,1.3,-0.1,1.4)"
+    }
+  }
+}

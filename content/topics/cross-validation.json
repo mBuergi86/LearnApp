@@ -1,0 +1,142 @@
+{
+  "id": "cross-validation",
+  "exam_id": "machine-learning",
+  "module_id": "ml-model-selection",
+  "title": "Cross-Validation und GridSearchCV",
+  "priority": "core",
+  "summary": "Cross-Validation bewertet Modellkonfigurationen über mehrere Trainings-/Validierungssplits, GridSearchCV durchsucht dafür einen vorgegebenen Parameterraum.",
+  "explanation": [
+    "Cross-Validation wiederholt Training und Validation mit verschiedenen Teilmengen. Bei k-Fold werden die Entwicklungsdaten in k Folds geteilt; jeder dient einmal als Validation, die anderen als Training.",
+    "Für jeden Lauf wird ein neues Modell angepasst. Auch Imputation, Skalierung und Featureauswahl werden ausschliesslich im jeweiligen Trainingsfold gelernt. Vorher auf allen Folds zu skalieren kann Validierungsinformation verraten.",
+    "Die k Scores werden zu einer Bewertung zusammengefasst. Bei einer Loss ist kleiner besser; bei Accuracy gewöhnlich grösser. Einzelne Foldwerte zeigen zusätzlich die Streuung, nicht nur den Durchschnitt.",
+    "Grid Search prüft alle Kombinationen einer vorgegebenen Hyperparameterliste. Mit a möglichen Tiefen und b Lernraten sind es a·b Konfigurationen und bei k Folds a·b·k Anpassungen, zuzüglich eines möglichen finalen Refit.",
+    "Ein unabhängiges Testset bleibt ausserhalb dieser Auswahl. Zeitreihen benötigen zeitliche Splits, zusammengehörige Personen oder Dokumente Gruppensplits. Gewöhnliches zufälliges k-Fold passt nicht automatisch zu jeder Datenstruktur."
+  ],
+  "steps": [
+    "Testset zurückhalten und passende Folds definieren.",
+    "Konfiguration im jeweiligen Trainingsfold komplett anpassen.",
+    "Auf dessen Validierungsfold bewerten.",
+    "Scores zusammenfassen, Konfiguration wählen und ggf. neu fitten."
+  ],
+  "sources": [
+    {
+      "file": "MachineLearning_Tag2_ModelTraining_Selection_2026_ShaoJuWoo.pdf",
+      "pages": [
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 5,
+  "example": "Eigener Rechenfall: 100 Entwicklungsfälle, k=5: je 80 Training und 20 Validation. Drei Baumtiefen mal zwei Regularisierungswerte ergeben 6 Konfigurationen; 6·5=30 Fold-Anpassungen. Mit einem abschliessenden Refit der gewählten Konfiguration sind es 31. Loss-Werte (0.2,0.3,0.4,0.3,0.3) haben Mittelwert 1.5/5=0.3.",
+  "formula": {
+    "expression": "Konfigurationen=∏ Anzahl Werte je Hyperparameter\nCV-Anpassungen=k·Konfigurationen",
+    "meaning": "Ein optionaler finaler Refit kommt zusätzlich hinzu.",
+    "variables": [
+      {
+        "symbol": "k",
+        "meaning": "Anzahl Folds"
+      },
+      {
+        "symbol": "∏",
+        "meaning": "Produkt: Anzahlen miteinander multiplizieren"
+      },
+      {
+        "symbol": "G",
+        "meaning": "Anzahl Hyperparameterkombinationen"
+      },
+      {
+        "symbol": "H",
+        "meaning": "Anzahl Hyperparameterlisten"
+      },
+      {
+        "symbol": "n_j",
+        "meaning": "Anzahl vorgegebener Werte in Liste j"
+      }
+    ],
+    "latex": [
+      "G=\\prod_{j=1}^H n_j",
+      "\\mathrm{CV\\!-\\!Anpassungen}=kG"
+    ],
+    "worked_example": {
+      "title": "Grid-Kombinationen und Modellanpassungen",
+      "given": [
+        "Drei Baumtiefen, zwei Regularisierungswerte.",
+        "Fünf CV-Folds; finaler Refit wird zunächst nicht gezählt."
+      ],
+      "steps": [
+        {
+          "text": "Alle Kombinationen der zwei Hyperparameterlisten zählen.",
+          "latex": "G=3\\cdot2=6"
+        },
+        {
+          "text": "Jede Konfiguration wird in jedem Fold neu angepasst.",
+          "latex": "kG=5\\cdot6=30"
+        },
+        {
+          "text": "Einen optionalen finalen Refit ausdrücklich getrennt ergänzen.",
+          "latex": "30+1=31\\quad\\text{nur mit Refit}"
+        }
+      ],
+      "result": "Die Cross-Validation benötigt 30 Anpassungen. Ein zusätzlicher Refit macht daraus 31; er darf nicht stillschweigend mitgezählt werden.",
+      "result_latex": "\\mathrm{CV\\!-\\!Anpassungen}=30"
+    }
+  },
+  "confusions": [
+    {
+      "term": "k Folds und k Cluster",
+      "note": "Gleiches Symbol, andere Rolle: Datenaufteilungen gegenüber gefundenen Gruppen."
+    },
+    {
+      "term": "Fold-Training und finaler Refit",
+      "note": "Cross-Validation trainiert mehrere Modelle; danach kann ein ausgewähltes Modell auf allen Entwicklungsdaten angepasst werden."
+    }
+  ],
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "Ein Fold-Lauf",
+      "caption": "Der Scaler wird innerhalb des Trainingsfolds gelernt.",
+      "labels": [
+        "Trainingsfolds",
+        "Vorbereitung lernen",
+        "Modell fitten",
+        "Validierungsfold transformieren",
+        "Score messen"
+      ]
+    },
+    {
+      "kind": "bars",
+      "title": "Fünf Validierungsverluste",
+      "caption": "Der mittlere Loss beträgt (0.2+0.3+0.4+0.3+0.3)/5=0.3.",
+      "labels": [
+        "Fold 1",
+        "Fold 2",
+        "Fold 3",
+        "Fold 4",
+        "Fold 5"
+      ],
+      "values": [
+        [
+          0.2,
+          0.3,
+          0.4,
+          0.3,
+          0.3
+        ]
+      ]
+    }
+  ]
+}

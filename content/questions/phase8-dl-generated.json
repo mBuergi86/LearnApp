@@ -1,0 +1,2837 @@
+{
+  "questions": [
+    {
+      "id": "dl-activation-functions-core",
+      "topic_id": "activation-functions",
+      "type": "numeric-choice",
+      "prompt": "Welche Werte liefert ReLU für die Inputs (−2,0,2)?",
+      "explanation": "max bedeutet den grösseren Wert auswählen: max(0,−2)=0, max(0,0)=0, max(0,2)=2. Richtig ist (0,0,2). (−2,0,2) wäre eine Identitätsfunktion, die negative Werte durchlässt. (0,0.5,1) und (−1,0,1) verwechselt man mit begrenzten Aktivierungen; sie sind auch keine exakten Sigmoid- oder tanh-Werte dieser Inputs.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "(0,0,2)"
+        },
+        {
+          "id": "o2",
+          "text": "(−2,0,2)"
+        },
+        {
+          "id": "o3",
+          "text": "(0,0.5,1)"
+        },
+        {
+          "id": "o4",
+          "text": "(−1,0,1)"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-activation-functions-fact",
+      "topic_id": "activation-functions",
+      "type": "true-false",
+      "prompt": "Softmax selbst gibt nur den Index der wahrscheinlichsten Klasse zurück.",
+      "explanation": "Softmax liefert einen Vektor von Wahrscheinlichkeiten mit Summe 1. Den Index des grössten Werts liefert erst Argmax.",
+      "options": [
+        {
+          "id": "false",
+          "text": "Falsch"
+        },
+        {
+          "id": "true",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "false",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-activation-functions-properties",
+      "topic_id": "activation-functions",
+      "type": "multiple-select",
+      "prompt": "Welche Zuordnungen von Output-Aktivierung und Aufgabe sind üblich und korrekt?",
+      "explanation": "Sigmoid passt zur Wahrscheinlichkeit einer positiven Klasse, Softmax zu einem gemeinsamen Klassenraum. ReLU ist nicht auf 1 begrenzt; eine harte Schwelle ist für gewöhnliches gradientenbasiertes Training ungeeignet.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "ReLU muss bei jeder Regression den Output auf [0,1] beschränken."
+        },
+        {
+          "id": "o2",
+          "text": "Eine binäre Schwellenfunktion liefert überall einen hilfreichen Gradienten fürs Training."
+        },
+        {
+          "id": "o3",
+          "text": "Sigmoid für eine einzelne binäre Klassenwahrscheinlichkeit."
+        },
+        {
+          "id": "o4",
+          "text": "Softmax für genau eine von mehreren gegenseitig ausschliessenden Klassen."
+        }
+      ],
+      "correct_answers": [
+        "o3",
+        "o4"
+      ],
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-activation-functions-detail",
+      "topic_id": "activation-functions",
+      "type": "numeric-choice",
+      "prompt": "Für Scores (0,ln 2,ln 3) lauten die Exponentialwerte (1,2,3). Welche Softmax-Wahrscheinlichkeit erhält die dritte Klasse?",
+      "explanation": "Zuerst exponentieren: (1,2,3). Summe=6, dann pro Klasse teilen. Dritte Klasse: 3/6=0.5. 0.167 und 0.333 gehören zur ersten und zweiten Klasse; 3 ist der unnormalisierte Exponentialwert, keine Wahrscheinlichkeit. Softmax liefert alle drei Wahrscheinlichkeiten, Argmax erst den Klassenindex.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "0.333"
+        },
+        {
+          "id": "o2",
+          "text": "3"
+        },
+        {
+          "id": "o3",
+          "text": "0.167"
+        },
+        {
+          "id": "o4",
+          "text": "0.5"
+        }
+      ],
+      "correct_answer": "o4",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-artificial-neuron-core",
+      "topic_id": "artificial-neuron",
+      "type": "numeric-choice",
+      "prompt": "Ein Neuron hat x=(2,−1), w=(0.5,−2), b=−1 und ReLU. Welche Aktivierung entsteht?",
+      "explanation": "Inputs paarweise gewichten: 0.5·2=1 und (−2)·(−1)=+2. Summe plus Bias: z=1+2−1=2. ReLU vergleicht danach 0 und 2 und liefert a=2. Die 1 ist nur ein Einzelbeitrag, 0 würde einen positiven z fälschlich abschneiden. Der Bias darf nicht vor der Gewichtung als zusätzliches x behandelt werden.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "0"
+        },
+        {
+          "id": "o2",
+          "text": "1"
+        },
+        {
+          "id": "o3",
+          "text": "4"
+        },
+        {
+          "id": "o4",
+          "text": "2"
+        }
+      ],
+      "correct_answer": "o4",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-artificial-neuron-fact",
+      "topic_id": "artificial-neuron",
+      "type": "true-false",
+      "prompt": "Bei null Inputs kann ein von null verschiedener Bias weiterhin die Aktivierung eines Neurons beeinflussen.",
+      "explanation": "Richtig: Für alle xᵢ=0 verschwinden die Gewichtsbeiträge, aber z=b. Bei b=2 liefert ReLU 2; bei b=−2 liefert sie 0. Der Bias kann also den Output beeinflussen, garantiert aber nicht bei jeder Aktivierung und jedem Bias einen von null verschiedenen Output.",
+      "options": [
+        {
+          "id": "false",
+          "text": "Falsch"
+        },
+        {
+          "id": "true",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "true",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-artificial-neuron-properties",
+      "topic_id": "artificial-neuron",
+      "type": "multiple-select",
+      "prompt": "Welche Aussagen gelten für z=Σwᵢxᵢ+b und a=φ(z)?",
+      "explanation": "z ist die gewichtete Summe plus Bias vor φ; a kommt nach φ. Bei x=0 gilt z=b. Inputs sind Beispieldaten, keine gewöhnlich trainierbaren Gewichte. a=z gilt etwa bei linearer Aktivierung oder positiver ReLU, aber nicht allgemein: ReLU(−1)=0 statt −1.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Die Inputs werden bei jedem Optimierungsschritt als Modellparameter gelernt."
+        },
+        {
+          "id": "o2",
+          "text": "z liegt vor der Aktivierungsfunktion."
+        },
+        {
+          "id": "o3",
+          "text": "Der Bias kann den Output auch bei x=0 beeinflussen."
+        },
+        {
+          "id": "o4",
+          "text": "a und z sind bei jeder Aktivierungsfunktion identisch."
+        }
+      ],
+      "correct_answers": [
+        "o2",
+        "o3"
+      ],
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-artificial-neuron-detail",
+      "topic_id": "artificial-neuron",
+      "type": "ordering",
+      "prompt": "Bringe die Rechnung eines einzelnen Neurons in die richtige Reihenfolge.",
+      "explanation": "Erst xᵢ mit wᵢ multiplizieren, dann die Produkte addieren, dann b addieren und φ anwenden. Beispiel x=2,w=3,b=−1: z=6−1=5 und ReLU(z)=5. ReLU schon auf x anzuwenden wäre ein anderer Rechenweg, nicht dieses Neuron.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Inputs mit ihren Gewichten multiplizieren."
+        },
+        {
+          "id": "o2",
+          "text": "Produkte aufsummieren."
+        },
+        {
+          "id": "o3",
+          "text": "Bias zur Summe addieren."
+        },
+        {
+          "id": "o4",
+          "text": "Aktivierungsfunktion auf z anwenden."
+        }
+      ],
+      "correct_order": [
+        "o1",
+        "o2",
+        "o3",
+        "o4"
+      ],
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-batch-iteration-epoch-core",
+      "topic_id": "batch-iteration-epoch",
+      "type": "numeric-choice",
+      "prompt": "1000 Trainingsbeispiele, Batchgrösse 250, ein Update pro Batch: Wie viele Iterationen hat eine Epoche?",
+      "explanation": "1000/250=4 Batches. Jeder Batch erzeugt eine Iteration; nach vier Iterationen wurden alle Beispiele einmal gesehen.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "1000"
+        },
+        {
+          "id": "o2",
+          "text": "1"
+        },
+        {
+          "id": "o3",
+          "text": "4"
+        },
+        {
+          "id": "o4",
+          "text": "250"
+        }
+      ],
+      "correct_answer": "o3",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-batch-iteration-epoch-fact",
+      "topic_id": "batch-iteration-epoch",
+      "type": "true-false",
+      "prompt": "1000 Trainingsbeispiele, Batchgrösse 250, ein Update pro Batch: Drei vollständige Epochen ergeben zwölf Updates.",
+      "explanation": "Richtig: 1000/250=4 Updates je Epoche; drei Epochen enthalten 3·4=12 Updates. Epoche ist ein Datendurchlauf, nicht ein einzelnes Update. Das gilt hier ohne verworfenen Rest oder Gradientenakkumulation.",
+      "options": [
+        {
+          "id": "false",
+          "text": "Falsch"
+        },
+        {
+          "id": "true",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "true",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-batch-iteration-epoch-properties",
+      "topic_id": "batch-iteration-epoch",
+      "type": "matching",
+      "prompt": "Ordne die Trainingsbegriffe ihren Bedeutungen zu.",
+      "explanation": "Batch ist eine Datengruppe, Iteration ein Schritt und Epoche ein vollständiger Datendurchlauf.",
+      "match_items": [
+        {
+          "id": "item1",
+          "text": "Batch",
+          "correct_option_id": "o1"
+        },
+        {
+          "id": "item2",
+          "text": "Iteration",
+          "correct_option_id": "o2"
+        },
+        {
+          "id": "item3",
+          "text": "Epoche",
+          "correct_option_id": "o3"
+        }
+      ],
+      "match_options": [
+        {
+          "id": "o1",
+          "text": "Gruppe gemeinsam verarbeiteter Beispiele."
+        },
+        {
+          "id": "o2",
+          "text": "Ein Trainingsschritt mit Forward, Backward und Update."
+        },
+        {
+          "id": "o3",
+          "text": "Vollständiger Durchlauf durch den Trainingsdatensatz."
+        }
+      ],
+      "difficulty": 3,
+      "enabled": true
+    },
+    {
+      "id": "dl-batch-iteration-epoch-detail",
+      "topic_id": "batch-iteration-epoch",
+      "type": "numeric-choice",
+      "prompt": "1050 Beispiele, Batchgrösse 250, der letzte kleinere Batch wird verarbeitet. Wie viele Updates erfolgen pro Epoche?",
+      "explanation": "1050/250=4.2. Vier volle Batches enthalten 1000 Fälle und ein kleiner fünfter die übrigen 50. Mit verarbeitetem Rest gilt ceil(4.2)=5 Updates. Nur vier zu zählen würde den ausdrücklich erhaltenen Rest verwerfen. Die 250 ist die Batchgrösse, nicht die Updateszahl.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "50"
+        },
+        {
+          "id": "o2",
+          "text": "5"
+        },
+        {
+          "id": "o3",
+          "text": "4"
+        },
+        {
+          "id": "o4",
+          "text": "250"
+        }
+      ],
+      "correct_answer": "o2",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-batch-normalization-core",
+      "topic_id": "batch-normalization",
+      "type": "single-choice",
+      "prompt": "Wie normalisiert BatchNorm bei einer Dense Layer gewöhnlich im Trainingsmodus?",
+      "explanation": "BatchNorm verwendet Batch-Mittelwert und Batch-Varianz je Feature. LayerNorm verwendet eine andere Achse innerhalb eines Beispiels.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Indem jede Aktivierung durch die Lernrate geteilt wird."
+        },
+        {
+          "id": "o2",
+          "text": "Je Feature mithilfe der Werte mehrerer Beispiele des aktuellen Mini-Batches."
+        },
+        {
+          "id": "o3",
+          "text": "Je Token ausschliesslich über dessen Feature-Dimensionen wie LayerNorm."
+        },
+        {
+          "id": "o4",
+          "text": "Nur anhand der Zielklassen des Testsatzes."
+        }
+      ],
+      "correct_answer": "o2",
+      "difficulty": 1,
+      "enabled": true
+    },
+    {
+      "id": "dl-batch-normalization-fact",
+      "topic_id": "batch-normalization",
+      "type": "true-false",
+      "prompt": "BatchNorm verwendet im üblichen Auswertungsmodus gespeicherte laufende Statistiken, wenn diese während des Trainings geführt wurden.",
+      "explanation": "Dieser Standardfall unterscheidet Training und Inferenz. Ohne gespeicherte Statistiken existieren andere Konfigurationen; die Aussage nennt deshalb ihre Voraussetzung.",
+      "options": [
+        {
+          "id": "false",
+          "text": "Falsch"
+        },
+        {
+          "id": "true",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "true",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-batch-normalization-properties",
+      "topic_id": "batch-normalization",
+      "type": "multiple-select",
+      "prompt": "Welche Aussagen gelten für BatchNorm im üblichen Modus mit laufenden Statistiken?",
+      "explanation": "γ/β sind lernbare affine Parameter. ε stabilisiert die Division. Mit laufenden Statistiken unterscheidet sich der Modus bei Training und Auswertung.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Inferenz verwendet gespeicherte laufende Statistiken statt neue Batch-Statistiken."
+        },
+        {
+          "id": "o2",
+          "text": "ε wird eingesetzt, um die Input-Kanalzahl zu verdoppeln."
+        },
+        {
+          "id": "o3",
+          "text": "Training und Inferenz verwenden zwingend identische Statistikberechnung."
+        },
+        {
+          "id": "o4",
+          "text": "γ und β sind trainierbar."
+        }
+      ],
+      "correct_answers": [
+        "o1",
+        "o4"
+      ],
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-batch-normalization-misconception",
+      "topic_id": "batch-normalization",
+      "type": "numeric-choice",
+      "prompt": "Batchwerte (1,3), Populationsvarianz, ε für diese Rechnung vernachlässigt. Welcher standardisierte Vektor entsteht?",
+      "explanation": "μ=(1+3)/2=2. Populationsvarianz=[(1−2)²+(3−2)²]/2=1, Standardabweichung=1. Daher x̂=(−1,1). Mit Stichprobenvarianz entstünde ein anderer Nenner, aber diese Aufgabe nennt ausdrücklich Populationsvarianz. γ und β sind hier noch nicht angewendet.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "(−1,1)"
+        },
+        {
+          "id": "o2",
+          "text": "(0,1)"
+        },
+        {
+          "id": "o3",
+          "text": "(1,3)"
+        },
+        {
+          "id": "o4",
+          "text": "(−2,2)"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-classic-attention-core",
+      "topic_id": "classic-attention",
+      "type": "single-choice",
+      "prompt": "Was ändert klassische Attention gegenüber einem einzigen fixen Encoder-Kontext?",
+      "explanation": "Der Decoder kann für jede Ausgabe unterschiedliche Quellpositionen gewichten. Die Encoder-Zustände bleiben zugänglich.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Sie berechnet je Decoderschritt einen Kontext aus gewichteten Encoder-Zuständen."
+        },
+        {
+          "id": "o2",
+          "text": "Sie entfernt die gesamte Quellsequenz aus dem Modell."
+        },
+        {
+          "id": "o3",
+          "text": "Sie verbietet dem Decoder jeden Zugriff auf die Quelle."
+        },
+        {
+          "id": "o4",
+          "text": "Sie erzwingt identische Gewichte für alle Quellpositionen."
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 1,
+      "enabled": true
+    },
+    {
+      "id": "dl-classic-attention-fact",
+      "topic_id": "classic-attention",
+      "type": "true-false",
+      "prompt": "Der Decoder kann bei zwei Ausgabeschritten unterschiedliche Attention-Gewichte auf denselben Quellsatz anwenden.",
+      "explanation": "Die Gewichte hängen vom aktuellen Decoderbedarf ab. Gleiche Quellzustände können daher verschiedene Kontextvektoren erzeugen.",
+      "options": [
+        {
+          "id": "false",
+          "text": "Falsch"
+        },
+        {
+          "id": "true",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "true",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-classic-attention-properties",
+      "topic_id": "classic-attention",
+      "type": "multiple-select",
+      "prompt": "Welche Aussagen zur klassischen Encoder-Decoder-Attention sind korrekt?",
+      "explanation": "Softmax normalisiert die Quellgewichte; die Scores hängen vom aktuellen Decoderbedarf ab. Dadurch kann der Kontext dynamisch werden.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Der Kontext ist unabhängig vom Decoderbedarf immer gleich."
+        },
+        {
+          "id": "o2",
+          "text": "Attention-Gewichte müssen negative Wahrscheinlichkeiten enthalten."
+        },
+        {
+          "id": "o3",
+          "text": "Gewichte summieren sich für einen Decoderschritt über die Quelle zu 1."
+        },
+        {
+          "id": "o4",
+          "text": "Der Kontext kann sich zwischen zwei Ausgabeschritten ändern."
+        }
+      ],
+      "correct_answers": [
+        "o3",
+        "o4"
+      ],
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-classic-attention-detail",
+      "topic_id": "classic-attention",
+      "type": "numeric-choice",
+      "prompt": "Encoder-Zustände (1,0),(0,2),(1,1); Gewichte (0.2,0.5,0.3). Welcher Kontext entsteht?",
+      "explanation": "Jeden Zustandsvektor mit seinem Gewicht multiplizieren und komponentenweise addieren: c₁=0.2·1+0.5·0+0.3·1=0.5; c₂=0.2·0+0.5·2+0.3·1=1.3. Die Gewichte summieren sich zu 1, der Kontext (0.5,1.3) muss das nicht. Er ist Inhalt, keine Wahrscheinlichkeitsverteilung.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "(1,3)"
+        },
+        {
+          "id": "o2",
+          "text": "(0.2,1.0)"
+        },
+        {
+          "id": "o3",
+          "text": "(0.5,0.3)"
+        },
+        {
+          "id": "o4",
+          "text": "(0.5,1.3)"
+        }
+      ],
+      "correct_answer": "o4",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-cnn-architecture-core",
+      "topic_id": "cnn-architecture",
+      "type": "single-choice",
+      "prompt": "Sechs Filter einer gewöhnlichen Convolution werden auf ein Bild angewendet. Was bestimmen diese sechs Filter unmittelbar?",
+      "explanation": "Ein Filter erzeugt eine Map. Die Kanalzahl der Zwischenrepräsentation ist nicht automatisch die spätere Klassenzahl.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Sechs mögliche Zielklassen bei jeder späteren Aufgabe."
+        },
+        {
+          "id": "o2",
+          "text": "Sechs Pixel in der gesamten Ausgabe."
+        },
+        {
+          "id": "o3",
+          "text": "Sechs unabhängige Trainingsdatensätze."
+        },
+        {
+          "id": "o4",
+          "text": "Sechs Output-Feature-Maps beziehungsweise Output-Kanäle."
+        }
+      ],
+      "correct_answer": "o4",
+      "difficulty": 1,
+      "enabled": true
+    },
+    {
+      "id": "dl-cnn-architecture-fact",
+      "topic_id": "cnn-architecture",
+      "type": "true-false",
+      "prompt": "Nach sechs Input-Feature-Maps benötigen die Filter einer gewöhnlichen zweiten Convolution Tiefe 6.",
+      "explanation": "Der Filter deckt alle aktuellen Input-Kanäle ab, unabhängig davon, ob das ursprüngliche Bild drei RGB-Kanäle hatte.",
+      "options": [
+        {
+          "id": "false",
+          "text": "Falsch"
+        },
+        {
+          "id": "true",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "true",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-cnn-architecture-properties",
+      "topic_id": "cnn-architecture",
+      "type": "multiple-select",
+      "prompt": "Welche Aussagen über CNN-Merkmale und Schichten treffen zu?",
+      "explanation": "CNN-Filter werden gelernt; frühe und spätere Merkmale können hierarchisch kombiniert werden. Kanäle und räumliche Breite sind verschiedene Dimensionen.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Output-Kanäle zählen die räumliche Breite eines Bildes."
+        },
+        {
+          "id": "o2",
+          "text": "Spätere Schichten können Kombinationen früher Merkmale verarbeiten."
+        },
+        {
+          "id": "o3",
+          "text": "Eine Nichtlinearität zwischen Convolutions erhöht die Darstellungsfähigkeit."
+        },
+        {
+          "id": "o4",
+          "text": "Jeder Filter einer tiefen Schicht muss von Hand als Auge programmiert sein."
+        }
+      ],
+      "correct_answers": [
+        "o2",
+        "o3"
+      ],
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-cnn-architecture-detail",
+      "topic_id": "cnn-architecture",
+      "type": "numeric-choice",
+      "prompt": "Die zweite Layer erhält sechs Maps und nutzt zehn 5 × 5 Filter mit einem Bias je Filter. Wie viele Parameter hat sie?",
+      "explanation": "Die Layer erhält sechs Kanäle, nicht mehr die ursprünglichen drei RGB-Kanäle. Ein Filter besitzt 5·5·6=150 Gewichte plus einen Bias. Zehn Filter: 10·151=1510 Parameter. Anzahl räumlicher Filterpositionen vervielfacht diese Zahl nicht, weil Gewichte geteilt werden.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "1500"
+        },
+        {
+          "id": "o2",
+          "text": "250"
+        },
+        {
+          "id": "o3",
+          "text": "1510"
+        },
+        {
+          "id": "o4",
+          "text": "760"
+        }
+      ],
+      "correct_answer": "o3",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-cnn-spatial-dimensions-core",
+      "topic_id": "cnn-spatial-dimensions",
+      "type": "numeric-choice",
+      "prompt": "Input 7 × 7, Kernel 3 × 3, Stride 2, Padding 0, Dilatation 1: Welche räumliche Ausgabe entsteht?",
+      "explanation": "Für jede Raumachse: N+2P−F=7+0−3=4; durch S=2 ergibt 2; floor und +1 ergeben O=3. Das gilt für Höhe und Breite, also 3×3. Ein zusätzliches Multiplizieren mit der Filterzahl würde Kanalzahl und Raumgrösse vermischen.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "7 × 7"
+        },
+        {
+          "id": "o2",
+          "text": "2 × 2"
+        },
+        {
+          "id": "o3",
+          "text": "3 × 3"
+        },
+        {
+          "id": "o4",
+          "text": "5 × 5"
+        }
+      ],
+      "correct_answer": "o3",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-cnn-spatial-dimensions-fact",
+      "topic_id": "cnn-spatial-dimensions",
+      "type": "true-false",
+      "prompt": "Padding erhält die räumliche Grösse für jede beliebige Kombination aus Filter und Stride.",
+      "explanation": "Grössenerhaltung gilt nur für passende Konfigurationen, etwa ungeraden Filter F, Stride 1 und P=(F−1)/2. Padding allein garantiert sie nicht.",
+      "options": [
+        {
+          "id": "false",
+          "text": "Falsch"
+        },
+        {
+          "id": "true",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "false",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-cnn-spatial-dimensions-properties",
+      "topic_id": "cnn-spatial-dimensions",
+      "type": "multiple-select",
+      "prompt": "Welche Aussagen über gewöhnliche Convolutions sind korrekt?",
+      "explanation": "Stride beeinflusst Fensterpositionen. Geteilte Filter haben eine Parameterzahl unabhängig von der Zahl dieser Positionen. P wird je Seite gezählt.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Grösserer Stride kann die räumliche Ausgabe verkleinern."
+        },
+        {
+          "id": "o2",
+          "text": "Filtergewichte werden an mehreren räumlichen Positionen geteilt."
+        },
+        {
+          "id": "o3",
+          "text": "Eine Verdopplung der Bildbreite verdoppelt zwingend die Anzahl Filtergewichte."
+        },
+        {
+          "id": "o4",
+          "text": "Padding P zählt in der Formel nur einen Rand insgesamt, deshalb steht niemals 2P darin."
+        }
+      ],
+      "correct_answers": [
+        "o1",
+        "o2"
+      ],
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-cnn-spatial-dimensions-detail",
+      "topic_id": "cnn-spatial-dimensions",
+      "type": "numeric-choice",
+      "prompt": "32 × 32 × 3 Input, zehn 5 × 5 Filter, ein Bias je Filter: Wie viele trainierbare Parameter enthält diese gewöhnliche Convolution?",
+      "explanation": "Pro Filter: 5·5·3=75 Gewichte plus ein Bias, also 76. Zehn Filter ergeben 760. Die 32×32 Inputpositionen werden nicht zusätzlich multipliziert, weil derselbe Filter räumlich wiederverwendet wird. Padding und Stride betreffen Outputpositionen, nicht diese Kernelparameter.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "1510"
+        },
+        {
+          "id": "o2",
+          "text": "760"
+        },
+        {
+          "id": "o3",
+          "text": "750"
+        },
+        {
+          "id": "o4",
+          "text": "320"
+        }
+      ],
+      "correct_answer": "o2",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-computer-vision-images-core",
+      "topic_id": "computer-vision-images",
+      "type": "numeric-choice",
+      "prompt": "Wie viele Zahlen enthält ein 32 × 32 RGB-Bild?",
+      "explanation": "32·32 Pixel, drei Kanalwerte je Pixel: 32·32·3=3072 Zahlen.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "32"
+        },
+        {
+          "id": "o2",
+          "text": "3072"
+        },
+        {
+          "id": "o3",
+          "text": "1024"
+        },
+        {
+          "id": "o4",
+          "text": "96"
+        }
+      ],
+      "correct_answer": "o2",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-computer-vision-images-fact",
+      "topic_id": "computer-vision-images",
+      "type": "true-false",
+      "prompt": "Flattening eines RGB-Bildes macht aus jedem Kanalwert eine eigene semantisch interpretierte Farbe.",
+      "explanation": "Flattening ordnet die vorhandenen Zahlen als Vektor an. Es lernt keine Semantik und erzeugt keine neuen Farbkanäle.",
+      "options": [
+        {
+          "id": "false",
+          "text": "Falsch"
+        },
+        {
+          "id": "true",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "false",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-computer-vision-images-properties",
+      "topic_id": "computer-vision-images",
+      "type": "multiple-select",
+      "prompt": "Welche Aussagen über Bilddaten treffen zu?",
+      "explanation": "Höhe/Breite und Kanäle sind verschiedene Achsen. Pixelintensitäten sind Messwerte; Objekterkennung entsteht erst durch Modellverarbeitung.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Bei 8-Bit-Kanälen liegt die Intensität gewöhnlich zwischen 0 und 255."
+        },
+        {
+          "id": "o2",
+          "text": "Ein 32 × 32 Bild besitzt immer 32 Kanäle."
+        },
+        {
+          "id": "o3",
+          "text": "Alle Pixelwerte sind bereits erkannte Objektklassen."
+        },
+        {
+          "id": "o4",
+          "text": "Ein RGB-Pixel hat drei Kanalwerte."
+        }
+      ],
+      "correct_answers": [
+        "o1",
+        "o4"
+      ],
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-computer-vision-images-misconception",
+      "topic_id": "computer-vision-images",
+      "type": "single-choice",
+      "prompt": "Warum sind lokale Filter für Bilddaten sinnvoll?",
+      "explanation": "Bilder haben lokale Struktur. Ein CNN nutzt sie mit Filtern und Parameterteilung; Labels und numerische Inputs bleiben je nach Aufgabe nötig.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Benachbarte Pixel besitzen räumliche Beziehungen, die ein lokaler Filter nutzen kann."
+        },
+        {
+          "id": "o2",
+          "text": "Die Reihenfolge der Pixel spielt bei jeder Bildaufgabe keine Rolle."
+        },
+        {
+          "id": "o3",
+          "text": "Ein Filter ersetzt automatisch alle Trainingslabels."
+        },
+        {
+          "id": "o4",
+          "text": "Ein CNN benötigt grundsätzlich keine Zahlen als Input."
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-dl-ai-ml-dl-core",
+      "topic_id": "dl-ai-ml-dl",
+      "type": "single-choice",
+      "prompt": "Ein Spamfilter verwendet ausschliesslich von Menschen programmierte Wenn-Dann-Regeln. Welche Einordnung passt?",
+      "explanation": "AI umfasst auch regelbasierte Systeme. ML setzt eine Anpassung anhand von Daten voraus; viele Regeln allein machen kein gelerntes Modell.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Er kann AI sein, ohne aus Daten trainiertes ML zu verwenden."
+        },
+        {
+          "id": "o2",
+          "text": "Jedes AI-System muss ein neuronales Netz enthalten."
+        },
+        {
+          "id": "o3",
+          "text": "Er ist automatisch Deep Learning, weil er Text verarbeitet."
+        },
+        {
+          "id": "o4",
+          "text": "Er ist ML, weil er mehrere Regeln hat."
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 1,
+      "enabled": true
+    },
+    {
+      "id": "dl-dl-ai-ml-dl-fact",
+      "topic_id": "dl-ai-ml-dl",
+      "type": "true-false",
+      "prompt": "Jedes Machine-Learning-Modell ist zugleich ein Deep-Learning-Modell.",
+      "explanation": "DL ist eine Teilmenge von ML. Eine trainierte logistische Regression oder ein Entscheidungsbaum ist ML, aber kein tiefes neuronales Netz.",
+      "options": [
+        {
+          "id": "false",
+          "text": "Falsch"
+        },
+        {
+          "id": "true",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "false",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-dl-ai-ml-dl-properties",
+      "topic_id": "dl-ai-ml-dl",
+      "type": "multiple-select",
+      "prompt": "Welche Aussagen über die Beziehung von AI, ML und DL sind korrekt?",
+      "explanation": "Die Begriffe sind verschachtelt: DL ⊂ ML ⊂ AI. Tiefe beschreibt die Architektur; die beste Modellwahl hängt von Aufgabe, Daten und unabhängiger Bewertung ab.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Mehr Trainingsbeispiele machen jedes Modell automatisch zu Deep Learning."
+        },
+        {
+          "id": "o2",
+          "text": "Ein tiefes Netz ist bei jeder Datenlage die beste Modellwahl."
+        },
+        {
+          "id": "o3",
+          "text": "Deep Learning gehört zu Machine Learning."
+        },
+        {
+          "id": "o4",
+          "text": "Machine Learning gehört zur künstlichen Intelligenz."
+        }
+      ],
+      "correct_answers": [
+        "o3",
+        "o4"
+      ],
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-dl-ai-ml-dl-misconception",
+      "topic_id": "dl-ai-ml-dl",
+      "type": "single-choice",
+      "prompt": "Was bezeichnet die Tiefe eines neuronalen Netzes?",
+      "explanation": "Tiefe zählt Schichten entlang des Verarbeitungspfads. Neuronen pro Schicht beschreiben Breite; Datenmenge und Accuracy sind andere Grössen.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Die Zahl der Trainingsbeispiele."
+        },
+        {
+          "id": "o2",
+          "text": "Die Zahl der Pixel je Bild."
+        },
+        {
+          "id": "o3",
+          "text": "Die Genauigkeit auf dem Testdatensatz."
+        },
+        {
+          "id": "o4",
+          "text": "Die Anzahl aufeinanderfolgender Verarbeitungsschichten."
+        }
+      ],
+      "correct_answer": "o4",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-dl-learning-ingredients-core",
+      "topic_id": "dl-learning-ingredients",
+      "type": "matching",
+      "prompt": "Ordne die Zutaten des Lernalgorithmus ihrer Aufgabe zu.",
+      "explanation": "Daten liefern Inputs und ggf. Ziele; das Modell erzeugt Vorhersagen; Loss bewertet diese gegen Ziele; Backpropagation berechnet Ableitungen; der Optimierer aktualisiert Parameter. Eine Metrik beurteilt Erfolg. Loss und Metrik können verschieden sein, etwa BCE und Accuracy.",
+      "match_items": [
+        {
+          "id": "item1",
+          "text": "Modell",
+          "correct_option_id": "o1"
+        },
+        {
+          "id": "item2",
+          "text": "Loss",
+          "correct_option_id": "o2"
+        },
+        {
+          "id": "item3",
+          "text": "Optimierer",
+          "correct_option_id": "o3"
+        },
+        {
+          "id": "item4",
+          "text": "Metrik",
+          "correct_option_id": "o4"
+        }
+      ],
+      "match_options": [
+        {
+          "id": "o1",
+          "text": "Bildet Eingaben auf Vorhersagen ab."
+        },
+        {
+          "id": "o2",
+          "text": "Bewertet den Unterschied zwischen Vorhersage und Ziel."
+        },
+        {
+          "id": "o3",
+          "text": "Aktualisiert Parameter anhand des Trainingssignals."
+        },
+        {
+          "id": "o4",
+          "text": "Beurteilt den praktischen Erfolg des Modells."
+        }
+      ],
+      "difficulty": 3,
+      "enabled": true
+    },
+    {
+      "id": "dl-dl-learning-ingredients-fact",
+      "topic_id": "dl-learning-ingredients",
+      "type": "true-false",
+      "prompt": "Eine Metrik kann sich von der Loss unterscheiden, obwohl beide dasselbe Modell bewerten.",
+      "explanation": "Cross-Entropy kann das differenzierbare Trainingsziel sein, während Accuracy richtige Klassenentscheidungen zählt. Sie haben verschiedene Aufgaben und Zahlenwerte.",
+      "options": [
+        {
+          "id": "false",
+          "text": "Falsch"
+        },
+        {
+          "id": "true",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "true",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-dl-learning-ingredients-properties",
+      "topic_id": "dl-learning-ingredients",
+      "type": "multiple-select",
+      "prompt": "Welche Grössen sind bei einem gewöhnlichen neuronalen Netz trainierbare Modellparameter?",
+      "explanation": "Gewichte und Biases werden im gewöhnlichen Netztraining angepasst. Die Lernrate bestimmt die Update-Schrittweite und ist ein Hyperparameter. Labels sind bekannte Zielantworten, nicht Zahlen, die man umschreibt, damit das Modell recht hat. Architektur und Daten werden beim einzelnen Gradientenupdate nicht zu Gewichten.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Die Labels des Trainingsdatensatzes."
+        },
+        {
+          "id": "o2",
+          "text": "Gewichte einer Dense Layer."
+        },
+        {
+          "id": "o3",
+          "text": "Biases der Neuronen."
+        },
+        {
+          "id": "o4",
+          "text": "Die vorab gewählte Lernrate des Optimierers."
+        }
+      ],
+      "correct_answers": [
+        "o2",
+        "o3"
+      ],
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-dl-learning-ingredients-detail",
+      "topic_id": "dl-learning-ingredients",
+      "type": "single-choice",
+      "prompt": "90 von 100 unabhängig geprüften Bildern sind richtig klassifiziert. Welche Metrik lässt sich direkt berechnen?",
+      "explanation": "Accuracy ist der Anteil richtiger Klassenentscheidungen: 90/100. Für Cross-Entropy fehlen die vorhergesagten Wahrscheinlichkeiten; für MSE fehlen numerische Fehler.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "MSE = 90."
+        },
+        {
+          "id": "o2",
+          "text": "Lernrate = 0.9."
+        },
+        {
+          "id": "o3",
+          "text": "Accuracy = 90 %."
+        },
+        {
+          "id": "o4",
+          "text": "Cross-Entropy = 0.1."
+        }
+      ],
+      "correct_answer": "o3",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-dl-loss-functions-core",
+      "topic_id": "dl-loss-functions",
+      "type": "single-choice",
+      "prompt": "Zielwerte sind kontinuierliche Hauspreise. Welche Loss passt direkt zu dieser Regression?",
+      "explanation": "MSE und MAE vergleichen numerische Vorhersagen mit Zielwerten. Softmax ist eine Output-Transformation und ohne Zielvergleich keine Loss.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Die Anzahl Klassen im Vokabular."
+        },
+        {
+          "id": "o2",
+          "text": "Eine kausale Attention-Maske."
+        },
+        {
+          "id": "o3",
+          "text": "Mean Squared Error oder Mean Absolute Error."
+        },
+        {
+          "id": "o4",
+          "text": "Softmax ohne Vergleich mit Zielwerten."
+        }
+      ],
+      "correct_answer": "o3",
+      "difficulty": 1,
+      "enabled": true
+    },
+    {
+      "id": "dl-dl-loss-functions-fact",
+      "topic_id": "dl-loss-functions",
+      "type": "true-false",
+      "prompt": "Der kategorische Cross-Entropy-Loss eines einzelnen One-Hot-Beispiels liegt immer zwischen 0 und 1.",
+      "explanation": "L=−ln(p_richtig) kann grösser als 1 sein. Bei p_richtig=0.1 beträgt er etwa 2.303; nur die Wahrscheinlichkeit ist auf [0,1] beschränkt.",
+      "options": [
+        {
+          "id": "false",
+          "text": "Falsch"
+        },
+        {
+          "id": "true",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "false",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-dl-loss-functions-properties",
+      "topic_id": "dl-loss-functions",
+      "type": "multiple-select",
+      "prompt": "Welche Aussagen über MSE und MAE treffen zu?",
+      "explanation": "Beide Losses sind nichtnegativ. Durch Quadrate beziehungsweise absolute Beträge heben sich Vorzeichen nicht auf; MSE bestraft grosse Abweichungen stärker.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "MSE quadriert die Abweichungen vor der Mittelung."
+        },
+        {
+          "id": "o2",
+          "text": "MAE verwendet absolute Abweichungen."
+        },
+        {
+          "id": "o3",
+          "text": "MSE ignoriert grosse Fehler vollständig."
+        },
+        {
+          "id": "o4",
+          "text": "MAE kann durch positive und negative Fehler auf null fallen."
+        }
+      ],
+      "correct_answers": [
+        "o1",
+        "o2"
+      ],
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-dl-loss-functions-detail",
+      "topic_id": "dl-loss-functions",
+      "type": "numeric-choice",
+      "prompt": "Die Fehler ŷ−y sind (1,−2). Wie gross ist ihr Mean Squared Error?",
+      "explanation": "MSE=(1²+(−2)²)/2=(1+4)/2=2.5. 1.5 wäre der MAE; 5 wäre die nicht gemittelte Quadratsumme.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "-0.5"
+        },
+        {
+          "id": "o2",
+          "text": "2.5"
+        },
+        {
+          "id": "o3",
+          "text": "1.5"
+        },
+        {
+          "id": "o4",
+          "text": "5"
+        }
+      ],
+      "correct_answer": "o2",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-dl-regularization-core",
+      "topic_id": "dl-regularization",
+      "type": "single-choice",
+      "prompt": "Die Trainingsloss sinkt, während die Validierungsloss nach einem Minimum steigt. Welcher Snapshot ist für Early Stopping sinnvoll?",
+      "explanation": "Early Stopping verwendet Validation und behält den besten Stand. Der Testsatz darf nicht für die wiederholte Auswahl genutzt werden.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Ein Snapshot mit zufällig gelöschten Gewichten."
+        },
+        {
+          "id": "o2",
+          "text": "Der Snapshot mit der besten Validierungsleistung."
+        },
+        {
+          "id": "o3",
+          "text": "Immer der letzte Snapshot, weil er am längsten trainiert wurde."
+        },
+        {
+          "id": "o4",
+          "text": "Der Snapshot mit dem kleinsten Loss auf dem Testsatz nach jeder Epoche."
+        }
+      ],
+      "correct_answer": "o2",
+      "difficulty": 1,
+      "enabled": true
+    },
+    {
+      "id": "dl-dl-regularization-fact",
+      "topic_id": "dl-regularization",
+      "type": "true-false",
+      "prompt": "Dropout entfernt ausgewählte Neuronen und ihre Gewichte dauerhaft aus dem gespeicherten Modell.",
+      "explanation": "Dropout maskiert Aktivierungen während des Trainings temporär. Die Gewichte bleiben vorhanden; in Standard-Inferenz wird Dropout deaktiviert.",
+      "options": [
+        {
+          "id": "false",
+          "text": "Falsch"
+        },
+        {
+          "id": "true",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "false",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-dl-regularization-properties",
+      "topic_id": "dl-regularization",
+      "type": "multiple-select",
+      "prompt": "Welche Aussagen zu Regularisierung sind korrekt?",
+      "explanation": "In C=C₀+λR steuert λ die Stärke der Strafe. Zu starke Einschränkung kann auch den Trainingsfit verschlechtern; Early Stopping braucht eine geeignete Validation.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Ein zu starkes Regularisierungsgewicht λ kann Underfitting begünstigen."
+        },
+        {
+          "id": "o2",
+          "text": "Early Stopping benötigt keine unabhängigen Validierungsdaten."
+        },
+        {
+          "id": "o3",
+          "text": "Eine höhere λ reduziert den Einfluss der Parameterstrafe."
+        },
+        {
+          "id": "o4",
+          "text": "L2-Regularisierung kann grosse Gewichte in der Loss bestrafen."
+        }
+      ],
+      "correct_answers": [
+        "o1",
+        "o4"
+      ],
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-dl-regularization-detail",
+      "topic_id": "dl-regularization",
+      "type": "numeric-choice",
+      "prompt": "C₀=0.4, w=(2,−1), λ=0.1 und R(w)=Σw². Wie gross ist C=C₀+λR?",
+      "explanation": "R=2²+(−1)²=5. C=0.4+0.1·5=0.9. λ multipliziert die Summe; es ist kein zusätzliches Gewicht des Netzes.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "0.9"
+        },
+        {
+          "id": "o2",
+          "text": "0.5"
+        },
+        {
+          "id": "o3",
+          "text": "5"
+        },
+        {
+          "id": "o4",
+          "text": "0.4"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-forward-backward-pass-core",
+      "topic_id": "forward-backward-pass",
+      "type": "single-choice",
+      "prompt": "Nach einem Forward Pass und der Loss-Berechnung läuft Backpropagation. Welches Ergebnis entsteht unmittelbar?",
+      "explanation": "Der Backward Pass liefert Ableitungen. Eine Parameteränderung benötigt den anschliessenden Optimierungsschritt.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Gradienten der Loss nach den Modellparametern."
+        },
+        {
+          "id": "o2",
+          "text": "Bereits aktualisierte Parameter, auch ohne Optimierer."
+        },
+        {
+          "id": "o3",
+          "text": "Ein neuer Train/Test-Split."
+        },
+        {
+          "id": "o4",
+          "text": "Die endgültige optimale Architektur."
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 1,
+      "enabled": true
+    },
+    {
+      "id": "dl-forward-backward-pass-fact",
+      "topic_id": "forward-backward-pass",
+      "type": "true-false",
+      "prompt": "Für reine Inferenz mit einem fertig trainierten Netz ist normalerweise kein Backward Pass nötig.",
+      "explanation": "Inferenz berechnet einen Output mit bestehenden Parametern. Es wird keine Trainingsloss rückwärts abgeleitet und kein Update vorgenommen.",
+      "options": [
+        {
+          "id": "false",
+          "text": "Falsch"
+        },
+        {
+          "id": "true",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "true",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-forward-backward-pass-properties",
+      "topic_id": "forward-backward-pass",
+      "type": "ordering",
+      "prompt": "Ordne einen gewöhnlichen Trainingsschritt.",
+      "explanation": "Ohne Vorhersage fehlt der Loss-Wert; ohne Ableitungen fehlt das Signal für das Gradientenupdate.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Forward Pass: Vorhersage berechnen."
+        },
+        {
+          "id": "o2",
+          "text": "Loss gegen den Zielwert bestimmen."
+        },
+        {
+          "id": "o3",
+          "text": "Backward Pass: Gradienten berechnen."
+        },
+        {
+          "id": "o4",
+          "text": "Optimierer: Parameter aktualisieren."
+        }
+      ],
+      "correct_order": [
+        "o1",
+        "o2",
+        "o3",
+        "o4"
+      ],
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-forward-backward-pass-detail",
+      "topic_id": "forward-backward-pass",
+      "type": "numeric-choice",
+      "prompt": "Für ŷ=wx, x=2, w=1, y=4 und L=½(ŷ−y)²: Wie gross ist ∂L/∂w?",
+      "explanation": "Forward: ŷ=1·2=2. Loss: ½(2−4)²=2. Ableitung nach ŷ: 2−4=−2; nach w: x=2. Kettenregel ergibt ∂L/∂w=(−2)·2=−4. Der Loss 2 ist nicht der Gradient; −2 ist erst die Output-Ableitung. Die Lernrate gehört erst in das spätere Update.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "-2"
+        },
+        {
+          "id": "o2",
+          "text": "2"
+        },
+        {
+          "id": "o3",
+          "text": "4"
+        },
+        {
+          "id": "o4",
+          "text": "-4"
+        }
+      ],
+      "correct_answer": "o4",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-lstm-core",
+      "topic_id": "lstm",
+      "type": "matching",
+      "prompt": "Ordne die drei LSTM-Gates ihren Rollen zu.",
+      "explanation": "Die LSTM hat drei Gate-Rollen. Die Aktualisierung c=f·c_alt+i·c̃ ist eine Kombination dieser Beiträge, kein zusätzliches viertes Gate.",
+      "match_items": [
+        {
+          "id": "item1",
+          "text": "Forget-Gate",
+          "correct_option_id": "o1"
+        },
+        {
+          "id": "item2",
+          "text": "Input-Gate",
+          "correct_option_id": "o2"
+        },
+        {
+          "id": "item3",
+          "text": "Output-Gate",
+          "correct_option_id": "o3"
+        }
+      ],
+      "match_options": [
+        {
+          "id": "o1",
+          "text": "Steuert den erhaltenen Anteil des alten Zellzustands."
+        },
+        {
+          "id": "o2",
+          "text": "Steuert den Anteil des neuen Zellkandidaten."
+        },
+        {
+          "id": "o3",
+          "text": "Steuert die aus dem Zellzustand erzeugte Hidden-Ausgabe."
+        }
+      ],
+      "difficulty": 3,
+      "enabled": true
+    },
+    {
+      "id": "dl-lstm-fact",
+      "topic_id": "lstm",
+      "type": "true-false",
+      "prompt": "Eine LSTM garantiert, dass bei beliebig langen Sequenzen niemals ein Gradient verschwinden kann.",
+      "explanation": "Der additive Zellpfad kann Gradienten besser erhalten, besonders bei Forget-Gates nahe 1. Andere Faktoren und lange Produkte bleiben relevant; eine allgemeine Garantie gibt es nicht.",
+      "options": [
+        {
+          "id": "false",
+          "text": "Falsch"
+        },
+        {
+          "id": "true",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "false",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-lstm-properties",
+      "topic_id": "lstm",
+      "type": "multiple-select",
+      "prompt": "Welche Aussagen über eine gewöhnliche LSTM sind korrekt?",
+      "explanation": "Gates liefern kontinuierliche Sigmoid-Werte. Der alte Anteil kann erhalten bleiben und mit einem neuen Anteil kombiniert werden; h_t ist die gefilterte Ausgabe.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Die Speicheraktualisierung löscht zwingend alle alten Informationen."
+        },
+        {
+          "id": "o2",
+          "text": "Zellzustand c_t und Hidden State h_t sind unterschiedliche Grössen."
+        },
+        {
+          "id": "o3",
+          "text": "Der neue Zellzustand enthält einen addierten Anteil i_t⊙c̃_t."
+        },
+        {
+          "id": "o4",
+          "text": "Das Forget-Gate muss stets exakt 0 oder exakt 1 sein."
+        }
+      ],
+      "correct_answers": [
+        "o2",
+        "o3"
+      ],
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-lstm-detail",
+      "topic_id": "lstm",
+      "type": "numeric-choice",
+      "prompt": "c_alt=2, f=0.8, i=0.5 und c̃=−0.4. Wie gross ist c_neu=f·c_alt+i·c̃?",
+      "explanation": "Alter Anteil=0.8·2=1.6, neuer Anteil=0.5·(−0.4)=−0.2. Summe c_neu=1.4. Dies ist Speicher und darf grösser als 1 sein. Für h_neu wären noch tanh(c_neu) und das Output-Gate nötig; Gatewerte und Zellzustand haben unterschiedliche Wertebereiche.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "2.1"
+        },
+        {
+          "id": "o2",
+          "text": "-0.2"
+        },
+        {
+          "id": "o3",
+          "text": "1.4"
+        },
+        {
+          "id": "o4",
+          "text": "1.8"
+        }
+      ],
+      "correct_answer": "o3",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-multi-head-attention-core",
+      "topic_id": "multi-head-attention",
+      "type": "single-choice",
+      "prompt": "Zwei Head-Outputs lauten (1,2) und (3,4). Welche Verkettung entsteht vor der Ausgangsprojektion?",
+      "explanation": "Concat hängt Features aneinander. (2,3) wäre eine Mittelung, (4,6) eine Addition; die Ausgangsprojektion folgt erst danach.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "(4,6)"
+        },
+        {
+          "id": "o2",
+          "text": "(3,8)"
+        },
+        {
+          "id": "o3",
+          "text": "(1,2,3,4)"
+        },
+        {
+          "id": "o4",
+          "text": "(2,3)"
+        }
+      ],
+      "correct_answer": "o3",
+      "difficulty": 1,
+      "enabled": true
+    },
+    {
+      "id": "dl-multi-head-attention-fact",
+      "topic_id": "multi-head-attention",
+      "type": "true-false",
+      "prompt": "Alle Heads müssen dieselben Query-, Key- und Value-Projektionsmatrizen verwenden.",
+      "explanation": "Jeder Head hat eigene gelernte Projektionen. Dadurch können unterschiedliche Repräsentationsräume und Beziehungen entstehen.",
+      "options": [
+        {
+          "id": "false",
+          "text": "Falsch"
+        },
+        {
+          "id": "true",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "false",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-multi-head-attention-properties",
+      "topic_id": "multi-head-attention",
+      "type": "multiple-select",
+      "prompt": "Welche Aussagen über Multi-Head Attention sind korrekt?",
+      "explanation": "Die Zahl der Positionen T bleibt erhalten. Unterschiedliche Head-Spezialisierungen können gelernt werden, sind aber nicht als feste Rollen garantiert.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Outputs der Heads werden entlang der Feature-Achse verkettet."
+        },
+        {
+          "id": "o2",
+          "text": "Eine gelernte Ausgangsprojektion kombiniert die verketteten Features."
+        },
+        {
+          "id": "o3",
+          "text": "Mehr Heads erhöhen zwangsläufig die Anzahl Tokens der Sequenz."
+        },
+        {
+          "id": "o4",
+          "text": "Jeder Head besitzt eine garantiert fest programmierte Syntaxaufgabe."
+        }
+      ],
+      "correct_answers": [
+        "o1",
+        "o2"
+      ],
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-multi-head-attention-detail",
+      "topic_id": "multi-head-attention",
+      "type": "numeric-choice",
+      "prompt": "Fünf Tokens, drei Heads, d_v=4 je Head: Welche Form hat die Verkettung vor W_O?",
+      "explanation": "Drei Head-Features mit je vier Komponenten werden zu zwölf Features je Token verkettet. Die fünf Tokenpositionen bleiben bestehen.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "3 × 20"
+        },
+        {
+          "id": "o2",
+          "text": "5 × 12"
+        },
+        {
+          "id": "o3",
+          "text": "15 × 4"
+        },
+        {
+          "id": "o4",
+          "text": "5 × 4"
+        }
+      ],
+      "correct_answer": "o2",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-neural-network-architecture-core",
+      "topic_id": "neural-network-architecture",
+      "type": "single-choice",
+      "prompt": "Ein Netz hat 784 Inputs, 16 Hidden-Neuronen und zehn Outputs. Welche Aufgabe passt zum Output am besten?",
+      "explanation": "784 Inputs repräsentieren hier 28·28 Pixel; 16 Hidden-Neuronen bilden Zwischenmerkmale. Zehn Output-Scores passen zu den Klassen 0 bis 9. Zehn Outputs bedeuten weder zehn Hidden Layers noch 784 einzelne Pixelklassen. Die passende Aufgabe folgt von der Outputrolle, nicht allein von der Inputzahl.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Die zehn Outputs sind zwingend zehn Hidden Layers."
+        },
+        {
+          "id": "o2",
+          "text": "Eine Klassifikation in zehn gegenseitig ausschliessende Ziffernklassen."
+        },
+        {
+          "id": "o3",
+          "text": "Ein Bild mit zehn RGB-Pixeln muss rekonstruiert werden."
+        },
+        {
+          "id": "o4",
+          "text": "Jedes Input-Pixel wird einer eigenen von 784 Klassen zugeordnet."
+        }
+      ],
+      "correct_answer": "o2",
+      "difficulty": 1,
+      "enabled": true
+    },
+    {
+      "id": "dl-neural-network-architecture-fact",
+      "topic_id": "neural-network-architecture",
+      "type": "true-false",
+      "prompt": "Zwei Netze mit derselben Architektur können nach unterschiedlichem Training verschiedene Gewichte besitzen.",
+      "explanation": "Die Architektur bestimmt Formen und Verbindungen. Daten, Initialisierung und Trainingsverlauf bestimmen die gelernten Parameter.",
+      "options": [
+        {
+          "id": "false",
+          "text": "Falsch"
+        },
+        {
+          "id": "true",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "true",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-neural-network-architecture-properties",
+      "topic_id": "neural-network-architecture",
+      "type": "multiple-select",
+      "prompt": "Welche Aussagen über Dense Layers sind korrekt?",
+      "explanation": "Eine Dense Layer hat n·m+m Parameter. Neuronenanzahl in einer Schicht ist Breite; gelernte Werte hängen von Training und Initialisierung ab.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Bei einem Bias je Output-Neuron kommen m Biases hinzu."
+        },
+        {
+          "id": "o2",
+          "text": "Mehr Neuronen in einer einzelnen Schicht erhöhen automatisch die Schichtanzahl."
+        },
+        {
+          "id": "o3",
+          "text": "Gleiche Architektur garantiert identische gelernte Gewichte."
+        },
+        {
+          "id": "o4",
+          "text": "Bei n Inputs und m Outputs gibt es n·m Verbindungsgewichte."
+        }
+      ],
+      "correct_answers": [
+        "o1",
+        "o4"
+      ],
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-neural-network-architecture-detail",
+      "topic_id": "neural-network-architecture",
+      "type": "numeric-choice",
+      "prompt": "Wie viele Parameter besitzt eine Dense Layer mit drei Inputs, zwei Outputs und einem Bias je Output?",
+      "explanation": "Jedes der zwei Output-Neuronen hat drei Gewichte und einen Bias: 2·(3+1)=8. Die 6 zählt nur Gewichte, die 5 addiert Neuronenzahlen statt Verbindungen. Inputwerte werden nicht gelernt und gehören nicht in die Parameterzahl.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "8"
+        },
+        {
+          "id": "o2",
+          "text": "6"
+        },
+        {
+          "id": "o3",
+          "text": "5"
+        },
+        {
+          "id": "o4",
+          "text": "12"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-pooling-resnet-core",
+      "topic_id": "pooling-resnet",
+      "type": "numeric-choice",
+      "prompt": "Ein 2 × 2 Fenster enthält [[1,3],[5,6]]. Welches Paar ergibt Max Pooling beziehungsweise Average Pooling?",
+      "explanation": "Maximum ist 6. Der Mittelwert ist (1+3+5+6)/4=15/4=3.75.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "6 und 3.75"
+        },
+        {
+          "id": "o2",
+          "text": "6 und 6"
+        },
+        {
+          "id": "o3",
+          "text": "5 und 3.75"
+        },
+        {
+          "id": "o4",
+          "text": "15 und 6"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-pooling-resnet-fact",
+      "topic_id": "pooling-resnet",
+      "type": "true-false",
+      "prompt": "Eine gewöhnliche Max-Pooling-Layer hat für jede Fensterposition eigene lernbare Kernelgewichte.",
+      "explanation": "Max Pooling verwendet eine feste Maximumsregel und keine lernbaren Filtergewichte. Convolution hat dagegen trainierbare Kernel.",
+      "options": [
+        {
+          "id": "false",
+          "text": "Falsch"
+        },
+        {
+          "id": "true",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "false",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-pooling-resnet-properties",
+      "topic_id": "pooling-resnet",
+      "type": "multiple-select",
+      "prompt": "Welche Aussagen über Residual-Verbindungen sind korrekt?",
+      "explanation": "Residual-Verbindungen addieren eine passende Eingangsdarstellung zur Transformation. Gate-Steuerung einer LSTM ist ein anderes Prinzip.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Jeder ResNet-Shortcut benötigt zwingend Forget-, Input- und Output-Gates."
+        },
+        {
+          "id": "o2",
+          "text": "Ein Shortcut löscht den gesamten Input, bevor addiert wird."
+        },
+        {
+          "id": "o3",
+          "text": "Ein gewöhnlicher Block kann y=x+F(x) berechnen."
+        },
+        {
+          "id": "o4",
+          "text": "Bei unterschiedlicher Form kann eine Projektion des Shortcuts nötig sein."
+        }
+      ],
+      "correct_answers": [
+        "o3",
+        "o4"
+      ],
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-pooling-resnet-misconception",
+      "topic_id": "pooling-resnet",
+      "type": "numeric-choice",
+      "prompt": "x=(2,−1) und F(x)=(0.5,0.2). Was liefert die Residual-Addition?",
+      "explanation": "Die Addition erfolgt komponentenweise: 2+0.5=2.5 und −1+0.2=−0.8. Keine Mittelung oder Multiplikation ist gemeint.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "(1,−0.2)"
+        },
+        {
+          "id": "o2",
+          "text": "(0.5,0.2)"
+        },
+        {
+          "id": "o3",
+          "text": "(2,−1)"
+        },
+        {
+          "id": "o4",
+          "text": "(2.5,−0.8)"
+        }
+      ],
+      "correct_answer": "o4",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-positional-information-core",
+      "topic_id": "positional-information",
+      "type": "single-choice",
+      "prompt": "Wozu wird Positionsinformation im ursprünglichen Transformer zu Token-Embeddings addiert?",
+      "explanation": "Unmaskierte Attention ohne Position ist permutationsäquivariant. Ein Positionsvektor stellt zusätzliche Reihenfolgeinformation bereit.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Damit jedes Token dieselbe Position erhält."
+        },
+        {
+          "id": "o2",
+          "text": "Damit die Reihenfolge vor dem Modell gelöscht wird."
+        },
+        {
+          "id": "o3",
+          "text": "Damit alle Attention-Gewichte konstant bleiben."
+        },
+        {
+          "id": "o4",
+          "text": "Damit die Repräsentation neben Tokeninhalt auch die Sequenzposition enthält."
+        }
+      ],
+      "correct_answer": "o4",
+      "difficulty": 1,
+      "enabled": true
+    },
+    {
+      "id": "dl-positional-information-fact",
+      "topic_id": "positional-information",
+      "type": "true-false",
+      "prompt": "In der sinusförmigen Kodierung nimmt bei wachsendem Dimensionspaarindex die Frequenz ab und die Wellenlänge zu.",
+      "explanation": "ω_i=1/10000^(2i/d_model) hat einen wachsenden Nenner. Verschiedene Dimensionspaare erfassen damit verschiedene Positionsskalen.",
+      "options": [
+        {
+          "id": "false",
+          "text": "Falsch"
+        },
+        {
+          "id": "true",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "true",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-positional-information-properties",
+      "topic_id": "positional-information",
+      "type": "multiple-select",
+      "prompt": "Welche Aussagen zur ursprünglichen sinusförmigen Positionskodierung sind korrekt?",
+      "explanation": "Gleich dimensionierte Vektoren werden addiert. Eine mathematisch berechenbare Kodierung ist keine Garantie für Modellleistung ausserhalb des gelernten Längenbereichs.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Die berechenbare Kodierung garantiert perfekte Generalisierung auf beliebig lange Sequenzen."
+        },
+        {
+          "id": "o2",
+          "text": "Gerade Dimensionen verwenden Sinus, ungerade Cosinus."
+        },
+        {
+          "id": "o3",
+          "text": "Embedding- und Positionsvektor haben dieselbe Länge für ihre Addition."
+        },
+        {
+          "id": "o4",
+          "text": "Token-ID und Positionsindex sind dieselbe Information."
+        }
+      ],
+      "correct_answers": [
+        "o2",
+        "o3"
+      ],
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-positional-information-misconception",
+      "topic_id": "positional-information",
+      "type": "numeric-choice",
+      "prompt": "d_model=4, Position 0: Welcher Positionsvektor entsteht mit Sinus/Cosinus-Paaren?",
+      "explanation": "sin(0)=0 und cos(0)=1. Die verschiedenen Frequenzen ändern am Positionsindex 0 diese Werte nicht.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "(0,0,0,0)"
+        },
+        {
+          "id": "o2",
+          "text": "(1,1,1,1)"
+        },
+        {
+          "id": "o3",
+          "text": "(0,1,0,1)"
+        },
+        {
+          "id": "o4",
+          "text": "(1,0,1,0)"
+        }
+      ],
+      "correct_answer": "o3",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-rnn-basics-core",
+      "topic_id": "rnn-basics",
+      "type": "single-choice",
+      "prompt": "Was trägt ein einfaches RNN zwischen Zeitschritten weiter?",
+      "explanation": "Der Zustand repräsentiert vergangenen Kontext. Die Parameter werden zeitlich geteilt; die Zustände ändern sich.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Für jeden Zeitpunkt eine neu gelernte unabhängige Gewichtsmatrix."
+        },
+        {
+          "id": "o2",
+          "text": "Das vollständige Testsatz-Label als unveränderten Input."
+        },
+        {
+          "id": "o3",
+          "text": "Einen Hidden State, der aus bisherigem Zustand und aktuellem Input berechnet wird."
+        },
+        {
+          "id": "o4",
+          "text": "Nur den Loss-Wert des gesamten Trainingsdatensatzes."
+        }
+      ],
+      "correct_answer": "o3",
+      "difficulty": 1,
+      "enabled": true
+    },
+    {
+      "id": "dl-rnn-basics-fact",
+      "topic_id": "rnn-basics",
+      "type": "true-false",
+      "prompt": "Ein einfaches RNN verwendet dieselben Gewichte an mehreren Zeitschritten.",
+      "explanation": "Die zeitliche Entfaltung kopiert den Rechenweg, nicht die unabhängig zu lernenden Parameter. Zustände und Inputs variieren, Gewichte werden geteilt.",
+      "options": [
+        {
+          "id": "false",
+          "text": "Falsch"
+        },
+        {
+          "id": "true",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "true",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-rnn-basics-properties",
+      "topic_id": "rnn-basics",
+      "type": "multiple-select",
+      "prompt": "Welche Aussagen über das einfache RNN treffen zu?",
+      "explanation": "Die Rekursion verarbeitet aktuellen Input und vorherigen Zustand. Welche Outputs ausgewertet werden, hängt von der Aufgabe ab.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "h_t hängt vom vorherigen Zustand h_t−1 ab."
+        },
+        {
+          "id": "o2",
+          "text": "Ein Output kann an jeder Position oder nur am Ende berechnet werden."
+        },
+        {
+          "id": "o3",
+          "text": "Der aktuelle Zustand ist grundsätzlich unabhängig von x_t."
+        },
+        {
+          "id": "o4",
+          "text": "Alle Zustände einer Sequenz können ohne Abhängigkeiten gleichzeitig berechnet werden."
+        }
+      ],
+      "correct_answers": [
+        "o1",
+        "o2"
+      ],
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-rnn-basics-detail",
+      "topic_id": "rnn-basics",
+      "type": "numeric-choice",
+      "prompt": "h_t=tanh(x_t+0.5h_t−1), h₀=0, x₁=1, x₂=0. Wie gross ist h₂ ungefähr?",
+      "explanation": "h₁=tanh(1)≈0.762, h₂=tanh(0.381)≈0.363. Der erste Input wirkt über den Zustand in den zweiten Schritt.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "1.5"
+        },
+        {
+          "id": "o2",
+          "text": "0.363"
+        },
+        {
+          "id": "o3",
+          "text": "0"
+        },
+        {
+          "id": "o4",
+          "text": "0.762"
+        }
+      ],
+      "correct_answer": "o2",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-rnn-bptt-core",
+      "topic_id": "rnn-bptt",
+      "type": "single-choice",
+      "prompt": "Warum werden bei BPTT Gradientenbeiträge aus mehreren Zeitkopien für ein Gewicht addiert?",
+      "explanation": "Ein geteilter Parameter wirkt an mehreren Zeitpositionen. Der Gradient einer summierten Loss ist die Summe ihrer vollständigen Ableitungsbeiträge.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Die RNN-Gewichte werden als Token-IDs interpretiert."
+        },
+        {
+          "id": "o2",
+          "text": "Dasselbe geteilte Gewicht beeinflusst mehrere Berechnungen des Gesamtverlusts."
+        },
+        {
+          "id": "o3",
+          "text": "Jeder Zeitpunkt gehört zwingend zu einem anderen Modell."
+        },
+        {
+          "id": "o4",
+          "text": "Die Addition ersetzt sämtliche lokalen Ableitungen durch Labels."
+        }
+      ],
+      "correct_answer": "o2",
+      "difficulty": 1,
+      "enabled": true
+    },
+    {
+      "id": "dl-rnn-bptt-fact",
+      "topic_id": "rnn-bptt",
+      "type": "true-false",
+      "prompt": "Truncated BPTT kann einen Zustand weitertragen, aber den Trainingsgradienten an einer Fenstergrenze abschneiden.",
+      "explanation": "Der numerische Zustand und sein Ableitungsgraph sind verschiedene Dinge. Das Abtrennen des Graphen begrenzt den rückwärts verfolgten Kontext.",
+      "options": [
+        {
+          "id": "false",
+          "text": "Falsch"
+        },
+        {
+          "id": "true",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "true",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-rnn-bptt-properties",
+      "topic_id": "rnn-bptt",
+      "type": "multiple-select",
+      "prompt": "Welche Aussagen über BPTT sind korrekt?",
+      "explanation": "BPTT verfolgt zeitliche Abhängigkeiten. Trunkierung trennt ältere Graphabschnitte und reduziert dadurch den lernbaren Gradientenhorizont.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Truncated BPTT begrenzt den rückwärts verfolgten Zeithorizont."
+        },
+        {
+          "id": "o2",
+          "text": "Eine Trunkierungsgrenze lässt immer sämtliche alten Trainingsgradienten unverändert durch."
+        },
+        {
+          "id": "o3",
+          "text": "Die Gradienten eines geteilten Parameters werden nur am letzten Zeitpunkt berücksichtigt."
+        },
+        {
+          "id": "o4",
+          "text": "Es wendet die Kettenregel auf das zeitlich entfaltete RNN an."
+        }
+      ],
+      "correct_answers": [
+        "o1",
+        "o4"
+      ],
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-rnn-bptt-detail",
+      "topic_id": "rnn-bptt",
+      "type": "numeric-choice",
+      "prompt": "Für eine summierte Loss betragen die vollständig berechneten Beiträge zum geteilten Gewicht 0.2,−0.1 und 0.4. Wie gross ist ihr Gesamtgradient?",
+      "explanation": "0.2−0.1+0.4=0.5. Bei einer mittleren statt summierten Loss käme zusätzlich der entsprechende Mittelungsfaktor hinzu.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "0.5"
+        },
+        {
+          "id": "o2",
+          "text": "0.7"
+        },
+        {
+          "id": "o3",
+          "text": "0.1667"
+        },
+        {
+          "id": "o4",
+          "text": "-0.3"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-self-attention-core",
+      "topic_id": "self-attention",
+      "type": "single-choice",
+      "prompt": "Vier Tokens werden mit gewöhnlicher Self-Attention verglichen. Welche Form hat die Query-Key-Score-Matrix?",
+      "explanation": "Jede der vier Queries wird mit vier Keys verglichen. Es entstehen 16 Scores, unabhängig von der Value-Dimension.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "4 × 4"
+        },
+        {
+          "id": "o2",
+          "text": "4 × 1"
+        },
+        {
+          "id": "o3",
+          "text": "1 × 4"
+        },
+        {
+          "id": "o4",
+          "text": "8 × 8"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 1,
+      "enabled": true
+    },
+    {
+      "id": "dl-self-attention-fact",
+      "topic_id": "self-attention",
+      "type": "true-false",
+      "prompt": "In Self-Attention müssen Queries immer aus dem Decoder und Keys/Values immer aus dem Encoder stammen.",
+      "explanation": "Das beschreibt Encoder-Decoder-Cross-Attention. Bei Self-Attention stammen Q,K,V aus derselben Sequenzrepräsentation.",
+      "options": [
+        {
+          "id": "false",
+          "text": "Falsch"
+        },
+        {
+          "id": "true",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "false",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-self-attention-properties",
+      "topic_id": "self-attention",
+      "type": "multiple-select",
+      "prompt": "Welche Aussagen über eine kausale Attention-Maske sind korrekt?",
+      "explanation": "Eine additive Maske setzt zukünftige Scores vor Softmax auf −∞. So verhindern die Nullgewichte unerlaubte Zukunftsinformation in der Value-Mischung.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Sie wird erst nach der fertigen Value-Summe auf die Output-Tokens angewendet."
+        },
+        {
+          "id": "o2",
+          "text": "Sie erlaubt während des Trainings das Lesen der richtigen zukünftigen Zieltokens."
+        },
+        {
+          "id": "o3",
+          "text": "Sie sperrt spätere Tokenpositionen für eine aktuelle autoregressive Position."
+        },
+        {
+          "id": "o4",
+          "text": "Gesperrte Positionen erhalten nach Softmax Gewicht 0."
+        }
+      ],
+      "correct_answers": [
+        "o3",
+        "o4"
+      ],
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-self-attention-detail",
+      "topic_id": "self-attention",
+      "type": "numeric-choice",
+      "prompt": "Gewichte (0.1,0.7,0.2) und Values (2,0),(0,4),(1,1): Wie lautet die gewichtete Summe?",
+      "explanation": "Erste Komponente: 0.1·2+0.7·0+0.2·1=0.4. Zweite: 0.1·0+0.7·4+0.2·1=3.0. Output (0.4,3.0) ist ein gemischter Inhaltsvektor; seine Komponenten müssen nicht auf 1 summieren. Normalisiert sind die Attention-Gewichte, nicht automatisch die Values.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "(3,5)"
+        },
+        {
+          "id": "o2",
+          "text": "(0.1,0.7)"
+        },
+        {
+          "id": "o3",
+          "text": "(0.2,2.8)"
+        },
+        {
+          "id": "o4",
+          "text": "(0.4,3.0)"
+        }
+      ],
+      "correct_answer": "o4",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-seq2seq-encoder-decoder-core",
+      "topic_id": "seq2seq-encoder-decoder",
+      "type": "single-choice",
+      "prompt": "Welche Aufgabe hat der Decoder im klassischen Encoder-Decoder-Modell?",
+      "explanation": "Der Encoder repräsentiert die Quelle; der Decoder bedingt seine Ausgaben auf diese Information und den bisherigen Zielkontext.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Er berechnet nur die Pixelintensitäten der Quelle."
+        },
+        {
+          "id": "o2",
+          "text": "Er löscht den Encoder vor jedem Zieltoken."
+        },
+        {
+          "id": "o3",
+          "text": "Er erzwingt immer dieselbe Eingabe- und Ausgabelänge."
+        },
+        {
+          "id": "o4",
+          "text": "Er erzeugt unter Nutzung der Quellrepräsentation schrittweise die Zielsequenz."
+        }
+      ],
+      "correct_answer": "o4",
+      "difficulty": 1,
+      "enabled": true
+    },
+    {
+      "id": "dl-seq2seq-encoder-decoder-fact",
+      "topic_id": "seq2seq-encoder-decoder",
+      "type": "true-false",
+      "prompt": "Beim Teacher Forcing kann der Decoder im Training das vorherige wahre Zieltoken erhalten.",
+      "explanation": "Das bekannte vorige Zieltoken dient als Input für die nächste Trainingsposition. Bei Inferenz werden stattdessen eigene erzeugte Tokens verwendet.",
+      "options": [
+        {
+          "id": "false",
+          "text": "Falsch"
+        },
+        {
+          "id": "true",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "true",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-seq2seq-encoder-decoder-properties",
+      "topic_id": "seq2seq-encoder-decoder",
+      "type": "ordering",
+      "prompt": "Ordne die Generierung im einfachen RNN-Encoder-Decoder ohne Attention.",
+      "explanation": "Die Quellrepräsentation muss vor der Decoderinitialisierung bereitstehen. Danach wird die Zielsequenz autoregressiv erweitert.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Quellsequenz im Encoder verarbeiten."
+        },
+        {
+          "id": "o2",
+          "text": "Decoder mit Kontext und Start-Token initialisieren."
+        },
+        {
+          "id": "o3",
+          "text": "Erstes Zieltoken vorhersagen."
+        },
+        {
+          "id": "o4",
+          "text": "Ausgewähltes Zieltoken für den nächsten Schritt zurückführen."
+        }
+      ],
+      "correct_order": [
+        "o1",
+        "o2",
+        "o3",
+        "o4"
+      ],
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-seq2seq-encoder-decoder-detail",
+      "topic_id": "seq2seq-encoder-decoder",
+      "type": "single-choice",
+      "prompt": "Was ist ein typischer Engpass eines Encoder-Decoders ohne Attention bei langen Quellen?",
+      "explanation": "Der fixe Kontext kann nicht jede relevante Quellinformation ausreichend bewahren. Attention erlaubt einen erneuten Zugriff auf mehrere Encoder-Zustände.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Softmax kann grundsätzlich nur zwei Tokens unterscheiden."
+        },
+        {
+          "id": "o2",
+          "text": "Der Decoder muss immer alle Wörter gleichzeitig ausgeben."
+        },
+        {
+          "id": "o3",
+          "text": "Die Quelle muss in einer Repräsentation fester Grösse komprimiert werden."
+        },
+        {
+          "id": "o4",
+          "text": "Die Modellgewichte werden mit jedem Quelltoken verdoppelt."
+        }
+      ],
+      "correct_answer": "o3",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-sequence-modeling-core",
+      "topic_id": "sequence-modeling",
+      "type": "single-choice",
+      "prompt": "Warum können «Der Hund jagt die Katze» und «Die Katze jagt den Hund» trotz ähnlicher Wörter verschiedene Bedeutungen haben?",
+      "explanation": "Eine Sequenz enthält Reihenfolgeinformation. Gleiche Wörter können in unterschiedlicher Anordnung andere handelnde und betroffene Rollen beschreiben.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Ein Modell muss nur die Wörter alphabetisch sortieren."
+        },
+        {
+          "id": "o2",
+          "text": "Alle Sätze mit denselben Wörtern haben dieselbe Bedeutung."
+        },
+        {
+          "id": "o3",
+          "text": "Die Reihenfolge bestimmt unterschiedliche Rollen der Wörter."
+        },
+        {
+          "id": "o4",
+          "text": "Die Zahlen der Tokens allein bestimmen vollständig die Bedeutung."
+        }
+      ],
+      "correct_answer": "o3",
+      "difficulty": 1,
+      "enabled": true
+    },
+    {
+      "id": "dl-sequence-modeling-fact",
+      "topic_id": "sequence-modeling",
+      "type": "true-false",
+      "prompt": "Bei jeder Sequence-to-Sequence-Aufgabe müssen Eingabe und Ausgabe gleich viele Tokens haben.",
+      "explanation": "Übersetzung oder Zusammenfassung können verschiedene Längen haben. Die Aufgabenstruktur verlangt Sequenzen, keine identischen Positionszahlen.",
+      "options": [
+        {
+          "id": "false",
+          "text": "Falsch"
+        },
+        {
+          "id": "true",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "false",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-sequence-modeling-properties",
+      "topic_id": "sequence-modeling",
+      "type": "multiple-select",
+      "prompt": "Welche Aufgaben können als Sequenzprobleme modelliert werden?",
+      "explanation": "Nächstes Element und Übersetzung sind Sequenzaufgaben. Zukunftsinformation wäre bei einer zeitlich kausalen Vorhersage Leakage.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Vorhersage des nächsten Zeichens aus einem bisherigen Präfix."
+        },
+        {
+          "id": "o2",
+          "text": "Übersetzung einer Quellsequenz in eine Zielsequenz."
+        },
+        {
+          "id": "o3",
+          "text": "Eine Reihenfolge wird prinzipiell vollständig ignoriert."
+        },
+        {
+          "id": "o4",
+          "text": "Für die Vorhersage gestern darf das tatsächliche Ergebnis morgen als Eingabe bekannt sein."
+        }
+      ],
+      "correct_answers": [
+        "o1",
+        "o2"
+      ],
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-sequence-modeling-detail",
+      "topic_id": "sequence-modeling",
+      "type": "single-choice",
+      "prompt": "Ein Modell sieht nur die letzten zwei Tokens. Welche Grenze ergibt sich daraus direkt?",
+      "explanation": "Ein festes Fenster begrenzt den sichtbaren Kontext. Ohne zusätzliche Zustände oder Zugriffe kann das Modell weiter zurückliegende Information nicht direkt verwenden.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Es wird automatisch ein LSTM mit unbegrenztem Gedächtnis."
+        },
+        {
+          "id": "o2",
+          "text": "Information ausserhalb dieses Fensters ist in diesem Input nicht zugänglich."
+        },
+        {
+          "id": "o3",
+          "text": "Es kann immer sämtliche früheren Tokens verlustfrei rekonstruieren."
+        },
+        {
+          "id": "o4",
+          "text": "Es benötigt keine numerische Textrepräsentation."
+        }
+      ],
+      "correct_answer": "o2",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-text-representations-core",
+      "topic_id": "text-representations",
+      "type": "single-choice",
+      "prompt": "Was bedeutet eine Token-ID in einer Embedding-Tabelle?",
+      "explanation": "Eine ID wählt eine Embedding-Zeile. Der Index selbst besitzt keine metrische semantische Ordnung und ist nicht mit Position gleichzusetzen.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Die ID ist zwingend die absolute Position im Satz."
+        },
+        {
+          "id": "o2",
+          "text": "Sie ist der Index einer Vektorzeile für das Token."
+        },
+        {
+          "id": "o3",
+          "text": "Ihr Zahlenwert ist eine vollständige semantische Bedeutung."
+        },
+        {
+          "id": "o4",
+          "text": "Eine doppelt so grosse ID bedeutet doppelte Wortähnlichkeit."
+        }
+      ],
+      "correct_answer": "o2",
+      "difficulty": 1,
+      "enabled": true
+    },
+    {
+      "id": "dl-text-representations-fact",
+      "topic_id": "text-representations",
+      "type": "true-false",
+      "prompt": "Ein statisches Embedding des Tokens «Bank» muss schon vor der Kontextverarbeitung zwischen Sitzbank und Geldinstitut unterscheiden.",
+      "explanation": "Ein statisches Embedding liefert für dieselbe ID denselben Anfangsvektor. Kontextabhängige Verarbeitung kann danach unterschiedliche Repräsentationen erzeugen.",
+      "options": [
+        {
+          "id": "false",
+          "text": "Falsch"
+        },
+        {
+          "id": "true",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "false",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-text-representations-properties",
+      "topic_id": "text-representations",
+      "type": "multiple-select",
+      "prompt": "Welche Aussagen über Tokenisierung und Embeddings sind korrekt?",
+      "explanation": "Tokenisierung muss nicht auf Wortgrenzen beschränkt sein. Embedding-Dimensionen sind gelernte Koordinaten; ihre Bedeutungen und Tokenpositionen sind keine vorgegebenen ID-Regeln.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Eine Embedding-Tabelle mit V Tokens und d Features enthält V·d Einträge."
+        },
+        {
+          "id": "o2",
+          "text": "Jede gelernte Embedding-Dimension hat zwingend eine fest benannte menschliche Eigenschaft."
+        },
+        {
+          "id": "o3",
+          "text": "Eine Token-ID und ein Positionsindex sind immer dieselbe Zahl."
+        },
+        {
+          "id": "o4",
+          "text": "Ein Token kann ein Teilwort oder ein Zeichen sein."
+        }
+      ],
+      "correct_answers": [
+        "o1",
+        "o4"
+      ],
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-text-representations-misconception",
+      "topic_id": "text-representations",
+      "type": "numeric-choice",
+      "prompt": "Eine Embedding-Tabelle hat 100 Tokens mit acht Dimensionen und keinen zusätzlichen Bias. Wie viele Parameter enthält sie?",
+      "explanation": "100 Tabellenzeilen mal acht Zahlen pro Zeile ergeben 800 Parameter. Die Token-IDs sind Indizes und werden nicht noch zusätzlich als Gewichte gezählt. Die Länge eines späteren Satzes vervielfacht die Tabelle ebenfalls nicht, weil dieselben Einträge wiederverwendet werden.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "800"
+        },
+        {
+          "id": "o2",
+          "text": "108"
+        },
+        {
+          "id": "o3",
+          "text": "100"
+        },
+        {
+          "id": "o4",
+          "text": "8"
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-transformer-architecture-core",
+      "topic_id": "transformer-architecture",
+      "type": "single-choice",
+      "prompt": "Welche Attention liefert dem Decoder des ursprünglichen Transformers Informationen aus der Quelle?",
+      "explanation": "In Cross-Attention kommen Queries aus dem Decoder und Keys/Values aus Encoder-Ausgaben. Decoder-Self-Attention bearbeitet dagegen bisherigen Zielkontext.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Encoder-Decoder-Cross-Attention."
+        },
+        {
+          "id": "o2",
+          "text": "Nur die kausale Decoder-Self-Attention auf Zieltokens."
+        },
+        {
+          "id": "o3",
+          "text": "Eine BatchNorm auf den Zielklassen."
+        },
+        {
+          "id": "o4",
+          "text": "Argmax auf dem Start-Token ohne Encoder."
+        }
+      ],
+      "correct_answer": "o1",
+      "difficulty": 1,
+      "enabled": true
+    },
+    {
+      "id": "dl-transformer-architecture-fact",
+      "topic_id": "transformer-architecture",
+      "type": "true-false",
+      "prompt": "Das positionsweise Feed-Forward-Netz einer Encoderschicht mischt direkt verschiedene Tokenpositionen miteinander.",
+      "explanation": "Das FFN verarbeitet jedes Token separat mit denselben Gewichten. Information zwischen Positionen wird durch Attention ausgetauscht.",
+      "options": [
+        {
+          "id": "false",
+          "text": "Falsch"
+        },
+        {
+          "id": "true",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "false",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-transformer-architecture-properties",
+      "topic_id": "transformer-architecture",
+      "type": "multiple-select",
+      "prompt": "Welche Bausteine gehören zum ursprünglichen Transformer?",
+      "explanation": "Der ursprüngliche Transformer verwendet Attention statt rekurrenter Schritte innerhalb seiner Schichten. Residual-Verbindungen und tokenweise LayerNorm stabilisieren die Verarbeitung.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Zwingend ein separates RNN zwischen jedem Attention-Head."
+        },
+        {
+          "id": "o2",
+          "text": "Zwingend BatchNorm über alle Tokens als Ersatz für LayerNorm."
+        },
+        {
+          "id": "o3",
+          "text": "Residual-Addition und LayerNorm um Teilschichten."
+        },
+        {
+          "id": "o4",
+          "text": "Kausale Self-Attention im autoregressiven Decoder."
+        }
+      ],
+      "correct_answers": [
+        "o3",
+        "o4"
+      ],
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-transformer-architecture-detail",
+      "topic_id": "transformer-architecture",
+      "type": "numeric-choice",
+      "prompt": "Die Quelle hat vier Tokens, der Decoder drei Querypositionen. Welche Form hat die Encoder-Decoder-Attention-Score-Matrix?",
+      "explanation": "Die Query-Matrix hat drei Decoderpositionen, die Keys vier Encoderpositionen. Jeder Query-Key-Vergleich ergibt eine Zahl, also 3×4=12 Scores. 4×3 würde die Rollen tauschen; 3×3 wäre Decoder-Self-Attention und 4×4 Encoder-Self-Attention.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "4 × 3"
+        },
+        {
+          "id": "o2",
+          "text": "3 × 3"
+        },
+        {
+          "id": "o3",
+          "text": "4 × 4"
+        },
+        {
+          "id": "o4",
+          "text": "3 × 4"
+        }
+      ],
+      "correct_answer": "o4",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-vanishing-gradients-core",
+      "topic_id": "vanishing-gradients",
+      "type": "single-choice",
+      "prompt": "Ein frühes Layer erhält trotz hoher Loss kaum Gradienten. Welcher Mechanismus kann das erklären?",
+      "explanation": "Lange Produkte kleiner Ableitungen können einen Gradienten stark abschwächen. Eine hohe Loss allein garantiert keinen grossen Gradienten.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Alle kleinen Faktoren werden grundsätzlich durch grosse Labels ersetzt."
+        },
+        {
+          "id": "o2",
+          "text": "Der Forward Pass hat automatisch sämtliche Gewichte gelöscht."
+        },
+        {
+          "id": "o3",
+          "text": "Die Loss wird durch eine hohe Lernrate immer exakt null."
+        },
+        {
+          "id": "o4",
+          "text": "Viele kleine lokale Ableitungsfaktoren werden entlang des Rückwärtspfads multipliziert."
+        }
+      ],
+      "correct_answer": "o4",
+      "difficulty": 1,
+      "enabled": true
+    },
+    {
+      "id": "dl-vanishing-gradients-fact",
+      "topic_id": "vanishing-gradients",
+      "type": "true-false",
+      "prompt": "Eine grosse Loss kann gleichzeitig mit einem sehr kleinen Gradienten in frühen Schichten auftreten.",
+      "explanation": "Loss misst Vorhersagefehler; ein Gradient misst lokale Empfindlichkeit. Sättigung und lange Produkte können die Ableitung trotz hohem Verlust abschwächen.",
+      "options": [
+        {
+          "id": "false",
+          "text": "Falsch"
+        },
+        {
+          "id": "true",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "true",
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-vanishing-gradients-properties",
+      "topic_id": "vanishing-gradients",
+      "type": "multiple-select",
+      "prompt": "Welche Aussagen zu kleinen Gradienten sind korrekt?",
+      "explanation": "Sättigung und lange Ketten können kleine Gradienten erzeugen. Ein kleiner Gradient ist kein Beweis für eine gute Loss oder richtige Vorhersage.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Mehr Zeitschritte verhindern automatisch Vanishing Gradients."
+        },
+        {
+          "id": "o2",
+          "text": "Sigmoid-Sättigung kann die Ableitung stark verkleinern."
+        },
+        {
+          "id": "o3",
+          "text": "Leaky ReLU erlaubt einen kleinen Gradienten auch im negativen Bereich."
+        },
+        {
+          "id": "o4",
+          "text": "Ein kleiner Gradient beweist, dass die Vorhersage korrekt ist."
+        }
+      ],
+      "correct_answers": [
+        "o2",
+        "o3"
+      ],
+      "difficulty": 2,
+      "enabled": true
+    },
+    {
+      "id": "dl-vanishing-gradients-detail",
+      "topic_id": "vanishing-gradients",
+      "type": "numeric-choice",
+      "prompt": "Ein vereinfachter Pfad multipliziert zehnmal den Faktor 0.5. Welcher Wert entsteht ungefähr?",
+      "explanation": "Zehn gleiche Faktoren werden multipliziert: 0.5^10=1/1024=0.0009765625, gerundet 0.000977. 10·0.5=5 wäre eine Summe, keine Ableitungskette. Jeder Einzelfaktor ist nicht null, das Produkt wird trotzdem klein.",
+      "options": [
+        {
+          "id": "o1",
+          "text": "5"
+        },
+        {
+          "id": "o2",
+          "text": "0.25"
+        },
+        {
+          "id": "o3",
+          "text": "0.000977"
+        },
+        {
+          "id": "o4",
+          "text": "0.5"
+        }
+      ],
+      "correct_answer": "o3",
+      "difficulty": 2,
+      "enabled": true
+    }
+  ]
+}

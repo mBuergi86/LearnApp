@@ -1,0 +1,141 @@
+{
+  "id": "classification-threshold",
+  "exam_id": "machine-learning",
+  "module_id": "ml-logistic-regression",
+  "title": "Klassifikationsschwelle",
+  "priority": "support",
+  "summary": "Eine logistische Vorhersage wird über eine Schwelle in eine Klassenentscheidung übersetzt.",
+  "explanation": [
+    "Ein binärer Klassifikator kann zuerst p für die positive Klasse liefern. Die Schwelle τ ist die Entscheidungsregel danach: Hier gilt ŷ=1 bei p≥τ. Sie ist kein zusätzliches Feature und kein ReLU-Argument.",
+    "Bei τ=0.5 genügt p=0.6 für positiv; bei τ=0.8 nicht. Das Modell kann dieselbe Wahrscheinlichkeit behalten, während eine andere Entscheidungspolitik ein anderes Label erzeugt.",
+    "Senkt man die Schwelle bei unveränderten Scores, können mehr Fälle positiv werden. True Positives und False Positives können steigen; False Negatives können sinken. Recall sinkt dabei nicht, sofern tatsächlich positive Fälle vorhanden sind.",
+    "Precision steigt bei höherer Schwelle häufig, aber nicht garantiert für jede kleine Stichprobe. Entscheidend sind die Labels der zusätzlich zugelassenen oder entfernten Fälle. Darum müssen TP und FP konkret gezählt werden.",
+    "Die passende Schwelle hängt von Fehlerkosten und Ziel ab: Ein übersehener Krankheitsfall kann anders gewichtet werden als ein unnötiger Alarm. Die Auswahl erfolgt mit Validation, nicht durch Optimierung auf dem abschliessenden Testset."
+  ],
+  "sources": [
+    {
+      "file": "Machine_Learning_Tag2_Logistic_Regression_2026_ShaoJuWoo.pdf",
+      "pages": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 2,
+  "steps": [
+    "Positive Klasse und Gleichheitsregel klären.",
+    "Jedes p mit τ vergleichen.",
+    "TP,FP,FN,TN anhand wahrer Labels zählen.",
+    "Metriken berechnen und Auswahl auf Validation begründen."
+  ],
+  "example": "Eigener Rechenfall: p=(0.9,0.6,0.4,0.1), wahre Labels y=(1,0,1,0). Bei τ=0.5 sind die Entscheidungen (1,1,0,0): TP=1,FP=1,FN=1,TN=1; Precision=1/2 und Recall=1/2. Bei τ=0.3 werden sie (1,1,1,0): TP=2,FP=1,FN=0,TN=1; Precision=2/3, Recall=1. Hier steigt sogar Precision beim Senken der Schwelle — «immer» wäre deshalb falsch.",
+  "formula": {
+    "expression": "ŷ=1 falls p≥τ, sonst 0\nPrecision=TP/(TP+FP); Recall=TP/(TP+FN)",
+    "meaning": "Diese Aufgabe verwendet ≥; die Richtung darf nicht stillschweigend umgedreht werden.",
+    "variables": [
+      {
+        "symbol": "p",
+        "meaning": "vorhergesagte positive Wahrscheinlichkeit"
+      },
+      {
+        "symbol": "τ",
+        "meaning": "Schwelle"
+      },
+      {
+        "symbol": "TP",
+        "meaning": "richtig positiv"
+      },
+      {
+        "symbol": "FP",
+        "meaning": "falsch positiv"
+      },
+      {
+        "symbol": "FN",
+        "meaning": "falsch negativ"
+      },
+      {
+        "symbol": "ŷ",
+        "meaning": "vorhergesagtes binäres Klassenlabel"
+      }
+    ],
+    "latex": [
+      "\\hat y=\\begin{cases}1&p\\ge\\tau\\\\0&p<\\tau\\end{cases}",
+      "\\mathrm{Precision}=\\frac{\\mathrm{TP}}{\\mathrm{TP}+\\mathrm{FP}}",
+      "\\mathrm{Recall}=\\frac{\\mathrm{TP}}{\\mathrm{TP}+\\mathrm{FN}}"
+    ],
+    "worked_example": {
+      "title": "Schwelle anwenden und Fehler zählen",
+      "given": [
+        "p=(0.9,0.6,0.4,0.1); wahre Labels y=(1,0,1,0).",
+        "Schwelle τ=0.5; Gleichheit zählt positiv."
+      ],
+      "steps": [
+        {
+          "text": "Jede Wahrscheinlichkeit mit derselben Schwelle vergleichen.",
+          "latex": "\\hat y=(1,1,0,0)"
+        },
+        {
+          "text": "Entscheidungen mit den wahren Labels paaren.",
+          "latex": "\\mathrm{TP}=1,\\quad\\mathrm{FP}=1,\\quad\\mathrm{FN}=1,\\quad\\mathrm{TN}=1"
+        },
+        {
+          "text": "Precision: richtige unter vorhergesagten Positiven.",
+          "latex": "\\mathrm{Precision}=\\frac1{1+1}=0.5"
+        },
+        {
+          "text": "Recall: erkannte unter tatsächlich Positiven.",
+          "latex": "\\mathrm{Recall}=\\frac1{1+1}=0.5"
+        }
+      ],
+      "result": "Zwei Fälle werden positiv entschieden, aber nur einer davon ist tatsächlich positiv. Ein weiterer positiver Fall wurde übersehen.",
+      "result_latex": "\\mathrm{Precision}=0.5,\\quad\\mathrm{Recall}=0.5"
+    }
+  },
+  "confusions": [
+    {
+      "term": "Schwelle und Gewicht",
+      "note": "Ein Gewicht beeinflusst den Score; die Schwelle übersetzt den fertigen Score in eine Entscheidung."
+    },
+    {
+      "term": "Typischer Trend und Garantie",
+      "note": "Höhere Schwelle garantiert bei festen Scores nicht eine höhere Precision."
+    }
+  ],
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "Wahrscheinlichkeit ist nicht Entscheidung",
+      "caption": "Der Vergleich mit der Schwelle verändert keine Modellgewichte.",
+      "labels": [
+        "Modell: p",
+        "Regel: p≥τ?",
+        "Positiv oder negativ",
+        "Vergleich mit wahrem Label"
+      ]
+    },
+    {
+      "kind": "bars",
+      "title": "Zwei Entscheidungen für dieselben Scores",
+      "caption": "Eine niedrigere Schwelle lässt hier einen weiteren tatsächlich positiven Fall zu.",
+      "labels": [
+        "TP bei τ=0.5",
+        "FP bei τ=0.5",
+        "TP bei τ=0.3",
+        "FP bei τ=0.3"
+      ],
+      "values": [
+        [
+          1,
+          1,
+          2,
+          1
+        ]
+      ]
+    }
+  ]
+}

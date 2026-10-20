@@ -1,0 +1,150 @@
+{
+  "id": "dl-regularization",
+  "exam_id": "deep-learning-data-science",
+  "module_id": "dl-training",
+  "title": "Regularisierung, Early Stopping und Dropout",
+  "priority": "core",
+  "summary": "Early Stopping, Gewicht-Regularisierung und Dropout begrenzen Überanpassung während des Trainings neuronaler Netze.",
+  "explanation": [
+    "Zusammenhang: Die Datenloss belohnt passende Trainingsvorhersagen, der Regularisierungsterm bevorzugt bestimmte Parameter. Validation kontrolliert die Wirkung auf neue Fälle. λ ist ein Hyperparameter, während w die durch Training angepassten Gewichte sind.",
+    "Overfitting bedeutet, dass ein Modell Besonderheiten seiner Trainingsdaten lernt, die auf neuen Daten nicht zuverlässig gelten. Typisch ist sinkende Trainingsloss bei steigender Validierungsloss. Gute Trainingswerte allein reichen deshalb nicht aus, um die Generalisierung zu beurteilen.",
+    "Regularisierung ergänzt die Datenloss um einen Parameterterm: C=C₀+λR(w). L2 bestraft die Summe quadrierter Gewichte und bevorzugt kleinere Gewichte; L1 verwendet absolute Beträge und kann dünn besetzte Gewichtsmuster begünstigen. Eine grosse λ gewichtet diesen Zusatz stärker und kann bei Übertreibung Underfitting verursachen.",
+    "Early Stopping beobachtet die Validierungsleistung während des Trainings. Verbessert sie sich über eine festgelegte Geduldsspanne nicht, wird das Training beendet. Üblicherweise wird der beste Validierungs-Snapshot wiederhergestellt, nicht einfach die letzte Parameterfassung.",
+    "Dropout setzt beim Training zufällig ausgewählte Aktivierungen auf null. Der Maskenwechsel verhindert, dass sich das Netz zu sehr auf einzelne gleichzeitig verfügbare Neuronen verlässt. Die Modellgewichte werden dadurch nicht dauerhaft gelöscht. Beim üblichen inverted Dropout werden die behaltenen Aktivierungen schon während des Trainings skaliert.",
+    "Bei der Auswertung wird Dropout deaktiviert. Für Early Stopping und Hyperparameterwahl wird Validation verwendet; der Testsatz bleibt bis zur abschliessenden Bewertung unberührt. Keine der Methoden garantiert gute Generalisierung, wenn Daten fehlen, Labels falsch sind oder die spätere Nutzung stark von den Trainingsdaten abweicht.",
+    "Mathematik lesen: Für L2 werden zuerst alle Gewichte quadriert und summiert, dann mit λ multipliziert. Auch (−1)²=1. Bei einer Definition λ·Σw²/2 statt λ·Σw² unterscheiden sich die Zahlen und Gradienten um den genannten Faktor; die Aufgabe muss ihre Konvention angeben."
+  ],
+  "sources": [
+    {
+      "file": "DeepLearning_Tag1_Einfuhrung_2026_ShaoJuWoo.pdf",
+      "pages": [
+        83,
+        84,
+        85,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 7,
+  "steps": [
+    "Train-, Validation- und Testdaten trennen.",
+    "Regularisierungsstärke und gegebenenfalls Dropout wählen.",
+    "Training und Validierungsleistung verfolgen.",
+    "Besten Snapshot mit Early Stopping auswählen.",
+    "Endgültig auf Testdaten bewerten."
+  ],
+  "example": "Beispiel L2: Gewichte w=(2,−1), Datenloss C₀=0.4, λ=0.1 und R(w)=Σw². Dann R=4+1=5 und C=0.4+0.1·5=0.9.\nBeispiel Early Stopping: Die Validierungsloss der Epochen 1 bis 5 lautet 0.8,0.6,0.5,0.55,0.65. Bei Geduld 2 sind nach Epoche 5 zwei Verschlechterungen erreicht; der beste Snapshot stammt aus Epoche 3.\nBeispiel Dropout: Bei Dropout-Rate 0.5 und Maske (1,0,1,0) werden die Aktivierungen (2,4,6,8) mit inverted Dropout zu (4,0,12,0). Bei Inferenz bleibt die Schicht unverändert, ohne zufällige Maske.",
+  "confusions": [
+    {
+      "term": "Validation und Test",
+      "note": "Validation steuert die Modellwahl. Test bewertet das bereits gewählte Modell."
+    },
+    {
+      "term": "Dropout und Gewichte löschen",
+      "note": "Dropout maskiert temporär Aktivierungen; es entfernt keine Parameter dauerhaft."
+    }
+  ],
+  "illustrations": [
+    {
+      "kind": "comparison",
+      "title": "Drei Wege gegen Überanpassung",
+      "labels": [
+        "L1 / L2|Parameter in der Loss bestrafen",
+        "Dropout|Aktivierungen im Training maskieren",
+        "Early Stopping|besten Validierungsstand behalten"
+      ],
+      "caption": "Die Kästen zeigen ergänzende Methoden, keine feste Reihenfolge."
+    },
+    {
+      "kind": "plot",
+      "title": "Early Stopping wählt den besten Stand",
+      "labels": [
+        "Epoche",
+        "Validierungsloss"
+      ],
+      "values": [
+        [
+          1,
+          0.8
+        ],
+        [
+          2,
+          0.6
+        ],
+        [
+          3,
+          0.5
+        ],
+        [
+          4,
+          0.55
+        ],
+        [
+          5,
+          0.65
+        ]
+      ],
+      "caption": "Die beste Validierungsloss ist 0.5 in Epoche 3. Späteres Training verbessert diesen Wert nicht."
+    }
+  ],
+  "formula": {
+    "expression": "C(w,b)=C₀(w,b)+λR(w)\nR_L2(w)=Σwᵢ²; R_L1(w)=Σ|wᵢ|",
+    "meaning": "Der Regularisierungsterm macht kleine Gewichte attraktiver; λ steuert seine Stärke.",
+    "variables": [
+      {
+        "symbol": "C₀",
+        "meaning": "Datenloss ohne Regularisierung"
+      },
+      {
+        "symbol": "λ",
+        "meaning": "vorgegebene Regularisierungsstärke"
+      },
+      {
+        "symbol": "R(w)",
+        "meaning": "zusätzliche Gewichtsstrafe"
+      },
+      {
+        "symbol": "wᵢ",
+        "meaning": "lernbares Gewicht"
+      },
+      {
+        "symbol": "Σ",
+        "meaning": "Summe über die hier bestraften Gewichte"
+      }
+    ],
+    "latex": [
+      "C=C_0+\\lambda R(w)",
+      "R_{\\mathrm{L2}}=\\sum_iw_i^2",
+      "R_{\\mathrm{L1}}=\\sum_i|w_i|"
+    ],
+    "worked_example": {
+      "title": "L2-Strafe zur Datenloss addieren",
+      "given": [
+        "Gewichte w=(2,−1), Datenloss C₀=0.4, λ=0.1.",
+        "Verwendet wird R=Σw², ohne zusätzlichen Faktor ½."
+      ],
+      "steps": [
+        {
+          "text": "Gewichte quadrieren; negatives Vorzeichen verschwindet.",
+          "latex": "R_{\\mathrm{L2}}=2^2+(-1)^2=4+1=5"
+        },
+        {
+          "text": "Die Strafe mit dem Hyperparameter λ gewichten.",
+          "latex": "\\lambda R=0.1\\cdot5=0.5"
+        },
+        {
+          "text": "Zur Datenloss addieren, nicht die Datenloss damit multiplizieren.",
+          "latex": "C=0.4+0.5=0.9"
+        }
+      ],
+      "result": "Die gesamte Trainingsloss ist 0.9. Eine andere Definition mit ½ vor der Strafe gäbe einen anderen Zahlenwert und muss ausdrücklich genannt sein.",
+      "result_latex": "C=0.9"
+    }
+  }
+}

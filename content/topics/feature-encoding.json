@@ -1,0 +1,139 @@
+{
+  "id": "feature-encoding",
+  "exam_id": "machine-learning",
+  "module_id": "ml-preprocessing",
+  "title": "Kategoriale Features encodieren",
+  "priority": "core",
+  "summary": "Kategoriale Merkmale werden abhängig von ihrer Ordnung als ordinale, nominale, one-hot-, multi-hot- oder periodische Repräsentation codiert.",
+  "explanation": [
+    "Modelle benötigen numerisch dargestellte Inputs. Encoding stellt Kategorien als Zahlen oder Vektoren dar. Die Darstellung darf keine fachlich falschen Beziehungen behaupten.",
+    "Ordinale Kategorien besitzen eine Reihenfolge. niedrig/mittel/hoch kann als 0/1/2 codiert werden, aber eine lineare Rechenregel nimmt dann auch gleiche Abstände an. Das muss zur Aufgabe passen.",
+    "Nominale Kategorien wie rot/grün/blau besitzen keine Reihenfolge. One-Hot-Encoding erzeugt eine Indikatorspalte je Kategorie; genau eine ist 1. Zahlen-IDs 1/2/3 könnten dagegen eine künstliche Ordnung und Distanz nahelegen.",
+    "Multi-Hot erlaubt mehrere gleichzeitig zutreffende Eigenschaften, etwa mehrere Sprachen einer Person. Zyklische Merkmale wie Uhrzeit benötigen eine Darstellung, die 23 Uhr und 0 Uhr als nah behandelt.",
+    "Der Encoder wird auf Training angepasst. Die Behandlung unbekannter Kategorien und die Spaltenreihenfolge müssen festgelegt sein. One-Hot-Spalten mit zusätzlichem Intercept können in linearer Regression redundant sein; eine Referenzkategorie vermeidet die exakte Abhängigkeit."
+  ],
+  "sources": [
+    {
+      "file": "MachineLearning_Tag1_Preprocessing_2026_ShaoJuWoo.pdf",
+      "pages": [
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 4,
+  "steps": [
+    "Nominal, ordinal oder Mehrfachzuordnung bestimmen.",
+    "Passendes Encoding wählen.",
+    "Vokabular und Spalten auf Training festlegen.",
+    "Unbekannte Kategorien und gleiche Spaltenordnung sicher behandeln."
+  ],
+  "example": "Eigener Rechenfall: Kategorien [rot,grün,blau]. grün wird One-Hot zu (0,1,0); Kategorie-ID 1 ist nur ein Index. Für eine Person mit Deutsch und Englisch aus [Deutsch,Französisch,Englisch] ergibt Multi-Hot (1,0,1). Für die Stunde h kann (sin(2πh/24),cos(2πh/24)) verwendet werden: h=0 liefert (0,1), h=12 ungefähr (0,−1).",
+  "formula": {
+    "expression": "One-Hot: v_j=1 für zutreffende Kategorie, sonst 0\nZyklisch: (sin(2πh/P),cos(2πh/P))",
+    "meaning": "Zyklische Codierung verbindet Anfang und Ende einer Periode.",
+    "variables": [
+      {
+        "symbol": "j",
+        "meaning": "Kategorieindex"
+      },
+      {
+        "symbol": "h",
+        "meaning": "Position im Zyklus"
+      },
+      {
+        "symbol": "P",
+        "meaning": "Periodenlänge, z. B. 24 Stunden"
+      },
+      {
+        "symbol": "c",
+        "meaning": "Index der zutreffenden Kategorie"
+      }
+    ],
+    "latex": [
+      "v_j=\\begin{cases}1&j=c\\\\0&j\\ne c\\end{cases}",
+      "\\left(\\sin\\frac{2\\pi h}{P},\\cos\\frac{2\\pi h}{P}\\right)"
+    ],
+    "worked_example": {
+      "title": "Kategorie und zyklische Uhrzeit codieren",
+      "given": [
+        "Kategorienreihenfolge [rot,grün,blau]; gewählt ist grün.",
+        "Uhrzeit h=0, Periode P=24 Stunden."
+      ],
+      "steps": [
+        {
+          "text": "Nur den Indikator der zutreffenden Kategorie auf 1 setzen.",
+          "latex": "v=(0,1,0)"
+        },
+        {
+          "text": "Den Winkel der zyklischen Position berechnen.",
+          "latex": "\\alpha=\\frac{2\\pi\\cdot0}{24}=0"
+        },
+        {
+          "text": "Sinus und Cosinus auf diesen Winkel anwenden.",
+          "latex": "(\\sin0,\\cos0)=(0,1)"
+        }
+      ],
+      "result": "One-Hot ergibt (0,1,0), zyklische Zeitcodierung (0,1). Die zwei Vektoren erfüllen verschiedene Zwecke; Kategorien erhalten keine künstliche Grössenordnung.",
+      "result_latex": "v=(0,1,0),\\quad \\mathrm{Zeitvektor}=(0,1)"
+    }
+  },
+  "confusions": [
+    {
+      "term": "Ordinal und nominal",
+      "note": "Eine Reihenfolge muss fachlich existieren, nicht nur im vergebenen Zahlencode."
+    },
+    {
+      "term": "One-Hot und Multi-Hot",
+      "note": "Genau eine Kategorie gegenüber mehreren gleichzeitig möglichen Eigenschaften."
+    }
+  ],
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "Kategorie in Eingabewerte übersetzen",
+      "caption": "Erst die Bedeutung entscheidet über die Codierung.",
+      "labels": [
+        "Kategorie verstehen",
+        "Ordnung oder Mehrfachlabel?",
+        "Encoding auf Training lernen",
+        "Gleiche Spalten für neue Daten"
+      ]
+    },
+    {
+      "kind": "matrix",
+      "title": "One-Hot für drei Farben",
+      "caption": "Zeilen: rot, grün, blau. Spalten: rot, grün, blau. Jede Zeile enthält genau eine 1.",
+      "labels": [
+        "rot | grün | blau"
+      ],
+      "values": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "id": "dl-learning-ingredients",
+  "exam_id": "deep-learning-data-science",
+  "module_id": "dl-foundations",
+  "title": "Zutaten eines Lernalgorithmus",
+  "priority": "core",
+  "summary": "Ein Lernproblem verbindet fünf Zutaten: Dataset, Modell, Loss, Optimierungsverfahren und Metrik.",
+  "explanation": [
+    "Vorwissen: Ein Dataset enthält viele Fälle, etwa Bilder; ein Batch ist nur ein Teil davon. Ein Modell ist die gesamte parametrisierte Rechenregel, nicht das Dataset. Training verändert Gewichte und Biases. Validieren vergleicht Einstellungen; Testen bewertet das ausgewählte Verfahren unabhängig.",
+    "Ein Lernproblem beginnt mit einem Dataset. Eingaben x enthalten die verfügbaren Informationen; beim überwachten Lernen beschreibt der Zielwert y die gewünschte Antwort. Die Daten müssen zur späteren Nutzung passen. Ein Modell, das nur helle Trainingsbilder kennt, kann an dunklen Bildern scheitern.",
+    "Das Modell fθ ist eine parametrisierte Abbildung von x auf eine Vorhersage ŷ. Die Parameter θ sind beispielsweise Gewichte und Biases. Die Architektur bestimmt, welche Funktionen das Modell darstellen kann; die Trainingsdaten bestimmen, welche Parameterwerte gelernt werden.",
+    "Die Loss-Funktion vergleicht Vorhersage und Zielwert. Für eine Regression kann sie den quadratischen Fehler messen; für eine Klassifikation kann sie die zu geringe Wahrscheinlichkeit der richtigen Klasse bestrafen. Die Wahl der Loss muss zum Output und zur Aufgabe passen.",
+    "Das Optimierungsverfahren verwendet die Gradienten der Loss, um Parameter zu verändern. Backpropagation berechnet die benötigten Ableitungen; ein Optimierer wie Gradient Descent bestimmt daraus den nächsten Parameterwert. Die Lernrate ist eine Einstellung dieses Verfahrens und kein aus den Daten gelerntes Gewicht.",
+    "Zu den fünf Zutaten der Vorlesung gehört zusätzlich eine Metrik. Sie beurteilt den praktischen Erfolg, etwa Accuracy für Klassifikation oder MAE für Regression. Loss und Metrik können verschieden sein: Cross-Entropy ermöglicht Training, während Accuracy den Anteil richtig klassifizierter Beispiele ausdrückt. Ein unabhängiger Testdatensatz bleibt für die abschliessende Bewertung reserviert.",
+    "Prüfungstransfer: Für y=1,p=0.6 und Schwelle 0.5 ist die Entscheidung korrekt. BCE=−ln(0.6)≈0.511 ist trotzdem nicht 0: Die Loss belohnt zusätzliche Sicherheit. Bei Schwelle 0.7 würde dieselbe Wahrscheinlichkeit falsch klassifiziert, ohne dass die Modellparameter verändert wurden."
+  ],
+  "sources": [
+    {
+      "file": "DeepLearning_Tag1_Einfuhrung_2026_ShaoJuWoo.pdf",
+      "pages": [
+        13,
+        14,
+        15,
+        16,
+        20,
+        21,
+        24
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 2,
+  "steps": [
+    "Dataset und Zielvariable festlegen.",
+    "Modell und passende Output-Darstellung wählen.",
+    "Loss berechnen und Gradienten bestimmen.",
+    "Parameter mit dem Optimierer aktualisieren.",
+    "Erfolg mit einer geeigneten Metrik auf unabhängigen Daten bewerten."
+  ],
+  "example": "Beispiel: Ein Netz unterscheidet Katzen und Hunde.\nDataset: Bilder x mit Labels y ∈ {0,1}, getrennt in Train, Validation und Test.\nModell: Ein CNN liefert p(Hund|Bild).\nLoss: Für ein Hundebild mit p = 0.8 ist die Binary Cross-Entropy −ln(0.8) ≈ 0.223; bei p = 0.2 wäre sie ≈ 1.609.\nOptimierung: Die Gradienten verändern Filter und Biases so, dass die Hundewahrscheinlichkeit für solche Beispiele steigen kann.\nMetrik: Sind bei einer Schwelle von 0.5 insgesamt 90 von 100 Testbildern richtig klassifiziert, beträgt die Accuracy 90 %. Diese Zahl ist keine Cross-Entropy.",
+  "confusions": [
+    {
+      "term": "Loss und Metrik",
+      "note": "Die Loss wird optimiert. Eine Metrik beschreibt den Erfolg und muss nicht dieselbe Grösse sein."
+    },
+    {
+      "term": "Parameter und Hyperparameter",
+      "note": "Gewichte werden gelernt; Architektur und Lernrate werden als Trainingskonfiguration gewählt."
+    }
+  ],
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "Die fünf Zutaten",
+      "labels": [
+        "Dataset|Eingaben x und Ziele y",
+        "Modell fθ|Vorhersagen ŷ",
+        "Loss L|Vorhersage mit Ziel vergleichen",
+        "Optimierer|Parameter θ aktualisieren",
+        "Metrik|Modellgüte beurteilen"
+      ],
+      "caption": "Der Optimierer verändert das Modell anhand der Loss. Die Metrik bewertet die Leistung; sie ist die fünfte Zutat in Folie 14."
+    },
+    {
+      "kind": "bars",
+      "title": "Loss für ein Hundebild",
+      "labels": [
+        "p = 0.8",
+        "p = 0.2"
+      ],
+      "values": [
+        [
+          0.223,
+          1.609
+        ]
+      ],
+      "caption": "Bei y = 1 gilt L = −ln(p). Eine kleine Wahrscheinlichkeit der richtigen Klasse verursacht einen grösseren Loss."
+    }
+  ]
+}

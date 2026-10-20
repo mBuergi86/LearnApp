@@ -1,0 +1,138 @@
+{
+  "id": "confusion-matrix",
+  "exam_id": "machine-learning",
+  "module_id": "ml-model-selection",
+  "title": "Confusion Matrix",
+  "priority": "support",
+  "summary": "Die Confusion Matrix zählt korrekte und fehlerhafte positive sowie negative Klassifikationsentscheidungen.",
+  "explanation": [
+    "Eine Confusion Matrix zählt wahre und vorhergesagte Klassen gemeinsam. Zuerst wird die positive Klasse festgelegt, etwa «krank». Positiv ist eine Benennung, nicht automatisch «gut».",
+    "True Positive bedeutet wahr positiv und positiv vorhergesagt; True Negative wahr negativ und negativ vorhergesagt. True beschreibt die Richtigkeit, Positive oder Negative die Vorhersage.",
+    "False Positive ist ein falscher Alarm: tatsächlich negativ, positiv vorhergesagt. False Negative ist ein übersehener positiver Fall: tatsächlich positiv, negativ vorhergesagt. Ein Fehler in der Zuordnung vertauscht Precision und Recall.",
+    "Tabellen können Achsen unterschiedlich anordnen. Deshalb immer Beschriftungen lesen: Hier sind Zeilen wahre Klassen und Spalten Vorhersagen. Die Summe aller vier Zellen ist die Anzahl bewerteter Fälle.",
+    "Precision fragt unter vorhergesagten Positiven nach richtigen; Recall fragt unter tatsächlichen Positiven nach erkannten. Unterschiedliche Schwellen verändern die Zählungen. Bei Nenner 0 ist die mathematische Quote nicht definiert und braucht eine ausdrücklich vereinbarte Behandlung."
+  ],
+  "sources": [
+    {
+      "file": "MachineLearning_Tag2_ModelTraining_Selection_2026_ShaoJuWoo.pdf",
+      "pages": [
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 7,
+  "steps": [
+    "Positive Klasse festlegen.",
+    "Wahre und vorhergesagte Labels pro Fall vergleichen.",
+    "Vier Zellen beschriftet zählen.",
+    "Passende Quote mit richtigem Nenner berechnen."
+  ],
+  "example": "Eigener Rechenfall: Zeilen wahr negativ/positiv, Spalten vorhergesagt negativ/positiv: [[50,10],[5,35]]. Also TN=50,FP=10,FN=5,TP=35 und N=100. Precision=35/(35+10)=7/9≈0.778; Recall=35/(35+5)=0.875; Accuracy=(50+35)/100=0.85. Die fünf übersehenen Fälle sind FN, nicht FP.",
+  "formula": {
+    "expression": "N=TP+TN+FP+FN\nPrecision=TP/(TP+FP)\nRecall=TP/(TP+FN)",
+    "meaning": "Die Nenner beantworten verschiedene Fragen.",
+    "variables": [
+      {
+        "symbol": "TP",
+        "meaning": "richtig positiv"
+      },
+      {
+        "symbol": "TN",
+        "meaning": "richtig negativ"
+      },
+      {
+        "symbol": "FP",
+        "meaning": "falsch positiv"
+      },
+      {
+        "symbol": "FN",
+        "meaning": "falsch negativ"
+      },
+      {
+        "symbol": "N",
+        "meaning": "alle Fälle"
+      }
+    ],
+    "latex": [
+      "N=\\mathrm{TP}+\\mathrm{TN}+\\mathrm{FP}+\\mathrm{FN}",
+      "\\mathrm{Precision}=\\frac{\\mathrm{TP}}{\\mathrm{TP}+\\mathrm{FP}}",
+      "\\mathrm{Recall}=\\frac{\\mathrm{TP}}{\\mathrm{TP}+\\mathrm{FN}}"
+    ],
+    "worked_example": {
+      "title": "Achsen lesen und Nenner richtig wählen",
+      "given": [
+        "Zeilen: wahr negativ/positiv. Spalten: vorhergesagt negativ/positiv.",
+        "Matrix [[50,10],[5,35]]."
+      ],
+      "steps": [
+        {
+          "text": "Die vier Zellen anhand der Beschriftung zuordnen.",
+          "latex": "\\mathrm{TN}=50,\\quad\\mathrm{FP}=10,\\quad\\mathrm{FN}=5,\\quad\\mathrm{TP}=35"
+        },
+        {
+          "text": "Alle bewerteten Fälle zählen.",
+          "latex": "N=50+10+5+35=100"
+        },
+        {
+          "text": "Precision mit allen positiv vorhergesagten Fällen im Nenner berechnen.",
+          "latex": "\\mathrm{Precision}=\\frac{35}{35+10}=\\frac79\\approx0.778"
+        },
+        {
+          "text": "Recall mit allen tatsächlich positiven Fällen im Nenner berechnen.",
+          "latex": "\\mathrm{Recall}=\\frac{35}{35+5}=0.875"
+        }
+      ],
+      "result": "Precision beträgt etwa 0.778, Recall 0.875. False Positives gehören zum Precision-Nenner, False Negatives zum Recall-Nenner.",
+      "result_latex": "P\\approx0.778,\\quad R=0.875"
+    }
+  },
+  "confusions": [
+    {
+      "term": "False Positive und False Negative",
+      "note": "Falscher Alarm gegenüber übersehenem tatsächlichem Positivfall."
+    },
+    {
+      "term": "Achsenkonvention",
+      "note": "Nicht die Position einer Zelle auswendig lernen; tatsächliche und vorhergesagte Achse lesen."
+    }
+  ],
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "Jeden Fall korrekt einordnen",
+      "caption": "Wahrheit und Entscheidung bestimmen zusammen die Zelle.",
+      "labels": [
+        "Positive Klasse definieren",
+        "Wahres Label",
+        "Vorhergesagtes Label",
+        "TP,TN,FP oder FN"
+      ]
+    },
+    {
+      "kind": "matrix",
+      "title": "Beschriftete Confusion Matrix",
+      "caption": "Zeilen: wahr negativ, wahr positiv. Spalten: vorhergesagt negativ, vorhergesagt positiv. TN=50,FP=10,FN=5,TP=35.",
+      "labels": [
+        "Vorhersage − | +"
+      ],
+      "values": [
+        [
+          50,
+          10
+        ],
+        [
+          5,
+          35
+        ]
+      ]
+    }
+  ]
+}

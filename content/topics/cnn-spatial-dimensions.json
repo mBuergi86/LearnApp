@@ -1,0 +1,138 @@
+{
+  "id": "cnn-spatial-dimensions",
+  "exam_id": "deep-learning-data-science",
+  "module_id": "dl-cnn",
+  "title": "Räumliche Dimensionen und Padding",
+  "priority": "core",
+  "summary": "Convolution kann Höhe und Breite eines Bildvolumens verkleinern; Padding fügt Randwerte hinzu und beeinflusst die Output-Dimension.",
+  "explanation": [
+    "Vorwissen: Höhe und Breite zählen Positionen, Kanalzahl zählt unterschiedliche Feature Maps. Stride ist Schrittweite, Padding eine Randerweiterung, Filtergrösse die Fensterbreite. Diese Begriffe bestimmen verschiedene Teile der Formrechnung.",
+    "Die räumliche Output-Grösse hängt von Input-Grösse N, Filtergrösse F, Padding P und Stride S ab. Für eine gewöhnliche Convolution mit Dilatation 1 gilt O=floor((N+2P−F)/S)+1. Höhe und Breite werden getrennt nach dieser Regel berechnet.",
+    "Ohne Padding und bei Stride 1 schrumpft die Grösse um F−1. Ein 3 × 3 Filter auf einem 7 × 7 Input liefert deshalb 5 × 5. Ein 5 × 5 Filter auf 32 × 32 liefert 28 × 28. Mehrere solche Schichten können die räumliche Auflösung schnell verringern.",
+    "Padding P ergänzt P Werte auf jeder Seite. Zero-Padding verwendet null als Randwert. Für einen ungeraden Filter und Stride 1 erhält P=(F−1)/2 die Grösse: Bei F=3 genügt P=1. Padding erhält die Grösse nicht für jede beliebige Stride-Konfiguration.",
+    "Stride 2 überspringt zwischen Fensterpositionen eine zusätzliche Position und reduziert die Output-Grösse. Ergibt der Bruch keine ganze Zahl, verwenden übliche Implementierungen die Floor-Regel und lassen die verbleibenden Randpositionen ungenutzt. Die Folien zeigen zunächst ganzzahlige Beispiele; die allgemeine Formel macht diese Annahme explizit.",
+    "Die Parameteranzahl hängt dagegen von Filterfläche, Input-Kanälen und Filteranzahl ab: F_H·F_W·C_in·C_out plus C_out Biases. Sie steigt nicht allein dadurch, dass ein Bild höher oder breiter wird, weil die Filtergewichte räumlich geteilt werden.",
+    "Mathematik lesen: Zuerst N+2P−F berechnen, dann durch S teilen, dann abrunden und 1 addieren. Die 2 vor P steht für beide gegenüberliegenden Ränder. Rechne Höhe und Breite getrennt; die Filterzahl bestimmt zusätzlich die Output-Kanäle."
+  ],
+  "sources": [
+    {
+      "file": "DeepLearning_Tag2_ComputerVision_2026.pdf",
+      "pages": [
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 3,
+  "steps": [
+    "Input-Grösse, Filter, Stride und Padding notieren.",
+    "O=floor((N+2P−F)/S)+1 pro räumlicher Achse berechnen.",
+    "Output-Kanäle aus der Filteranzahl bestimmen.",
+    "Filtergewichte und Biases getrennt für die Parameterzahl zählen."
+  ],
+  "example": "Beispiel: N=7, F=3, S=2, P=0. O=floor((7−3)/2)+1=3. Die Ausgabe eines quadratischen Inputs ist 3 × 3.\nMit S=1 und P=1 ergibt sich O=(7+2−3)+1=7: Die räumliche Grösse bleibt erhalten.\nParameterbeispiel aus Folie 43: Input 32 × 32 × 3, zehn 5 × 5 Filter, S=1, P=2. Ein Filter hat 75 Gewichte und einen Bias. Insgesamt sind es 10·76=760 Parameter; Output 32 × 32 × 10.\nBei N=8,F=3,S=2,P=0 ergibt die Floor-Regel O=3, nicht 3.5.",
+  "confusions": [
+    {
+      "term": "Grösse und Parameterzahl",
+      "note": "Output-Grösse wird auch von Stride und Padding beeinflusst. Die Zahl geteilter Filterparameter hängt nicht von der Anzahl Fensterpositionen ab."
+    },
+    {
+      "term": "Einseitiges und beidseitiges Padding",
+      "note": "P ist hier die Zahl der Randwerte je Seite, deshalb steht 2P in der Formel."
+    }
+  ],
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "Was bestimmt die Ausgabe?",
+      "labels": [
+        "Input N + Ränder 2P|Filtergrösse F abziehen",
+        "Schrittweite S|Fensterpositionen zählen",
+        "Floor + 1|Output-Grösse O"
+      ],
+      "caption": "Die Formel gilt hier für Dilatation 1. Höhe und Breite werden unabhängig berechnet."
+    },
+    {
+      "kind": "comparison",
+      "title": "7 × 7 mit 3 × 3 Filter",
+      "labels": [
+        "P = 0; S = 1|Output 5 × 5",
+        "P = 0; S = 2|Output 3 × 3",
+        "P = 1; S = 1|Output 7 × 7"
+      ],
+      "caption": "Die drei Kästen vergleichen unterschiedliche Konfigurationen desselben Inputs."
+    }
+  ],
+  "formula": {
+    "expression": "O=⌊(N+2P−F)/S⌋+1\nParameter=C_out·(F_H·F_W·C_in+1)",
+    "meaning": "Gewöhnliche Convolution, Dilatation 1 und ein Bias je Filter.",
+    "variables": [
+      {
+        "symbol": "N,O",
+        "meaning": "Input- und Outputgrösse einer Raumachse"
+      },
+      {
+        "symbol": "F,S,P",
+        "meaning": "Filtergrösse, Stride, Padding je Rand"
+      },
+      {
+        "symbol": "⌊ · ⌋",
+        "meaning": "abrunden auf eine ganze Zahl"
+      },
+      {
+        "symbol": "F_H,F_W",
+        "meaning": "Filterhöhe und -breite"
+      },
+      {
+        "symbol": "C_in,C_out",
+        "meaning": "Inputkanäle und Anzahl Outputfilter"
+      }
+    ],
+    "latex": [
+      "O=\\left\\lfloor\\frac{N+2P-F}{S}\\right\\rfloor+1",
+      "\\#\\mathrm{Parameter}=C_{\\mathrm{out}}(F_HF_WC_{\\mathrm{in}}+1)"
+    ],
+    "worked_example": {
+      "title": "Outputform und Parameterzahl auseinanderhalten",
+      "given": [
+        "Quadratischer Input 7×7×3, sechs Filter mit 3×3.",
+        "Stride S=2, Padding P=0, Dilatation 1, ein Bias je Filter."
+      ],
+      "steps": [
+        {
+          "text": "Die räumliche Formel pro Achse einsetzen.",
+          "latex": "O=\\left\\lfloor\\frac{7+0-3}{2}\\right\\rfloor+1=3"
+        },
+        {
+          "text": "Höhe, Breite und Filterzahl zur Outputform verbinden.",
+          "latex": "\\mathrm{Outputform}=3\\times3\\times6"
+        },
+        {
+          "text": "Parameter je Filter zählen, unabhängig von Outputpositionen.",
+          "latex": "3\\cdot3\\cdot3+1=28"
+        },
+        {
+          "text": "Mit der Anzahl Filter multiplizieren.",
+          "latex": "6\\cdot28=168"
+        }
+      ],
+      "result": "Outputform ist 3×3×6; die Layer besitzt 168 Parameter. Höhe und Breite des Outputs werden nicht zusätzlich in die Parameterzahl multipliziert.",
+      "result_latex": "\\#\\mathrm{Parameter}=168"
+    }
+  }
+}

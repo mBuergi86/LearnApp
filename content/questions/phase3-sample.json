@@ -1,0 +1,502 @@
+{
+  "questions": [
+    {
+      "id": "ml-supervised-labels",
+      "topic_id": "supervised-unsupervised",
+      "type": "single-choice",
+      "prompt": "Welches Merkmal kennzeichnet Supervised Learning?",
+      "explanation": "Supervised Learning verwendet bekannte Paare aus Input und Ziel. Ein Preis ist ein numerisches Label, Spam/kein Spam ein Klassenlabel. Ohne vorgegebene Zielwerte, etwa beim Clustering, fehlt genau diese überwachte Vergleichsantwort.",
+      "difficulty": 1,
+      "enabled": true,
+      "options": [
+        {
+          "id": "labeled",
+          "text": "Zu jeder Eingabe existiert eine entsprechende Ausgabe."
+        },
+        {
+          "id": "no-target",
+          "text": "Die Trainingsdaten bestehen nur aus Features."
+        },
+        {
+          "id": "random-centers",
+          "text": "Clusterzentren werden zufällig initialisiert."
+        },
+        {
+          "id": "no-prediction",
+          "text": "Es werden grundsätzlich keine Vorhersagemodelle erstellt."
+        }
+      ],
+      "correct_answer": "labeled"
+    },
+    {
+      "id": "ml-unsupervised-true",
+      "topic_id": "supervised-unsupervised",
+      "type": "true-false",
+      "prompt": "Beim Unsupervised Learning werden die Features ohne vorgegebene Klassenlabels modelliert.",
+      "explanation": "Richtig: Beim gewöhnlichen unüberwachten Lernen liegen Features, aber keine vorgegebenen Ziel-Labels vor. K-Means berechnet daraus Gruppen und Zentren. «Unsupervised» bedeutet deshalb nicht «lernt keine Parameter».",
+      "difficulty": 1,
+      "enabled": true,
+      "options": [
+        {
+          "id": "false",
+          "text": "Falsch"
+        },
+        {
+          "id": "true",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "true"
+    },
+    {
+      "id": "ml-split-role",
+      "topic_id": "train-validation-test",
+      "type": "matching",
+      "prompt": "Ordne jedem Datensatz seine Rolle zu.",
+      "explanation": "Training lernt Parameter, Validation vergleicht Konfigurationen, Test bewertet das bereits ausgewählte Verfahren. Die Rollen sind nicht austauschbar: Wer mit Testwerten Hyperparameter auswählt, macht aus dem Test faktisch ein weiteres Validierungsset.",
+      "difficulty": 2,
+      "enabled": true,
+      "match_items": [
+        {
+          "id": "training",
+          "text": "Trainingsset",
+          "correct_option_id": "fit"
+        },
+        {
+          "id": "validation",
+          "text": "Validierungsset",
+          "correct_option_id": "select"
+        },
+        {
+          "id": "test",
+          "text": "Testset",
+          "correct_option_id": "final"
+        }
+      ],
+      "match_options": [
+        {
+          "id": "fit",
+          "text": "Modellparameter anpassen"
+        },
+        {
+          "id": "select",
+          "text": "Modell und Hyperparameter auswählen"
+        },
+        {
+          "id": "final",
+          "text": "Finale Leistung auf unbekannten Daten schätzen"
+        }
+      ]
+    },
+    {
+      "id": "ml-validation-purpose",
+      "topic_id": "train-validation-test",
+      "type": "single-choice",
+      "prompt": "Wofür wird der Validierungsdatensatz hauptsächlich verwendet?",
+      "explanation": "Validation dient der Modell- und Hyperparameterauswahl, z. B. Vergleich der Baumtiefen 3 und 10. Gewichte werden auf Training angepasst; die unabhängige Endbewertung gehört zum Test. Imputation ist Datenvorbereitung, keine Hauptaufgabe des Validierungssets.",
+      "difficulty": 1,
+      "enabled": true,
+      "options": [
+        {
+          "id": "fit",
+          "text": "Modellparameter direkt trainieren"
+        },
+        {
+          "id": "hyperparameters",
+          "text": "Modell und Hyperparameter auswählen"
+        },
+        {
+          "id": "final-test",
+          "text": "Die finale unabhängige Testleistung messen"
+        },
+        {
+          "id": "impute",
+          "text": "Fehlende Werte ersetzen"
+        }
+      ],
+      "correct_answer": "hyperparameters"
+    },
+    {
+      "id": "ml-random-forest-randomness",
+      "topic_id": "random-forest",
+      "type": "multiple-select",
+      "prompt": "Welche zwei Zufallsquellen verwendet ein gewöhnlicher Random Forest?",
+      "explanation": "Zwei getrennte Zufallsquellen: Bootstrap variiert die Fälle je Baum; zufällige Featurekandidaten variieren die Split-Auswahl je Knoten. Nur die Daten umzuschichten ist noch nicht die zusätzliche Merkmalszufälligkeit. Das soll die Fehler der Bäume weniger ähnlich machen.",
+      "difficulty": 2,
+      "enabled": true,
+      "options": [
+        {
+          "id": "bootstrap",
+          "text": "Bootstrap-Stichproben der Trainingsdaten"
+        },
+        {
+          "id": "features",
+          "text": "Zufällige Auswahl betrachteter Merkmale"
+        },
+        {
+          "id": "labels",
+          "text": "Zufälliges Vertauschen der Klassenlabels"
+        },
+        {
+          "id": "loss",
+          "text": "Zufällige Auswahl der Loss-Funktion"
+        }
+      ],
+      "correct_answers": [
+        "bootstrap",
+        "features"
+      ]
+    },
+    {
+      "id": "ml-random-forest-voting",
+      "topic_id": "random-forest",
+      "type": "true-false",
+      "prompt": "Bei einer Hard-Voting-Regel gewinnt die Klasse mit den meisten Baumstimmen, sofern es keinen Gleichstand gibt.",
+      "explanation": "Richtig: Beim Hard Voting wird gezählt, wie viele Bäume jede Klasse vorhersagen. Drei Stimmen für A und zwei für B ergeben A. Das ist nicht dasselbe wie das Mitteln von Klassenwahrscheinlichkeiten beim Soft Voting. Für einen Gleichstand braucht man eine zusätzliche festgelegte Regel.",
+      "difficulty": 1,
+      "enabled": true,
+      "options": [
+        {
+          "id": "false",
+          "text": "Falsch"
+        },
+        {
+          "id": "true",
+          "text": "Richtig"
+        }
+      ],
+      "correct_answer": "true"
+    },
+    {
+      "id": "ml-kmeans-order",
+      "topic_id": "k-means",
+      "type": "ordering",
+      "prompt": "Bringe die Schritte eines gewöhnlichen K-Means-Durchlaufs in die richtige Reihenfolge.",
+      "explanation": "Erst Startzentren festlegen, dann Punkte zuordnen, dann aus den zugeordneten Punkten neue Mittelwerte berechnen. Beispielsweise {2,4} ergibt Zentrum 3. Danach erneut zuordnen, bis ein Stoppkriterium greift. Mittelwerte können nicht aus noch unbekannten Gruppen berechnet werden.",
+      "difficulty": 2,
+      "enabled": true,
+      "options": [
+        {
+          "id": "initialize",
+          "text": "k erste Mittel zufällig erzeugen"
+        },
+        {
+          "id": "assign",
+          "text": "Beobachtungen dem nächsten Mittel zuordnen"
+        },
+        {
+          "id": "recenter",
+          "text": "Cluster-Schwerpunkte als neue Mittel berechnen"
+        },
+        {
+          "id": "repeat",
+          "text": "Zuordnung und Aktualisierung bis zur Konvergenz wiederholen"
+        }
+      ],
+      "correct_order": [
+        "initialize",
+        "assign",
+        "recenter",
+        "repeat"
+      ]
+    },
+    {
+      "id": "ml-kmeans-problem",
+      "topic_id": "k-means",
+      "type": "single-choice",
+      "prompt": "Welche Schwierigkeit kann beim gewöhnlichen K-Means auftreten?",
+      "explanation": "Vorgegebene Clusterzahl und Startzentren beeinflussen die Lösung. K-Means optimiert ein nichtkonvexes Gesamtproblem und kann eine schlechtere lokale Lösung finden; «lokal» ist nicht gleich «global». Labels werden zur normalen Anpassung nicht benötigt.",
+      "difficulty": 1,
+      "enabled": true,
+      "options": [
+        {
+          "id": "local-minimum",
+          "text": "Ein ungünstiges lokales Minimum"
+        },
+        {
+          "id": "requires-labels",
+          "text": "Es benötigt für jeden Punkt ein Label"
+        },
+        {
+          "id": "one-cluster",
+          "text": "Es kann grundsätzlich nur einen Cluster bilden"
+        },
+        {
+          "id": "no-iteration",
+          "text": "Die Zentren können nicht aktualisiert werden"
+        }
+      ],
+      "correct_answer": "local-minimum"
+    },
+    {
+      "id": "dl-gradient-direction",
+      "topic_id": "gradient-descent",
+      "type": "single-choice",
+      "prompt": "Warum steht im Gradient-Descent-Update ein Minuszeichen?",
+      "explanation": "Der Gradient zeigt lokal bergauf. Das Minuszeichen richtet den Schritt bergab aus; eine tatsächlich kleinere Loss hängt auch von einer geeigneten Schrittgrösse ab.",
+      "difficulty": 1,
+      "enabled": true,
+      "options": [
+        {
+          "id": "descent",
+          "text": "Damit das Update in die lokale Abstiegsrichtung entgegen dem Gradienten zeigt"
+        },
+        {
+          "id": "absolute",
+          "text": "Damit alle Parameter negativ werden"
+        },
+        {
+          "id": "normalize",
+          "text": "Damit der Gradient auf 1 normiert wird"
+        },
+        {
+          "id": "labels",
+          "text": "Damit die Labels umgedreht werden"
+        }
+      ],
+      "correct_answer": "descent"
+    },
+    {
+      "id": "dl-gradient-numeric",
+      "topic_id": "gradient-descent",
+      "type": "numeric-choice",
+      "prompt": "Es gilt Xₖ = 4, gradient(Xₖ) = 8 und η = 0.1. Welcher Wert folgt aus Xₖ₊₁ = Xₖ − η · gradient(Xₖ)?",
+      "context": "Ein einzelner Gradient-Descent-Schritt",
+      "explanation": "Der ganze Schritt ist η·Gradient=0.1·8=0.8. Diesen vom alten Parameter abziehen: 4−0.8=3.2. Der Gradient 8 und die Änderung 0.8 sind nicht der neue Parameter. Ein Plus vor dem Schritt würde lokal die entgegengesetzte Richtung wählen.",
+      "difficulty": 2,
+      "enabled": true,
+      "options": [
+        {
+          "id": "value-32",
+          "text": "3.2"
+        },
+        {
+          "id": "value-40",
+          "text": "4.0"
+        },
+        {
+          "id": "value-48",
+          "text": "4.8"
+        },
+        {
+          "id": "value-08",
+          "text": "0.8"
+        }
+      ],
+      "correct_answer": "value-32"
+    },
+    {
+      "id": "dl-backprop-purpose",
+      "topic_id": "backpropagation",
+      "type": "single-choice",
+      "prompt": "Was berechnet Backpropagation?",
+      "explanation": "Backpropagation berechnet die Gradienten der Kosten bezüglich Gewichten und Biases. Gradient Descent verwendet diese anschließend für Updates.",
+      "difficulty": 1,
+      "enabled": true,
+      "options": [
+        {
+          "id": "gradients",
+          "text": "Gradienten bezüglich Gewichten und Biases"
+        },
+        {
+          "id": "initialize",
+          "text": "Zufällige Startgewichte"
+        },
+        {
+          "id": "clusters",
+          "text": "Clusterzentren"
+        },
+        {
+          "id": "split",
+          "text": "Train-, Validation- und Test-Splits"
+        }
+      ],
+      "correct_answer": "gradients"
+    },
+    {
+      "id": "dl-training-order",
+      "topic_id": "backpropagation",
+      "type": "ordering",
+      "prompt": "Bringe den Trainingsablauf in die richtige Reihenfolge.",
+      "explanation": "Zuerst entsteht im Forward Pass die Vorhersage, danach der Loss. Backpropagation berechnet die Gradienten, mit denen die Gewichte aktualisiert werden.",
+      "difficulty": 2,
+      "enabled": true,
+      "options": [
+        {
+          "id": "forward",
+          "text": "Forward Pass"
+        },
+        {
+          "id": "loss",
+          "text": "Loss berechnen"
+        },
+        {
+          "id": "backprop",
+          "text": "Backpropagation"
+        },
+        {
+          "id": "update",
+          "text": "Gewichte aktualisieren"
+        }
+      ],
+      "correct_order": [
+        "forward",
+        "loss",
+        "backprop",
+        "update"
+      ]
+    },
+    {
+      "id": "dl-cnn-properties",
+      "topic_id": "cnn-convolution",
+      "type": "multiple-select",
+      "prompt": "Welche Aussagen gelten für eine gewöhnliche Convolution mit groups=1?",
+      "explanation": "Gewöhnliche Filter arbeiten lokal und umfassen alle Input-Kanäle. Jede Map verwendet denselben Filter an allen räumlichen Positionen. Gruppierte und Depthwise-Convolutions wären andere Konfigurationen.",
+      "difficulty": 2,
+      "enabled": true,
+      "options": [
+        {
+          "id": "local",
+          "text": "Sie verarbeitet lokale Bildbereiche."
+        },
+        {
+          "id": "shared",
+          "text": "Eine Feature Map verwendet gemeinsame Filterparameter."
+        },
+        {
+          "id": "depth",
+          "text": "Ein Filter erstreckt sich über die gesamte Input-Tiefe."
+        },
+        {
+          "id": "unique",
+          "text": "Jede Bildposition benötigt vollständig eigene Filtergewichte."
+        }
+      ],
+      "correct_answers": [
+        "local",
+        "shared",
+        "depth"
+      ]
+    },
+    {
+      "id": "dl-cnn-dot-product",
+      "topic_id": "cnn-convolution",
+      "type": "numeric-choice",
+      "prompt": "Wie viele Komponenten hat das Skalarprodukt eines 5 × 5 × 3 Filters?",
+      "explanation": "Der Filter umfasst 5 · 5 räumliche Positionen und alle 3 RGB-Kanäle: 5 · 5 · 3 = 75.",
+      "difficulty": 1,
+      "enabled": true,
+      "options": [
+        {
+          "id": "components-25",
+          "text": "25"
+        },
+        {
+          "id": "components-28",
+          "text": "28"
+        },
+        {
+          "id": "components-75",
+          "text": "75"
+        },
+        {
+          "id": "components-150",
+          "text": "150"
+        }
+      ],
+      "correct_answer": "components-75"
+    },
+    {
+      "id": "dl-qkv-match",
+      "topic_id": "query-key-value",
+      "type": "matching",
+      "prompt": "Ordne Query, Key und Value ihrer Rolle zu.",
+      "explanation": "Die Query sucht, der Key wird für den Relevanzvergleich verwendet und der Value liefert die gewichtete Information.",
+      "difficulty": 2,
+      "enabled": true,
+      "match_items": [
+        {
+          "id": "query",
+          "text": "Query",
+          "correct_option_id": "search"
+        },
+        {
+          "id": "key",
+          "text": "Key",
+          "correct_option_id": "compare"
+        },
+        {
+          "id": "value",
+          "text": "Value",
+          "correct_option_id": "content"
+        }
+      ],
+      "match_options": [
+        {
+          "id": "search",
+          "text": "Suchanfrage eines Tokens"
+        },
+        {
+          "id": "compare",
+          "text": "Merkmale für den Relevanzvergleich"
+        },
+        {
+          "id": "content",
+          "text": "Information für den Kontextvektor"
+        }
+      ]
+    },
+    {
+      "id": "dl-qkv-steps",
+      "topic_id": "query-key-value",
+      "type": "multiple-select",
+      "prompt": "Welche Schritte gehören zur Berechnung von skalierter Dot-Product-Self-Attention?",
+      "explanation": "Self-Attention projiziert Q,K,V, bildet Query-Key-Scores und skaliert sie durch √d_k. Nach gegebenenfalls einer Maske normalisiert Softmax je Query; anschliessend werden Values gewichtet summiert.",
+      "difficulty": 3,
+      "enabled": true,
+      "options": [
+        {
+          "id": "project",
+          "text": "Q, K und V mit getrennten Gewichtsmatrizen erzeugen"
+        },
+        {
+          "id": "score",
+          "text": "Query-Key-Skalarprodukte berechnen"
+        },
+        {
+          "id": "softmax",
+          "text": "Scores mit Softmax normalisieren"
+        },
+        {
+          "id": "cluster",
+          "text": "Tokens mit K-Means gruppieren"
+        }
+      ],
+      "correct_answers": [
+        "project",
+        "score",
+        "softmax"
+      ]
+    },
+    {
+      "id": "disabled-placeholder",
+      "topic_id": "gradient-descent",
+      "type": "single-choice",
+      "prompt": "Diese deaktivierte Frage darf nicht ausgeliefert werden.",
+      "explanation": "Nur für den Filtertest.",
+      "difficulty": 1,
+      "enabled": false,
+      "options": [
+        {
+          "id": "a",
+          "text": "A"
+        },
+        {
+          "id": "b",
+          "text": "B"
+        }
+      ],
+      "correct_answer": "a"
+    }
+  ]
+}

@@ -1,0 +1,156 @@
+{
+  "id": "self-attention",
+  "exam_id": "deep-learning-data-science",
+  "module_id": "dl-transformer",
+  "title": "Self-Attention",
+  "priority": "core",
+  "summary": "Self-Attention bildet für jedes Token einen Kontextvektor aus gewichteten Informationen aller Tokens derselben Sequenz.",
+  "explanation": [
+    "Zusammenhang: Jedes Token aktualisiert seine Darstellung mit Information anderer erlaubter Positionen. Die Anzahl Tokens bleibt erhalten, aber die Vektorwerte ändern sich. Kontextverständnis entsteht aus gelernten Gewichtungen und nachfolgenden Schichten, nicht aus einem fest einprogrammierten Wörterbuch.",
+    "Self-Attention lässt jede Position einer Sequenz Informationen aus derselben Sequenz sammeln. Aus den aktuellen Tokenrepräsentationen entstehen Queries, Keys und Values. Für jede Query wird bewertet, welche Keypositionen für ihre neue Repräsentation relevant sind.",
+    "Die Matrix QKᵀ enthält für T Tokens T × T Scores. Eine Zeile gehört zu einer Queryposition, eine Spalte zu einer Keyposition. Nach Division durch √d_k wird Softmax zeilenweise angewendet. Die resultierenden Gewichte werden pro Query normalisiert, nicht gemeinsam über die ganze Matrix.",
+    "Die Gewichtsmatrix A wird mit V multipliziert. Dadurch entsteht für jede Queryposition eine gewichtete Summe von Value-Vektoren. Die Zahl der Outputpositionen bleibt T. Ein Head mit Value-Dimension d_v liefert eine Matrix T × d_v.",
+    "Encoder-Self-Attention kann in einer bidirektionalen Konfiguration alle verfügbaren Quellpositionen berücksichtigen. Für autoregressive Decodergenerierung verhindert eine kausale Maske den Blick auf spätere Positionen. Gesperrte Score-Einträge erhalten vor Softmax −∞; deren Gewicht wird null.",
+    "Eine einzelne Attention-Schicht ist nicht automatisch ein vollständiger Transformer. Positionsinformation, Feed-Forward-Netze, Residual-Verbindungen und Normalisierung ergänzen die Architektur. Standard-Self-Attention berechnet T² Positionsbeziehungen, sodass lange Sequenzen erheblichen Speicher- und Rechenaufwand verursachen können.",
+    "Mathematik lesen: Hat Q die Form T×d_k und Kᵀ die Form d_k×T, ergibt das Produkt T×T. Bei A der Form T×T und V der Form T×d_v folgt Z der Form T×d_v. Die inneren Dimensionen müssen beim Matrixprodukt gleich sein."
+  ],
+  "confusions": [
+    {
+      "term": "Self-Attention und Cross-Attention",
+      "note": "Self: Q,K,V aus derselben Sequenz. Cross: Query aus einer anderen Quelle als Key/Value."
+    },
+    {
+      "term": "Scores und Gewichte",
+      "note": "Scores können negativ sein. Nach Softmax sind die unmaskierten Gewichte nichtnegativ und summieren sich je Zeile zu 1."
+    }
+  ],
+  "sources": [
+    {
+      "file": "DeepLearning_Tag3_Transformer_2026.pdf",
+      "pages": [
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 1,
+  "steps": [
+    "Q, K und V aus derselben Sequenz bilden.",
+    "T × T Query-Key-Scores berechnen und skalieren.",
+    "Falls nötig eine kausale Maske anwenden.",
+    "Softmax je Queryzeile berechnen.",
+    "A mit V multiplizieren."
+  ],
+  "example": "Beispiel: Für drei Tokens sei eine Queryzeile nach Softmax (0.1,0.7,0.2). Die zugehörigen Values sind (2,0), (0,4) und (1,1).\nDie neue Repräsentation dieser Position ist 0.1·(2,0)+0.7·(0,4)+0.2·(1,1)=(0.4,3.0).\nDas zweite Token liefert den grössten Anteil, der Output bleibt aber ein Vektor und kein Wortindex.\nBei vier Tokens besitzt die Score-Matrix 16 Einträge. Für die zweite Position eines kausalen Decoders dürfen die dritte und vierte Position nicht berücksichtigt werden; ihre Gewichte sind nach der Maskierung 0.",
+  "illustrations": [
+    {
+      "kind": "matrix",
+      "title": "Kausale Sichtbarkeit bei drei Tokens",
+      "labels": [
+        "1 = erlaubt; 0 = gesperrt"
+      ],
+      "values": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          0
+        ],
+        [
+          1,
+          1,
+          1
+        ]
+      ],
+      "caption": "Zeilen sind Querypositionen, Spalten Keypositionen. Eine Position darf sich selbst und die Vergangenheit sehen, keine Zukunft."
+    },
+    {
+      "kind": "bars",
+      "title": "Eine Query gewichtet drei Values",
+      "labels": [
+        "Token 1",
+        "Token 2",
+        "Token 3"
+      ],
+      "values": [
+        [
+          0.1,
+          0.7,
+          0.2
+        ]
+      ],
+      "caption": "Mit den Beispiel-Values ergibt die gewichtete Summe den Vektor (0.4,3.0)."
+    }
+  ],
+  "formula": {
+    "expression": "A=softmax((QKᵀ/√d_k)+Maske); Z=AV",
+    "meaning": "Eine kausale Maske ist 0 an erlaubten und −∞ an gesperrten Positionen.",
+    "variables": [
+      {
+        "symbol": "Q,K,V",
+        "meaning": "projizierte Query-, Key- und Value-Matrizen"
+      },
+      {
+        "symbol": "A",
+        "meaning": "zeilenweise normalisierte Gewichte"
+      },
+      {
+        "symbol": "d_k",
+        "meaning": "Dimension je Query/Key"
+      },
+      {
+        "symbol": "Maske",
+        "meaning": "0 für erlaubt, −∞ für gesperrt"
+      },
+      {
+        "symbol": "Z",
+        "meaning": "neue Tokenrepräsentationen"
+      },
+      {
+        "symbol": "ᵀ",
+        "meaning": "Transponieren"
+      },
+      {
+        "symbol": "M",
+        "meaning": "additive Maske; entspricht Maske in der bisherigen Formel"
+      }
+    ],
+    "latex": [
+      "A=\\operatorname{softmax}\\!\\left(\\frac{QK^\\top}{\\sqrt{d_k}}+M\\right)",
+      "Z=AV"
+    ],
+    "worked_example": {
+      "title": "Eine Queryzeile und ihre Value-Mischung",
+      "given": [
+        "Eine Attentionzeile A=(0.1,0.7,0.2).",
+        "Value-Zeilen v₁=(2,0),v₂=(0,4),v₃=(1,1)."
+      ],
+      "steps": [
+        {
+          "text": "Zeilengewichte auf Summe 1 prüfen.",
+          "latex": "0.1+0.7+0.2=1"
+        },
+        {
+          "text": "Erste Outputkomponente als gewichtete Summe berechnen.",
+          "latex": "z_1=0.1\\cdot2+0.7\\cdot0+0.2\\cdot1=0.4"
+        },
+        {
+          "text": "Zweite Komponente separat berechnen.",
+          "latex": "z_2=0.1\\cdot0+0.7\\cdot4+0.2\\cdot1=3.0"
+        }
+      ],
+      "result": "Diese Position bekommt den neuen Inhaltsvektor (0.4,3.0). Seine Summe muss nicht 1 sein: Nur die Attentiongewichte sind eine normalisierte Verteilung.",
+      "result_latex": "z=(0.4,3.0)"
+    }
+  }
+}

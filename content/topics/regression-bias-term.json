@@ -1,0 +1,115 @@
+{
+  "id": "regression-bias-term",
+  "exam_id": "machine-learning",
+  "module_id": "ml-regression",
+  "title": "Bias-Term in der Regression",
+  "priority": "support",
+  "summary": "Ein konstanter Bias-Term erlaubt der Regressionsgeraden beziehungsweise -ebene einen Offset.",
+  "explanation": [
+    "Der Bias oder Intercept ist ein additiver Modellparameter. Er ermöglicht einen Output auch dann, wenn alle Inputs null sind. Er wird wie die Gewichte im Training geschätzt.",
+    "Für ŷ=wx+b legt w die Steigung fest, b verschiebt die Gerade nach oben oder unten. Ohne Bias gilt bei x=0 immer ŷ=0; das Modell muss durch den Ursprung laufen.",
+    "In Matrixschreibweise wird oft eine Spalte voller Einsen zu X ergänzt. Das zugehörige Gewicht ist b, weil b·1=b. Diese konstante Spalte ist keine neue unabhängige Messung.",
+    "Bei mehreren Features verschiebt der Bias eine Ebene oder Hyperebene. Bei einem Neuron wird er vor der Aktivierung addiert. Erst danach entstehen beispielsweise ReLU-Output oder Sigmoid-Wahrscheinlichkeit.",
+    "Der Bias-Term ist nicht dasselbe wie statistischer Bias im Bias-Variance-Tradeoff. Das eine ist ein Parameter, das andere eine systematische Abweichung des Lernverfahrens. Ein Modell mit Bias-Term kann trotzdem hohen statistischen Bias haben."
+  ],
+  "sources": [
+    {
+      "file": "MachineLearning_Tag2_Lineare_Regression_2026_ShaoJuWoo.pdf",
+      "pages": [
+        13,
+        14,
+        15
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 3,
+  "steps": [
+    "Gewichtete Featurebeiträge berechnen.",
+    "Bias einmal addieren.",
+    "Gegebenenfalls aktivieren.",
+    "Bias als lernbaren Parameter mitzählen."
+  ],
+  "example": "Eigener Rechenfall: Ohne Bias ŷ=2x ergibt x=0 die Zahl 0. Mit b=3 gilt ŷ=2x+3 und bei x=0 folgt 3. Für x=4 ist ŷ=11. In erweiterter Schreibweise (x,1)·(w,b)=(4,1)·(2,3)=8+3=11. Es gibt ein Gewicht und einen Bias, insgesamt zwei Parameter.",
+  "formula": {
+    "expression": "ŷ=wx+b=[x,1]·[w,b]ᵀ",
+    "meaning": "Die Eins-Spalte stellt den additiven Offset dar.",
+    "variables": [
+      {
+        "symbol": "w",
+        "meaning": "Steigung"
+      },
+      {
+        "symbol": "b",
+        "meaning": "Intercept/Bias"
+      },
+      {
+        "symbol": "x",
+        "meaning": "Featurewert"
+      }
+    ],
+    "latex": [
+      "\\hat y=wx+b=\\begin{pmatrix}x&1\\end{pmatrix}\\begin{pmatrix}w\\\\b\\end{pmatrix}"
+    ],
+    "worked_example": {
+      "title": "Der Bias als Eins-Spaltengewicht",
+      "given": [
+        "x=4, w=2 und b=3."
+      ],
+      "steps": [
+        {
+          "text": "Den gewichteten Inputbeitrag bestimmen.",
+          "latex": "wx=2\\cdot4=8"
+        },
+        {
+          "text": "Den konstanten Bias addieren.",
+          "latex": "\\hat y=8+3=11"
+        },
+        {
+          "text": "Dieselbe Rechnung mit erweiterter Eingabe (x,1) kontrollieren.",
+          "latex": "\\begin{pmatrix}4&1\\end{pmatrix}\\begin{pmatrix}2\\\\3\\end{pmatrix}=4\\cdot2+1\\cdot3=11"
+        }
+      ],
+      "result": "Die Eins-Spalte macht den additiven Bias zu einem Matrixparameter. Bei x=0 wäre die Vorhersage 3, nicht null.",
+      "result_latex": "\\hat y=11,\\quad \\hat y(0)=3"
+    }
+  },
+  "confusions": [
+    {
+      "term": "Bias-Term und statistischer Bias",
+      "note": "Gleiches Wort, verschiedene Bedeutungen."
+    },
+    {
+      "term": "Bias und Schwelle",
+      "note": "Ein Bias verändert den Score; eine Entscheidungsregel kann anschliessend eine Schwelle darauf anwenden."
+    }
+  ],
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "Offset vor der Ausgabe",
+      "caption": "Der Bias ist additiv, nicht ein zusätzlicher Inputwert, der vom Nutzer gelernt wird.",
+      "labels": [
+        "Feature x",
+        "Mit w multiplizieren",
+        "b addieren",
+        "Vorhersage"
+      ]
+    },
+    {
+      "kind": "bars",
+      "title": "Output bei x=0",
+      "caption": "Ein Bias 3 ermöglicht Output 3 statt der erzwungenen null.",
+      "labels": [
+        "Ohne Bias",
+        "Mit Bias 3"
+      ],
+      "values": [
+        [
+          0,
+          3
+        ]
+      ]
+    }
+  ]
+}

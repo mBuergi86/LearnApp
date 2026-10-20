@@ -1,0 +1,121 @@
+{
+  "id": "pooling-resnet",
+  "exam_id": "deep-learning-data-science",
+  "module_id": "dl-cnn",
+  "title": "Pooling und ResNet",
+  "priority": "support",
+  "summary": "Pooling reduziert räumliche Dimensionen; ResNet ist eine Architektur für Netze mit vielen Schichten.",
+  "explanation": [
+    "Vorwissen: Pooling und Residual-Verbindung lösen verschiedene Probleme. Pooling fasst Nachbarwerte zusammen; ein Shortcut addiert einen alternativen Rechenpfad. Das eine reduziert Positionen, das andere erleichtert den Transport von Information und Gradienten.",
+    "Pooling reduziert die räumliche Auflösung einer Feature Map. Ein Fenster fasst mehrere Aktivierungen zu einem Wert zusammen. Max Pooling wählt das Maximum; Average Pooling verwendet den Mittelwert. Übliches Pooling bearbeitet jeden Kanal getrennt und ändert seine Anzahl nicht.",
+    "Ein 2 × 2 Fenster mit Stride 2 halbiert bei geraden Input-Dimensionen ohne Padding Höhe und Breite. Weniger Positionen reduzieren Speicher- und Rechenaufwand in nachfolgenden Schichten. Gleichzeitig geht Detailinformation verloren; Pooling ist kein verlustfreies Komprimieren.",
+    "Gewöhnliches Max- oder Average-Pooling besitzt keine lernbaren Filtergewichte. Das unterscheidet es von Convolution. Die Pooling-Konfiguration wird gewählt, aber es werden keine Kernelwerte durch Gradient Descent gelernt.",
+    "ResNet steht für Residual Network. Ein Residual-Block berechnet eine Transformation F(x) und addiert einen Shortcut: y=x+F(x). Das Netz muss so eine Korrektur zum Eingang lernen statt jede Repräsentation komplett neu aufzubauen. Der Shortcut schafft einen zusätzlichen Informations- und Gradientenpfad.",
+    "Für eine direkte Addition müssen die Formen von x und F(x) übereinstimmen. Bei einer Dimensionsänderung kann der Shortcut eine lernbare Projektion verwenden. Ein gewöhnlicher ResNet-Shortcut ist keine LSTM-artige Gate-Steuerung. Pooling und Residual-Verbindungen sind also zwei verschiedene Architekturwerkzeuge.",
+    "Mathematik lesen: Average Pooling summiert Fensterwerte und teilt durch die Zahl Einträge. Max Pooling wählt nur den grössten. Bei x+F(x) werden gleich positionierte Komponenten addiert, nicht die Vektoren verkettet; passende Formen sind dafür Voraussetzung."
+  ],
+  "sources": [
+    {
+      "file": "DeepLearning_Tag2_ComputerVision_2026.pdf",
+      "pages": [
+        45,
+        46,
+        47
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 4,
+  "steps": [
+    "Bei Pooling Fenstergrösse und Stride festlegen.",
+    "Maximum oder Mittelwert je Kanal bestimmen.",
+    "Bei einem Residual-Block F(x) berechnen.",
+    "Shortcut und Blockausgabe nur bei passenden Formen addieren."
+  ],
+  "example": "Pooling-Beispiel: Die Matrix [[1,3,2,4],[5,6,7,8],[0,2,9,1],[3,4,6,5]] wird mit 2 × 2 Fenstern und Stride 2 verarbeitet.\nMax Pooling ergibt [[6,8],[4,9]]. Average Pooling ergibt [[3.75,5.25],[2.25,5.25]]. Die vier Fenster überlappen hier nicht.\nResidual-Beispiel: x=(2,−1), F(x)=(0.5,0.2). Die Addition ergibt y=(2.5,−0.8). Wäre F(x)=0, bliebe y=x. Eine direkte Addition scheitert dagegen, wenn x zwei und F(x) drei Komponenten besitzt.",
+  "confusions": [
+    {
+      "term": "Pooling und Convolution",
+      "note": "Pooling verdichtet nach einer festen Regel; Convolution hat lernbare Filter."
+    },
+    {
+      "term": "Residual-Verbindung und Gate",
+      "note": "Eine gewöhnliche Skip-Verbindung addiert einen Shortcut; ein Gate steuert einen Informationsanteil."
+    }
+  ],
+  "illustrations": [
+    {
+      "kind": "residual",
+      "title": "Residual-Block mit Shortcut",
+      "labels": [
+        "Input x",
+        "Transformation F(x)",
+        "Ausgabe x + F(x)"
+      ],
+      "values": [],
+      "caption": "Der seitliche Pfad überträgt x zur Addition. Die Formen beider Summanden müssen zusammenpassen."
+    },
+    {
+      "kind": "matrix",
+      "title": "Max-Pooling-Ergebnis",
+      "labels": [
+        "2 × 2 Fenster, Stride 2"
+      ],
+      "values": [
+        [
+          6,
+          8
+        ],
+        [
+          4,
+          9
+        ]
+      ],
+      "caption": "Jede Zelle ist das Maximum eines nicht überlappenden 2×2-Fensters aus der Beispielmatrix."
+    }
+  ],
+  "formula": {
+    "expression": "Residual-Block: y=x+F(x)",
+    "meaning": "Bei unterschiedlicher Form kann statt x eine passende Projektion des Shortcuts verwendet werden.",
+    "variables": [
+      {
+        "symbol": "x",
+        "meaning": "Inputrepräsentation des Blocks"
+      },
+      {
+        "symbol": "F(x)",
+        "meaning": "berechnete Transformation/Korrektur"
+      },
+      {
+        "symbol": "y",
+        "meaning": "Output nach komponentenweiser Addition"
+      }
+    ],
+    "latex": [
+      "y=x+F(x)"
+    ],
+    "worked_example": {
+      "title": "Eine Residual-Korrektur addieren",
+      "given": [
+        "x=(2,−1), Transformation F(x)=(0.5,0.2).",
+        "Beide Vektoren besitzen dieselbe Form."
+      ],
+      "steps": [
+        {
+          "text": "Formen auf direkte Addierbarkeit prüfen.",
+          "latex": "x,F(x)\\in\\mathbb R^2"
+        },
+        {
+          "text": "Erste Komponente addieren.",
+          "latex": "y_1=2+0.5=2.5"
+        },
+        {
+          "text": "Zweite Komponente mit ihrem Vorzeichen addieren.",
+          "latex": "y_2=-1+0.2=-0.8"
+        }
+      ],
+      "result": "Der Output ist (2.5,−0.8). Eine direkte Residual-Verbindung addiert komponentenweise; sie multipliziert oder verkettet die Vektoren nicht.",
+      "result_latex": "y=(2.5,-0.8)"
+    }
+  }
+}

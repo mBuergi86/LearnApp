@@ -1,0 +1,128 @@
+{
+  "id": "ml-lifecycle",
+  "exam_id": "machine-learning",
+  "module_id": "ml-foundations",
+  "title": "Machine-Learning-Entwicklungszyklus",
+  "priority": "core",
+  "summary": "Ein ML-Modell entsteht in einer wiederholten Kette aus Datenverständnis, Vorbereitung, Training, Bewertung und Verbesserung.",
+  "explanation": [
+    "Ein Datensatz ist eine Sammlung von Beobachtungen, etwa Häusern. Features sind ihre bekannten Eigenschaften wie Fläche; das Label ist der gesuchte Zielwert, etwa der Verkaufspreis. Das Modell ist eine Rechenregel, die aus Features eine Vorhersage erzeugt.",
+    "Training bedeutet, die veränderbaren Zahlen dieser Rechenregel aus Trainingsbeispielen zu lernen. Bei ŷ=wx+b sind w und b Modellparameter. Die Modellfamilie und Einstellungen wie die Lernrate werden dagegen vorgegeben: Das sind Hyperparameter.",
+    "Zuerst wird die praktische Aufgabe geklärt: Welche Information ist bei einer späteren Vorhersage tatsächlich verfügbar? Die spätere Verkaufssumme darf nicht zugleich ein Eingabefeature sein. Eine solche Abkürzung wäre Data Leakage statt brauchbares Lernen.",
+    "Daten werden geeignet getrennt, untersucht und vorbereitet. Imputation und Skalierung werden nur auf dem Trainingsanteil angepasst. Mit Validation werden Kandidaten verglichen; das Testset bleibt für die abschliessende Bewertung unberührt.",
+    "Ein gutes Trainingsergebnis allein genügt nicht. Das fertige Verfahren muss auf neuen Daten funktionieren: Das heisst Generalisierung. Verbesserungen erfolgen mit Training und Validation, nicht durch fortlaufendes Nachbessern anhand des Testsets."
+  ],
+  "steps": [
+    "Ziel, Features und verfügbare Informationen festlegen.",
+    "Training, Validation und Test passend zur Aufgabe trennen.",
+    "Vorverarbeitung auf Training lernen und Kandidaten trainieren.",
+    "Mit Validation auswählen, dann einmal unabhängig testen."
+  ],
+  "sources": [
+    {
+      "file": "MachineLearning_Tag1_Einfuhrung_2026_ShaoJuWoo.pdf",
+      "pages": [
+        52,
+        54
+      ]
+    },
+    {
+      "file": "MachineLearning_Tag1_Preprocessing_2026_ShaoJuWoo.pdf",
+      "pages": [
+        3,
+        4
+      ]
+    }
+  ],
+  "initial_status": "unlearned",
+  "sort_order": 3,
+  "example": "Eigener Rechenfall: Ein Hauspreis-Modell verwendet ŷ=2000x+50000 CHF mit x als Fläche in m². Für x=80 gilt ŷ=2000·80+50000=210000 CHF. Der tatsächliche Preis y=220000 CHF ergibt den Fehler ŷ−y=−10000 CHF. Training verändert w und b, nicht nachträglich das bekannte Label. Ob diese Regel auch für andere Häuser taugt, prüft man auf zurückgehaltenen Daten.",
+  "formula": {
+    "expression": "ŷ=f(x;θ); Fehler=ŷ−y",
+    "meaning": "Ein Modell erzeugt eine Vorhersage; erst der Vergleich mit dem bekannten Ziel erlaubt die Bewertung.",
+    "variables": [
+      {
+        "symbol": "x",
+        "meaning": "Features eines Beispiels"
+      },
+      {
+        "symbol": "y",
+        "meaning": "tatsächliches Label"
+      },
+      {
+        "symbol": "ŷ",
+        "meaning": "Vorhersage"
+      },
+      {
+        "symbol": "θ",
+        "meaning": "gelernte Modellparameter"
+      }
+    ],
+    "latex": [
+      "\\hat y=f(x;\\theta)",
+      "\\mathrm{Fehler}=\\hat y-y"
+    ],
+    "worked_example": {
+      "title": "Vom Haus zur Vorhersage",
+      "given": [
+        "Fläche x=80 m²; Modell ŷ=2000x+50000 CHF.",
+        "Bekannter Preis y=220000 CHF."
+      ],
+      "steps": [
+        {
+          "text": "Featurewert in die gelernte Rechenregel einsetzen.",
+          "latex": "\\hat y=2000\\cdot80+50000"
+        },
+        {
+          "text": "Gewichteten Beitrag berechnen und den Bias addieren.",
+          "latex": "\\hat y=160000+50000=210000"
+        },
+        {
+          "text": "Vorhersage mit dem bekannten Ziel vergleichen.",
+          "latex": "\\hat y-y=210000-220000=-10000"
+        }
+      ],
+      "result": "Das Modell schätzt 210000 CHF und liegt 10000 CHF unter dem Ziel. Erst dieser Vergleich erlaubt eine Fehlerbewertung.",
+      "result_latex": "\\mathrm{Fehler}=-10000\\ \\mathrm{CHF}"
+    }
+  },
+  "confusions": [
+    {
+      "term": "Datensatz, Modell und Parameter",
+      "note": "Der Datensatz liefert Beispiele. Das Modell beschreibt die Rechenregel. Parameter sind die gelernten Zahlen in dieser Regel."
+    },
+    {
+      "term": "Training und Vorhersage",
+      "note": "Training lernt Parameter mit bekannten Zielen. Vorhersage verwendet die fertige Regel für neue Inputs."
+    }
+  ],
+  "illustrations": [
+    {
+      "kind": "flow",
+      "title": "Vom Beispiel zur Bewertung",
+      "caption": "Das Testset wird nicht für die Auswahl verwendet.",
+      "labels": [
+        "Aufgabe und Daten",
+        "Daten trennen",
+        "Vorbereitung und Training",
+        "Validation: auswählen",
+        "Test: bewerten"
+      ]
+    },
+    {
+      "kind": "bars",
+      "title": "Vorhersage und tatsächlicher Preis",
+      "caption": "80 m² ergeben 210000 CHF; die Differenz zum Ziel beträgt −10000 CHF.",
+      "labels": [
+        "Vorhersage CHF",
+        "Ziel CHF"
+      ],
+      "values": [
+        [
+          210000,
+          220000
+        ]
+      ]
+    }
+  ]
+}
