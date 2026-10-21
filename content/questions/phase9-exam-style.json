@@ -464,12 +464,12 @@
       "id": "exam-ml-vif",
       "topic_id": "collinearity",
       "type": "single-choice",
-      "prompt": "Drei Features haben paarweise nur schwache Korrelationen. Trotzdem hat x₃ einen VIF von 12. Was bedeutet das?",
+      "prompt": "Drei Features haben paarweise nur schwache Korrelationen. Trotzdem hat $x_3$ einen VIF von 12. Was bedeutet das?",
       "explanation": "Preprocessing F.40, F.41: Eine paarweise Korrelation kann Multikollinearität übersehen. Der VIF misst, wie stark ein Feature durch die anderen erklärbar ist. VIF > 5 bis 10 gilt als problematisch.",
       "options": [
         {
           "id": "o4",
-          "text": "x₃ muss log-transformiert werden"
+          "text": "$x_3$ muss log-transformiert werden"
         },
         {
           "id": "o3",
@@ -481,7 +481,7 @@
         },
         {
           "id": "o1",
-          "text": "x₃ lässt sich gut durch eine Kombination der anderen Features erklären (Multikollinearität)"
+          "text": "$x_3$ lässt sich gut durch eine Kombination der anderen Features erklären (Multikollinearität)"
         }
       ],
       "correct_answer": "o1",

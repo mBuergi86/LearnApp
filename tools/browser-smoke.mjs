@@ -127,7 +127,7 @@ try {
   assert.equal(initial.dashboard, false);
   assert.equal(initial.frames.some((frame) => frame.state === 'unknown' && (frame.shellVisible || frame.dashboardVisible)), false);
   const loginFooter = await footerState(client);
-  assert.equal(loginFooter.text, 'ML/DL Exam Trainer · v1.8.1');
+  assert.equal(loginFooter.text, 'ML/DL Exam Trainer · v1.8.2');
   assert.equal(loginFooter.visible, true);
   assert.equal(loginFooter.position, 'static');
 
@@ -139,7 +139,7 @@ try {
   })()`);
   await waitFor(client, `document.body.dataset.authState === 'authenticated' && !!document.querySelector('.exam-grid')`, 'dashboard after login');
   const appFooter = await footerState(client);
-  assert.equal(appFooter.text, 'ML/DL Exam Trainer · v1.8.1');
+  assert.equal(appFooter.text, 'ML/DL Exam Trainer · v1.8.2');
   assert.equal(appFooter.visible, true);
   assert.equal(appFooter.position, 'static');
 
@@ -227,7 +227,7 @@ try {
   await client.call('Page.reload', { ignoreCache: true });
   await waitFor(client, `document.body?.dataset.authState === 'unauthenticated'`, 'login after desktop logout reload');
 
-  console.log(JSON.stringify({ footerVersion: '1.8.1', footerLogin: true, footerApp: true, footerLight: true, footerDark: true, footerNormalFlow: true, initialAuthNoFlicker: true, login: true, sessionReload: true, themeSystem: true, themeLight: true, themeDark: true, themeReload: true, osThemeChange: true, desktop: desktopChecks, mobile: mobileChecks, mobileLogoutReload: true, desktopLogoutReload: true, screenshot: screenshotPath }));
+  console.log(JSON.stringify({ footerVersion: '1.8.2', footerLogin: true, footerApp: true, footerLight: true, footerDark: true, footerNormalFlow: true, initialAuthNoFlicker: true, login: true, sessionReload: true, themeSystem: true, themeLight: true, themeDark: true, themeReload: true, osThemeChange: true, desktop: desktopChecks, mobile: mobileChecks, mobileLogoutReload: true, desktopLogoutReload: true, screenshot: screenshotPath }));
 } finally {
   if (client) client.close();
   chrome.kill();

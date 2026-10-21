@@ -159,7 +159,7 @@
       "id": "dl-artificial-neuron-properties",
       "topic_id": "artificial-neuron",
       "type": "multiple-select",
-      "prompt": "Welche Aussagen gelten für z=Σwᵢxᵢ+b und a=φ(z)?",
+      "prompt": "Welche Aussagen gelten für $z = \\sum_i w_i x_i + b$ und $a = \\varphi(z)$?",
       "explanation": "z ist die gewichtete Summe plus Bias vor φ; a kommt nach φ. Bei x=0 gilt z=b. Inputs sind Beispieldaten, keine gewöhnlich trainierbaren Gewichte. a=z gilt etwa bei linearer Aktivierung oder positiver ReLU, aber nicht allgemein: ReLU(−1)=0 statt −1.",
       "options": [
         {

@@ -3,7 +3,7 @@ const assert = require('node:assert/strict');
 const state = require('./ui-state.js');
 
 test('application version has one exported source', () => {
-  assert.equal(state.APP_VERSION, '1.8.1');
+  assert.equal(state.APP_VERSION, '1.8.2');
 });
 
 test('auth starts unknown and resolves only from a server result', () => {
