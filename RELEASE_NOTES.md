@@ -1,5 +1,12 @@
 # Release Notes
 
+## v1.8.1
+
+- Removed programming-syntax questions (pandas `rolling`/`resample`, PyTorch
+  graph); rewrote three ML questions in plain words without code
+- Pools (all/core): ML 138/122, DL/DS 130/104. Details in
+  [RELEASE-1.8.1.md](RELEASE-1.8.1.md).
+
 ## v1.8.0
 
 - 53 calculation questions disabled; 10 typical ones kept and rewritten with

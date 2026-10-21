@@ -94,7 +94,7 @@ func TestDLAnswerKeysRemainValidAfterPublicOptionShuffle(t *testing.T) {
 		}
 		checked++
 	}
-	if checked != 131 {
-		t.Fatalf("checked %d questions, want 131", checked)
+	if checked != 130 {
+		t.Fatalf("checked %d questions, want 130", checked)
 	}
 }

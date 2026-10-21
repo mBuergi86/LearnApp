@@ -113,7 +113,7 @@ func TestBothExamPoolsGradeAllSixTypesAfterShuffle(t *testing.T) {
 			}
 		}
 	}
-	for exam, want := range map[string]int{"machine-learning": 139, "deep-learning-data-science": 131} {
+	for exam, want := range map[string]int{"machine-learning": 138, "deep-learning-data-science": 130} {
 		if counts[exam] != want || len(types[exam]) != 6 {
 			t.Fatalf("%s: count %d, types %d", exam, counts[exam], len(types[exam]))
 		}
