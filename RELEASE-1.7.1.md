@@ -5,7 +5,7 @@ Image built and pushed to Zot. No server access and no deployment.
 
 ## Image
 
-- Tag: `<registry>/learn/mldl-exam-trainer:1.7.1`
+- Tag: `registry.marbui.ch/learn/mldl-exam-trainer:1.7.1`
 - Local tag: `localhost/mldl-exam-trainer:1.7.1`
 - Platform: linux/amd64, CGO disabled.
 - Image ID: `eef2e74acaaa771268d2eecb1137bd1f1a932a540fe397174e683706ae745097`

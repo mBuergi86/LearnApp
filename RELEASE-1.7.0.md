@@ -5,7 +5,7 @@ to Zot. No server access and no deployment.
 
 ## Image
 
-- Tag: `<registry>/learn/mldl-exam-trainer:1.7.0`
+- Tag: `registry.marbui.ch/learn/mldl-exam-trainer:1.7.0`
 - Local tag: `localhost/mldl-exam-trainer:1.7.0`
 - Platform: linux/amd64, CGO disabled.
 - Image ID: `f023b411c481c922f38643c9702d6dd38eff561b73e4fdb131e338049425702c`

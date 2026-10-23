@@ -5,7 +5,8 @@
 - Math written with Unicode symbols (cluster union and intersection, BP3/BP4
   gradients, neuron sum, VIF feature) now uses LaTeX and renders as MathML
 - Plain-text fallback understands more symbols (φ, ∂, ⋃, ∩, ∅, ∞)
-- No pool or schema changes
+- No pool or schema changes. Image built and pushed to Zot on 2026-10-23,
+  without course PDFs. Details in [RELEASE-1.8.2.md](RELEASE-1.8.2.md).
 
 ## v1.8.1
 

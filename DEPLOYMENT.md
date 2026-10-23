@@ -1,9 +1,15 @@
-# Kubernetes deployment reference for v1.7.1
+# Kubernetes deployment reference for v1.8.2
 
-This file is a reference for the separate deployment step. Version 1.7.1, a
-bugfix release for login behind the TLS proxy, was built and pushed to Zot on
-2026-10-20 (see [RELEASE-1.7.1.md](RELEASE-1.7.1.md)). That release task does
-not execute Kubernetes, Traefik, TLS, DNS or server deployment commands.
+This file is a reference for the separate deployment step. Version 1.8.2, a
+rendering patch that converts the remaining Unicode math to LaTeX, was built and
+pushed to Zot on 2026-10-23 (see [RELEASE-1.8.2.md](RELEASE-1.8.2.md)). That
+release task does not execute Kubernetes, Traefik, TLS, DNS or server
+deployment commands. The 1.8.2 image contains no course PDFs (see
+[CONTAINER.md](CONTAINER.md)); the live installation shows missing-source
+notices until an image with PDFs is published. There is no 1.8.1 image; 1.8.2
+contains all 1.8.1 changes. Compared with 1.7.1, the upgrade changes only
+content and rendering: SQLite stays at schema 7, no migration, and no new
+environment variables.
 
 The application is a single-replica SQLite workload. Mount one ReadWriteOnce
 PVC at `/app/data`; do not use a shared network filesystem or scale the Deployment
@@ -21,9 +27,11 @@ For the existing installation, preserve its existing PVC `mldl-data`, mount
 `/data`, `APP_DB_PATH=/data/app.db`, and trusted-proxy configuration. The generic
 example below is not a replacement for that live configuration. Updating the
 image alone must not create a new empty database or discard those env values.
-The requested new image tag is `:1.7.1` (without a leading `v`); change only
-the image tag. No server
-deployment commands are performed by the release task; only the approved Zot push.
+The requested new image tag is `:1.8.2` (without a leading `v`); change only
+the image tag. No server deployment commands are performed by the release task;
+only the approved Zot push. Rolling back means setting the previous tag
+(`:1.8.0` or `:1.7.1`) again; the database stays compatible because the schema
+is unchanged.
 
 Create the bootstrap secret out of band. The values must not be committed.
 
@@ -71,7 +79,7 @@ spec:
         seccompProfile: { type: RuntimeDefault }
       containers:
         - name: app
-          image: <registry>/learn/mldl-exam-trainer:1.7.1
+          image: registry.marbui.ch/learn/mldl-exam-trainer:1.8.2
           ports: [{ containerPort: 8080, name: http }]
           envFrom:
             - secretRef: { name: mldl-exam-bootstrap }
@@ -106,11 +114,13 @@ and route to this ClusterIP Service. Do not publish the Service through a
 NodePort, LoadBalancer, or a second Ingress. The app adds HSTS only for requests
 marked HTTPS by Traefik.
 
-For the approved registry publication, tag and publish v1.7.1 without
-overwriting an existing tag:
+Images reach Zot only through `podman push` from the build machine. For the
+approved registry publication, tag and publish v1.8.2 without
+overwriting an existing tag (check with
+`podman search --list-tags registry.marbui.ch/learn/mldl-exam-trainer` first):
 
 ```sh
-podman tag localhost/mldl-exam-trainer:1.7.1 <registry>/learn/mldl-exam-trainer:1.7.1
-podman login <registry>
-podman push <registry>/learn/mldl-exam-trainer:1.7.1
+podman tag localhost/mldl-exam-trainer:1.8.2 registry.marbui.ch/learn/mldl-exam-trainer:1.8.2
+podman login registry.marbui.ch
+podman push registry.marbui.ch/learn/mldl-exam-trainer:1.8.2
 ```

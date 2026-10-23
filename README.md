@@ -103,7 +103,7 @@ server access nor a Kubernetes or k3s rollout.
 ```text
 content/catalog.json       exam areas, modules and PDF registry
 content/topics/            58 learning pages with source metadata
-content/questions/         256 active, objectively gradable questions
+content/questions/         268 active, objectively gradable questions
 content/inventory/         phase 8A slide inventory
 content/audit/             final audits
 content/pdfs/              13 external original PDFs (not in Git)
@@ -153,7 +153,7 @@ Current content:
 
 - 58 learning pages: 28 Machine Learning and 30 Deep Learning & Data Science
 - 45 CORE and 13 SUPPORT topics
-- 256 active questions: 122 Machine Learning and 134 Deep Learning & Data Science
+- 268 active questions: 138 Machine Learning and 130 Deep Learning & Data Science
 - single choice, multiple select, true/false, ordering, matching and numeric multiple choice
 - 13 registered PDFs with a total of 621 original pages
 
@@ -188,8 +188,8 @@ the [middleware audit](content/audit/middleware-security-review.md).
 All 58 topics (28 ML and 30 DL/DS) include detailed explanations, worked
 examples, common confusions and two local SVG illustrations each. Formulas
 explain their symbols. The 122 ML questions were revised; 29 ML and 34 DL
-calculation questions are verified independently. The pools remain 122/104 for
-ML and 134/110 for DL/DS (all/core). Details and limitations are in the
+calculation questions are verified independently. Since 1.8.1 the pools are
+138/122 for ML and 130/104 for DL/DS (all/core). Details and limitations are in the
 [content review](content/audit/dl-ds-quality-review.md).
 
 ### Release build 1.8.2
@@ -202,12 +202,15 @@ podman build --platform linux/amd64 --build-arg "APP_VERSION=$appVersion" -t "lo
 The image tag is explicitly `:1.8.2`; the shared login/app footer shows
 `ML/DL Exam Trainer · v1.8.2`. The version source is `web/ui-state.js`; the
 build also applies it as an OCI image label. The approved registry tag is
-`<registry>/learn/mldl-exam-trainer:1.8.2`. Not built or deployed yet.
-Local verification uses dedicated test volumes, not existing learning data.
+`registry.marbui.ch/learn/mldl-exam-trainer:1.8.2`. It was built and pushed to Zot on
+2026-10-23 without the course PDFs; no server deployment. Local verification
+uses dedicated test volumes, not existing learning data. Build commands for
+Linux shells and the push steps are in [CONTAINER.md](CONTAINER.md).
 
 ### Release notes 1.8.2
 
 - Unicode math in seven questions converted to LaTeX.
+  Details: [RELEASE-1.8.2.md](RELEASE-1.8.2.md).
 
 ### Release notes 1.8.1
 
