@@ -44,7 +44,7 @@
     }
     return html + escape(value.slice(last));
   }
-  const GREEK = Object.freeze({ alpha: 'α', beta: 'β', gamma: 'γ', eta: 'η', lambda: 'λ', mu: 'μ', sigma: 'σ', theta: 'θ', pi: 'π', sum: 'Σ', ln: 'ln', log: 'log', hat: '' });
+  const GREEK = Object.freeze({ alpha: 'α', beta: 'β', gamma: 'γ', eta: 'η', lambda: 'λ', mu: 'μ', sigma: 'σ', theta: 'θ', pi: 'π', sum: 'Σ', ln: 'ln', log: 'log', hat: '', varphi: 'φ', phi: 'φ', partial: '∂', bigcup: '⋃', cup: '∪', cap: '∩', emptyset: '∅', infty: '∞' });
   // Readable fallback for places that cannot hold markup (aria-label, <option>).
   function plain(text = '') {
     return String(text).replace(INLINE_MATH, (_, latex) => latex

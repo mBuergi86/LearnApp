@@ -1,6 +1,6 @@
 # ML/DL Exam Trainer
 
-Web app for exam preparation in Machine Learning and Deep Learning & Data Science. The current version is 1.8.0 (2026-10-20): practice focuses on exam-style questions, formulas in questions are typeset with LaTeX, and the text is larger. Version 1.7.1 (2026-10-20) fixed login behind the TLS proxy. Version 1.7.0 (2026-10-13) introduced real LaTeX typesetting rendered as native MathML, simple worked examples in 49 formula cards, and per-topic quick checks. The navigation from 1.6.0 is unchanged.
+Web app for exam preparation in Machine Learning and Deep Learning & Data Science. The current version is 1.8.2 (2026-10-21): remaining Unicode math converted to LaTeX. Version 1.8.1 (2026-10-21): programming-syntax questions removed. Version 1.8.0 (2026-10-20): practice focuses on exam-style questions, formulas in questions are typeset with LaTeX, and the text is larger. Version 1.7.1 (2026-10-20) fixed login behind the TLS proxy. Version 1.7.0 (2026-10-13) introduced real LaTeX typesetting rendered as native MathML, simple worked examples in 49 formula cards, and per-topic quick checks. The navigation from 1.6.0 is unchanged.
 
 The user interface and the learning content are in German.
 
@@ -192,18 +192,27 @@ calculation questions are verified independently. The pools remain 122/104 for
 ML and 134/110 for DL/DS (all/core). Details and limitations are in the
 [content review](content/audit/dl-ds-quality-review.md).
 
-### Release build 1.8.0
+### Release build 1.8.2
 
 ```powershell
 $appVersion = node -p "require('./web/ui-state.js').APP_VERSION"
 podman build --platform linux/amd64 --build-arg "APP_VERSION=$appVersion" -t "localhost/mldl-exam-trainer:$appVersion" -f Containerfile .
 ```
 
-The image tag is explicitly `:1.8.0`; the shared login/app footer shows
-`ML/DL Exam Trainer · v1.8.0`. The version source is `web/ui-state.js`; the
+The image tag is explicitly `:1.8.2`; the shared login/app footer shows
+`ML/DL Exam Trainer · v1.8.2`. The version source is `web/ui-state.js`; the
 build also applies it as an OCI image label. The approved registry tag is
-`<registry>/learn/mldl-exam-trainer:1.8.0`. Not built or deployed yet.
+`<registry>/learn/mldl-exam-trainer:1.8.2`. Not built or deployed yet.
 Local verification uses dedicated test volumes, not existing learning data.
+
+### Release notes 1.8.2
+
+- Unicode math in seven questions converted to LaTeX.
+
+### Release notes 1.8.1
+
+- Programming-syntax questions (pandas, PyTorch) removed or rewritten in plain
+  words. Details: [RELEASE-1.8.1.md](RELEASE-1.8.1.md).
 
 ### Release notes 1.8.0
 

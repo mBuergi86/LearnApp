@@ -220,8 +220,8 @@
       "id": "exam-ml-hidden-missing",
       "topic_id": "missing-values",
       "type": "single-choice",
-      "prompt": "Ein Temperatursensor liefert bei 4 % der Zeilen den Wert −300 °C. `isna().sum()` zeigt 0 fehlende Werte. Was ist korrekt?",
-      "explanation": "Preprocessing F.6: Benutzerdefinierte Werte wie −300 °C oder 0 bpm stehen oft für fehlende Werte. isna() findet nur echte NaN. −300 °C liegt unter dem absoluten Nullpunkt und ist physikalisch unmöglich.",
+      "prompt": "Ein Temperatursensor liefert bei 4 % der Zeilen den Wert −300 °C. Die Prüfung auf fehlende Werte zeigt 0. Was ist korrekt?",
+      "explanation": "Preprocessing F.6: Benutzerdefinierte Werte wie −300 °C oder 0 bpm stehen oft für fehlende Werte. Eine Prüfung auf fehlende Werte findet nur echte Lücken (NaN), keine Platzhalter. −300 °C liegt unter dem absoluten Nullpunkt und ist physikalisch unmöglich.",
       "options": [
         {
           "id": "o4",
@@ -248,24 +248,24 @@
       "id": "exam-ml-dropna-axis",
       "topic_id": "missing-values",
       "type": "single-choice",
-      "prompt": "Ein DataFrame hat 2000 Zeilen. Nur die Spalte «Bemerkung» enthält in 1950 Zeilen NaN. Welche Methode verliert am wenigsten Information?",
-      "explanation": "axis=0 würde 1950 von 2000 Zeilen löschen. axis=1 entfernt nur die eine fast leere Spalte. fillna und ffill würden 1950 Werte erfinden.",
+      "prompt": "Ein Datensatz hat 2000 Zeilen. Nur das Merkmal «Bemerkung» fehlt in 1950 Zeilen, alle anderen Merkmale sind vollständig. Welches Vorgehen verliert am wenigsten Information?",
+      "explanation": "Zeilen löschen würde 1950 von 2000 Beobachtungen wegwerfen, also fast den ganzen Datensatz. Die Spalte zu entfernen kostet nur ein Merkmal, das ohnehin zu 97,5 % leer ist. Auffüllen würde 1950 Werte erfinden und dem Modell falsche Information geben.",
       "options": [
         {
           "id": "o1",
-          "text": "dropna(axis=1): die fast leere Spalte entfernen"
+          "text": "Das Merkmal «Bemerkung» als ganze Spalte entfernen"
         },
         {
           "id": "o4",
-          "text": "ffill über die ganze Tabelle"
+          "text": "Die Lücken mit dem vorherigen Wert auffüllen"
         },
         {
           "id": "o2",
-          "text": "dropna(axis=0): alle Zeilen mit NaN entfernen"
+          "text": "Alle Zeilen mit einem fehlenden Wert entfernen"
         },
         {
           "id": "o3",
-          "text": "fillna(42)"
+          "text": "Die Lücken mit einer festen Zahl wie 42 auffüllen"
         }
       ],
       "correct_answer": "o1",
@@ -298,13 +298,13 @@
       ],
       "correct_answer": "o1",
       "difficulty": 2,
-      "enabled": true
+      "enabled": false
     },
     {
       "id": "exam-ml-binning-type",
       "topic_id": "data-cleaning-noise",
       "type": "single-choice",
-      "prompt": "Was passiert mit dem Datentyp, wenn man eine stetige Grösse mit pd.cut in Klassen einteilt (Binning)?",
+      "prompt": "Was passiert mit dem Datentyp, wenn man eine stetige Grösse in Klassen einteilt (Binning)?",
       "explanation": "Preprocessing F.16: Binning wandelt stetige, quantitative Daten in ordinale, qualitative Daten um. Die Klassen haben eine Reihenfolge, aber die genauen Werte gehen verloren.",
       "options": [
         {
@@ -464,12 +464,12 @@
       "id": "exam-ml-vif",
       "topic_id": "collinearity",
       "type": "single-choice",
-      "prompt": "Drei Features haben paarweise nur schwache Korrelationen. Trotzdem hat x₃ einen VIF von 12. Was bedeutet das?",
+      "prompt": "Drei Features haben paarweise nur schwache Korrelationen. Trotzdem hat $x_3$ einen VIF von 12. Was bedeutet das?",
       "explanation": "Preprocessing F.40, F.41: Eine paarweise Korrelation kann Multikollinearität übersehen. Der VIF misst, wie stark ein Feature durch die anderen erklärbar ist. VIF > 5 bis 10 gilt als problematisch.",
       "options": [
         {
           "id": "o4",
-          "text": "x₃ muss log-transformiert werden"
+          "text": "$x_3$ muss log-transformiert werden"
         },
         {
           "id": "o3",
@@ -481,7 +481,7 @@
         },
         {
           "id": "o1",
-          "text": "x₃ lässt sich gut durch eine Kombination der anderen Features erklären (Multikollinearität)"
+          "text": "$x_3$ lässt sich gut durch eine Kombination der anderen Features erklären (Multikollinearität)"
         }
       ],
       "correct_answer": "o1",
@@ -1385,7 +1385,7 @@
       ],
       "correct_answer": "o1",
       "difficulty": 2,
-      "enabled": true
+      "enabled": false
     },
     {
       "id": "exam-dl-filter-depth",

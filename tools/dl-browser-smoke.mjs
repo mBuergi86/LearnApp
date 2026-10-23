@@ -290,7 +290,7 @@ try {
   assert.equal(todayFormulaExample,1);
   assert.deepEqual(securityErrors,[],'CSP errors');
   assert.deepEqual(externalRequests,[],'external page runtime requests');
-  console.log(JSON.stringify({version:'1.8.0',pages,figures,topics:58,formulaStates,mathExpressions,nativeMathML:true,normalMathWeight:true,noCSPWeakening:true,noExternalRuntimeRequests:true,mobile:true,desktop:true,light:true,dark:true,todayFigures,todayFormulaExample,shortCheckCorrectAndWrong:true,shortCheckKeyboard:true,shortCheckNoLearningWrites:true,navigationWalkthroughs,screenshots}));
+  console.log(JSON.stringify({version:'1.8.2',pages,figures,topics:58,formulaStates,mathExpressions,nativeMathML:true,normalMathWeight:true,noCSPWeakening:true,noExternalRuntimeRequests:true,mobile:true,desktop:true,light:true,dark:true,todayFigures,todayFormulaExample,shortCheckCorrectAndWrong:true,shortCheckKeyboard:true,shortCheckNoLearningWrites:true,navigationWalkthroughs,screenshots}));
 } finally {
   if(client)client.close(); chrome.kill(); await sleep(100);
   await rm(profile,{recursive:true,force:true});

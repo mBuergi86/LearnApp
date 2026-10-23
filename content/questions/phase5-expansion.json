@@ -498,8 +498,8 @@
       "id": "ml-kmeans-disjoint",
       "topic_id": "k-means",
       "type": "true-false",
-      "prompt": "Für zwei verschiedene K-Means-Cluster gilt Cᵢ ∩ Cⱼ = ∅.",
-      "explanation": "Richtig für die gewöhnliche harte Partition: Jeder Punkt wird nach festgelegter Gleichstandsregel genau einem Cluster zugeordnet. Cᵢ∩Cⱼ=∅ bedeutet, dass zwei verschiedene Cluster keine gemeinsamen Punkte enthalten. Es bedeutet nicht, dass ihre Zentren immer verschieden sein müssen.",
+      "prompt": "Für zwei verschiedene K-Means-Cluster gilt $C_i \\cap C_j = \\emptyset$.",
+      "explanation": "Richtig für die gewöhnliche harte Partition: Jeder Punkt wird nach festgelegter Gleichstandsregel genau einem Cluster zugeordnet. $C_i \\cap C_j = \\emptyset$ bedeutet, dass zwei verschiedene Cluster keine gemeinsamen Punkte enthalten. Es bedeutet nicht, dass ihre Zentren immer verschieden sein müssen.",
       "difficulty": 2,
       "enabled": true,
       "options": [
@@ -518,8 +518,8 @@
       "id": "ml-kmeans-union",
       "topic_id": "k-means",
       "type": "single-choice",
-      "prompt": "Was bedeutet ⋃ⱼ₌₁ᵏ Cⱼ = D?",
-      "explanation": "Die Vereinigung aller Cluster enthält den ganzen Datensatz: Kein zugeordneter Punkt bleibt ausserhalb. Zusammen mit Disjunktheit bedeutet das eine Partition. Die Vereinigung ist weder ein Durchschnitt noch die Summe der Clusterzentren.",
+      "prompt": "Was bedeutet $\\bigcup_{j=1}^{k} C_j = D$?",
+      "explanation": "$\\bigcup$ heisst Vereinigung: alle Cluster zusammengenommen. Die Vereinigung aller Cluster enthält den ganzen Datensatz $D$: Kein zugeordneter Punkt bleibt ausserhalb. Zusammen mit Disjunktheit ($C_i \\cap C_j = \\emptyset$) bedeutet das eine Partition. Die Vereinigung ist weder ein Durchschnitt noch die Summe der Clusterzentren.",
       "difficulty": 2,
       "enabled": true,
       "options": [
@@ -885,25 +885,25 @@
       "topic_id": "backpropagation",
       "type": "single-choice",
       "prompt": "Welche Ableitung liefert BP3 direkt?",
-      "explanation": "BP3 lautet ∂C/∂bᵢˡ = eᵢˡ und liefert damit den Bias-Gradienten.",
+      "explanation": "BP3 lautet $\\frac{\\partial C}{\\partial b_i^l} = e_i^l$ und liefert damit den Bias-Gradienten.",
       "difficulty": 2,
       "enabled": true,
       "options": [
         {
           "id": "bias",
-          "text": "∂C/∂bᵢˡ"
+          "text": "$\\frac{\\partial C}{\\partial b_i^l}$"
         },
         {
           "id": "weight",
-          "text": "∂C/∂wᵢₖˡ"
+          "text": "$\\frac{\\partial C}{\\partial w_{ik}^l}$"
         },
         {
           "id": "learning-rate",
-          "text": "∂C/∂η"
+          "text": "$\\frac{\\partial C}{\\partial \\eta}$"
         },
         {
           "id": "cluster",
-          "text": "∂C/∂k"
+          "text": "$\\frac{\\partial C}{\\partial k}$"
         }
       ],
       "correct_answer": "bias"
@@ -913,25 +913,25 @@
       "topic_id": "backpropagation",
       "type": "multiple-select",
       "prompt": "Welche zwei Faktoren werden in BP4 für den Gewichtsgradienten multipliziert?",
-      "explanation": "Der Gewichtsgradient ist vorgeschaltete Aktivierung mal lokale Ableitung: ∂C/∂wᵢₖˡ=aₖˡ⁻¹eᵢˡ. Bei Aktivierung 2 und e=−0.3 ergibt er −0.6. η ist kein Faktor dieser Ableitung, sondern des Updates. Der lokale Fehler ist auch nicht einfach der Loss-Wert.",
+      "explanation": "Der Gewichtsgradient ist vorgeschaltete Aktivierung mal lokale Ableitung: $\\frac{\\partial C}{\\partial w_{ik}^l} = a_k^{l-1} \\cdot e_i^l$. Bei Aktivierung 2 und $e = -0.3$ ergibt er $-0.6$. $\\eta$ ist kein Faktor dieser Ableitung, sondern des Updates. Der lokale Fehler ist auch nicht einfach der Loss-Wert.",
       "difficulty": 3,
       "enabled": true,
       "options": [
         {
           "id": "previous-activation",
-          "text": "Vorgeschaltete Aktivierung aₖˡ⁻¹"
+          "text": "Vorgeschaltete Aktivierung $a_k^{l-1}$"
         },
         {
           "id": "local-error",
-          "text": "Lokaler Fehler eᵢˡ"
+          "text": "Lokaler Fehler $e_i^l$"
         },
         {
           "id": "learning-rate",
-          "text": "Lernrate η"
+          "text": "Lernrate $\\eta$"
         },
         {
           "id": "cluster-count",
-          "text": "Clusterzahl k"
+          "text": "Clusterzahl $k$"
         }
       ],
       "correct_answers": [

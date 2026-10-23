@@ -372,8 +372,8 @@ func TestProjectFinalContentSeparatesAllAndCoreExamPools(t *testing.T) {
 		}
 	}
 	for examID, want := range map[string]struct{ all, core int }{
-		"machine-learning":           {all: 139, core: 122},
-		"deep-learning-data-science": {all: 131, core: 105},
+		"machine-learning":           {all: 138, core: 122},
+		"deep-learning-data-science": {all: 130, core: 104},
 	} {
 		if counts[examID] != want.all || coreCounts[examID] != want.core {
 			t.Fatalf("exam %s pools all=%d core=%d, want all=%d core=%d", examID, counts[examID], coreCounts[examID], want.all, want.core)
